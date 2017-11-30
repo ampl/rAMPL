@@ -11,7 +11,28 @@
 #include "parameter_mod.h"
 #include <Rcpp.h>
 
+class AMPLRunnable : public ampl::Runnable {
+public:
+  Rcpp::Function callback;
+  AMPLRunnable(Rcpp::Function _callback): callback(_callback) { }
+  void run() {
+    callback();
+  }
+};
+
+class AMPLOutputHandler : public ampl::OutputHandler {
+public:
+  Rcpp::Function outputhandler;
+  AMPLOutputHandler(Rcpp::Function _outputhandler): outputhandler(_outputhandler) { }
+  void output(ampl::output::Kind kind, const char* output) {
+    outputhandler(output);
+  }
+};
+
 class RcppAMPL{
+private:
+  AMPLRunnable *Cb = NULL;
+  AMPLOutputHandler *OHandler = NULL;
 public:
   ampl::AMPL _impl;
   RcppAMPL();
@@ -23,11 +44,15 @@ public:
   void read(std::string fileName);
   void readData(std::string fileName);
   void eval(std::string amplstatements);
+  void solve();
+  void solveAsync(Rcpp::Function callback);
   RcppVariable getVariable(std::string name) const;
   RcppConstraint getConstraint(std::string name) const;
   RcppObjective getObjective(std::string name) const;
   RcppSet getSet(std::string name) const;
   RcppParameter getParameter(std::string name) const;
+
+  void setOutputHandler(Rcpp::Function outputhandler);
 
   Rcpp::List getVariables() const;
   Rcpp::List getConstraints() const;
@@ -35,5 +60,7 @@ public:
   Rcpp::List getSets() const;
   Rcpp::List getParameters() const;
 };
+
+RCPP_EXPOSED_ENUM_NODECL(ampl::output::Kind);
 
 #endif

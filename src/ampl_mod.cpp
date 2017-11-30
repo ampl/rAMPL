@@ -167,6 +167,43 @@ void RcppAMPL::eval(std::string amplstatements) {
   return _impl.eval(amplstatements);
 }
 
+/*.. method:: AMPL.solve()
+
+  Solve the current model.
+
+  :return: ``NULL``.
+  :raises Error: If the underlying interpreter is not running.
+*/
+void RcppAMPL::solve() {
+  return _impl.solve();
+}
+
+/*.. method:: AMPL.solveAsync(callback)
+
+  Solve the current model asynchronously.
+
+  :param function callback: Function to be called when solver is done.
+  :return: ``NULL``.
+*/
+void RcppAMPL::solveAsync(Rcpp::Function callback) {
+  free(Cb);
+  Cb = new AMPLRunnable(callback);
+  _impl.solveAsync(Cb);
+}
+
+/*.. method:: AMPL.setOutputHandler(outputhandler)
+
+  Sets a new output handler.
+
+  :param function outputhandler: The function handling the %AMPL output derived from interpreting user commands.
+  :return: ``NULL``.
+*/
+void RcppAMPL::setOutputHandler(Rcpp::Function outputhandler) {
+  free(OHandler);
+  OHandler = new AMPLOutputHandler(outputhandler);
+  _impl.setOutputHandler(OHandler);
+}
+
 /*.. method:: AMPL.getVariable(name)
 
   Get the variable with the corresponding name.
@@ -328,6 +365,8 @@ RCPP_MODULE(ampl_module){
         .method("readData", &RcppAMPL::readData, "Interprets the specified file as an AMPL data file")
 
         .method("eval", &RcppAMPL::eval, "Parses AMPL code and evaluates it")
+        .method("solve", &RcppAMPL::solve, "Solve the current model")
+        .method("solveAsync", &RcppAMPL::solveAsync, "Solve the current model asynchronously")
 
         .method("cd", &RcppAMPL::cd, "Display the current working directory")
         .method("cd", &RcppAMPL::cdStr, "Change the current working directory")
@@ -346,5 +385,7 @@ RCPP_MODULE(ampl_module){
         .method("getObjectives", &RcppAMPL::getObjectives, "Get all the objectives declared")
         .method("getSets", &RcppAMPL::getSets, "Get all the sets declared")
         .method("getParameters", &RcppAMPL::getParameters, "Get all the parameters declared")
+
+        .method("setOutputHandler", &RcppAMPL::setOutputHandler, "Sets a new output handler")
         ;
 }

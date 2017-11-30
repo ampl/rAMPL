@@ -1,14 +1,6 @@
 #include "environment_mod.h"
 #include <Rcpp.h>
 
-//' An AMPL environment.
-//'
-//' This class provides access to the environment variables and provides
-//' facilities to specify where to load the underlying AMPL interpreter.
-//'
-//' @param binaryDirectory Optional parameter to specify the location of the AMPL binary.
-//'
-//' @name Environment
 RcppEnvironment::RcppEnvironment()  { }
 RcppEnvironment::RcppEnvironment(std::string binaryDirectory): _impl(binaryDirectory) { }
 
