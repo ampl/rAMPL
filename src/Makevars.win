@@ -1,0 +1,2 @@
+PKG_LIBS = -L../inst/libs/x64/ -lampl
+PKG_CPPFLAGS =  -I../src/include/

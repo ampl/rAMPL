@@ -1,0 +1,15 @@
+Package: rAMPL
+Title: R API for AMPL
+Version: 0.0.0.9000
+Author: Filipe Brandao
+Maintainer: Filipe Brandao <fdabrandao@ampl.com>
+Description: What the package does (one paragraph).
+Depends: R (>= 3.2.3)
+License: GPL
+Encoding: UTF-8
+LazyData: true
+LinkingTo: Rcpp
+Imports: Rcpp
+RoxygenNote: 6.0.1
+Suggests: testthat
+
