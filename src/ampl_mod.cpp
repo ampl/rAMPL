@@ -178,19 +178,6 @@ void RcppAMPL::solve() {
   return _impl.solve();
 }
 
-/*.. method:: AMPL.solveAsync(callback)
-
-  Solve the current model asynchronously.
-
-  :param function callback: Function to be called when solver is done.
-  :return: ``NULL``.
-*/
-void RcppAMPL::solveAsync(Rcpp::Function callback) {
-  free(Cb);
-  Cb = new AMPLRunnable(callback);
-  _impl.solveAsync(Cb);
-}
-
 /*.. method:: AMPL.setOutputHandler(outputhandler)
 
   Sets a new output handler.
@@ -366,7 +353,6 @@ RCPP_MODULE(ampl_module){
 
         .method("eval", &RcppAMPL::eval, "Parses AMPL code and evaluates it")
         .method("solve", &RcppAMPL::solve, "Solve the current model")
-        .method("solveAsync", &RcppAMPL::solveAsync, "Solve the current model asynchronously")
 
         .method("cd", &RcppAMPL::cd, "Display the current working directory")
         .method("cd", &RcppAMPL::cdStr, "Change the current working directory")
