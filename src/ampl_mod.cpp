@@ -149,8 +149,8 @@ void RcppAMPL::readData(std::string fileName){
   re-populated lazily (at first access)
 
   The output of interpreting the statements is passed to the current
-  OutputHandler (see getOutputHandler and
-  setOutputHandler).
+  OutputHandler (see :meth:`~.AMPL.getOutputHandler` and
+  :meth:`~.AMPL.setOutputHandler`).
 
   By default, errors are reported as exceptions and warnings are printed on
   stdout. This behavior can be changed reassigning an
@@ -176,19 +176,6 @@ void RcppAMPL::eval(std::string amplstatements) {
 */
 void RcppAMPL::solve() {
   return _impl.solve();
-}
-
-/*.. method:: AMPL.setOutputHandler(outputhandler)
-
-  Sets a new output handler.
-
-  :param function outputhandler: The function handling the %AMPL output derived from interpreting user commands.
-  :return: ``NULL``.
-*/
-void RcppAMPL::setOutputHandler(Rcpp::Function outputhandler) {
-  free(OHandler);
-  OHandler = new AMPLOutputHandler(outputhandler);
-  _impl.setOutputHandler(OHandler);
 }
 
 /*.. method:: AMPL.getVariable(name)
@@ -342,23 +329,86 @@ Rcpp::List RcppAMPL::getParameters() const {
   return list;
 }
 
+/*.. method:: AMPL.setOutputHandler(outputhandler)
+
+  Sets a new output handler.
+
+  :param function outputhandler: The function handling the AMPL output derived from interpreting user commands.
+  :return: ``NULL``.
+*/
+void RcppAMPL::setOutputHandler(Rcpp::Function outputhandler) {
+  free(OHandler);
+  OHandler = new AMPLOutputHandler(outputhandler);
+  _impl.setOutputHandler(OHandler);
+}
+
+/*.. method:: AMPL.getOutputHandler()
+
+  Get the current output handler.
+
+  :return: The current output handler.
+  :rtype: function
+  :raises Error: If no output handler was set.
+*/
+Rcpp::Function RcppAMPL::getOutputHandler() const {
+  if(OHandler != NULL) {
+    return OHandler->outputhandler;
+  } else {
+    throw Rcpp::exception("No output handler defined.");
+  }
+}
+
+/*.. method:: AMPL.setErrorHandler(errorhandler)
+
+  Sets a new error handler. The error handler receives a list with:
+  - ``$type``: type (warning or error);
+  - ``$filename``: name of the file where the error was detected;
+  - ``$line``: the row where the error is located;
+  - ``$offset``: the offset where the error is located;
+  - ``$message``: the error message.
+
+  :param function errorhandler: The function handling AMPL errors and warnings.
+  :return: ``NULL``.
+*/
+void RcppAMPL::setErrorHandler(Rcpp::Function errorhandler) {
+  free(EHandler);
+  EHandler = new AMPLErrorHandler(errorhandler);
+  _impl.setErrorHandler(EHandler);
+}
+
+/*.. method:: AMPL.getErrorHandler()
+
+  Get the current error handler.
+
+  :return: The current error handler.
+  :rtype: function
+  :raises Error: If no error handler was set.
+*/
+Rcpp::Function RcppAMPL::getErrorHandler() const {
+  if(EHandler != NULL) {
+    return EHandler->errorhandler;
+  } else {
+    throw Rcpp::exception("No error handler defined.");
+  }
+}
 
 // *** RCPP_MODULE ***
 RCPP_MODULE(ampl_module){
     Rcpp::class_<RcppAMPL>( "AMPL" )
         .constructor("An AMPL translator")
         .constructor<SEXP>("An AMPL translator")
-        .method("read", &RcppAMPL::read, "Interprets the specified file")
-        .method("readData", &RcppAMPL::readData, "Interprets the specified file as an AMPL data file")
-
-        .method("eval", &RcppAMPL::eval, "Parses AMPL code and evaluates it")
-        .method("solve", &RcppAMPL::solve, "Solve the current model")
 
         .method("cd", &RcppAMPL::cd, "Display the current working directory")
         .method("cd", &RcppAMPL::cdStr, "Change the current working directory")
 
         .method("getOption", &RcppAMPL::getOption, "Get the current value of the specified option")
         .method("setOption", &RcppAMPL::setOption, "Set an AMPL option to a specified value")
+
+        .method("read", &RcppAMPL::read, "Interprets the specified file")
+        .method("readData", &RcppAMPL::readData, "Interprets the specified file as an AMPL data file")
+
+        .method("eval", &RcppAMPL::eval, "Parses AMPL code and evaluates it")
+        .method("solve", &RcppAMPL::solve, "Solve the current model")
 
         .method("getVariable", &RcppAMPL::getVariable, "Get the variable with the corresponding name")
         .method("getConstraint", &RcppAMPL::getConstraint, "Get the constraint with the corresponding name")
@@ -373,5 +423,8 @@ RCPP_MODULE(ampl_module){
         .method("getParameters", &RcppAMPL::getParameters, "Get all the parameters declared")
 
         .method("setOutputHandler", &RcppAMPL::setOutputHandler, "Sets a new output handler")
+        .method("getOutputHandler", &RcppAMPL::getOutputHandler, "Get the current output handler")
+        .method("setErrorHandler", &RcppAMPL::setErrorHandler, "Sets a new error handler")
+        .method("getErrorHandler", &RcppAMPL::getErrorHandler, "Get the current error handler")
         ;
 }
