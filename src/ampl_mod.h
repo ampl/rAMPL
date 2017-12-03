@@ -69,7 +69,7 @@ public:
   void eval(std::string amplstatements);
   void solve();
 
-  RcppVariable getVariable(std::string name) const;
+  RcppVariable<ampl::Variable> getVariable(std::string name) const;
   RcppConstraint getConstraint(std::string name) const;
   RcppObjective getObjective(std::string name) const;
   RcppSet getSet(std::string name) const;
