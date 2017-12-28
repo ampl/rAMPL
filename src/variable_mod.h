@@ -39,11 +39,9 @@ public:
   double slack() const;
   std::string sstatus() const;
   std::string status() const;
-  ampl::VariableInstance get(Rcpp::List) const;
 };
 
 RCPP_EXPOSED_CLASS_NODECL(RcppVariable)
 RCPP_EXPOSED_CLASS_NODECL(ampl::VariableInstance)
-//RCPP_EXPOSED_CLASS(RcppVariable<ampl::VariableInstance>)
 
 #endif

@@ -14,9 +14,9 @@ public:
   T get(Rcpp::List) const;
 };
 
-typedef RcppBasicEntity<ampl::VariableInstance> RcppBEVariable;
+typedef RcppBasicEntity<ampl::VariableInstance> RcppVariableEntity;
 
-RCPP_EXPOSED_CLASS_NODECL(RcppBEVariable)
+RCPP_EXPOSED_CLASS_NODECL(RcppVariableEntity)
 //RCPP_EXPOSED_CLASS(RcppVariable<ampl::VariableInstance>)
 
 #endif

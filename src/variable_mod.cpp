@@ -327,13 +327,13 @@ std::string RcppVariable::status() const {
   return _impl.status();
 }
 
-ampl::VariableInstance RcppVariable::get(Rcpp::List index) const {
-  return _impl.get(list2tuple(index));
-}
-
 // *** RCPP_MODULE ***
 RCPP_MODULE(variable_module){
+    Rcpp::class_<RcppVariableEntity>( "VariableEntity" )
+        .const_method( "[[", &RcppVariableEntity::get)
+        ;
     Rcpp::class_<RcppVariable>( "Variable" )
+        .derives<RcppVariableEntity>("VariableEntity")
         .method("value", &RcppVariable::value, "Get the current value of this variable")
         .method("integrality", &RcppVariable::integrality, "Get the integrality type for this variable")
         .method("fix", &RcppVariable::fix, "Fix all instances of this variable to their current value")
@@ -361,6 +361,5 @@ RCPP_MODULE(variable_module){
         .method("slack", &RcppVariable::slack, "Returns the smaller slack")
         .method("sstatus", &RcppVariable::sstatus, "Returns the solver status")
         .method("status", &RcppVariable::status, "Returns the AMPL status")
-        .const_method( "[[", &RcppVariable::get)
         ;
 }
