@@ -4,13 +4,14 @@
 #include <string>
 #include "ampl/entity.h"
 #include "ampl/instance.h"
+#include "entity_mod.h"
 #include <Rcpp.h>
 
-template <class T>
-class RcppVariable{
+class RcppVariable: public RcppBasicEntity<ampl::VariableInstance> {
 public:
-  T _impl;
-  RcppVariable(T impl);
+  ampl::Variable _impl;
+  using RcppBasicEntity<ampl::VariableInstance>::get;
+  RcppVariable(ampl::Variable impl);
   double value() const;
   std::string integrality() const;
   void fix();
@@ -38,12 +39,11 @@ public:
   double slack() const;
   std::string sstatus() const;
   std::string status() const;
-  //RcppVariable<ampl::VariableInstance> get(Rcpp::List) const;
+  ampl::VariableInstance get(Rcpp::List) const;
 };
 
-typedef RcppVariable<ampl::Variable> RcppVariableEntity;
-
-RCPP_EXPOSED_CLASS_NODECL(RcppVariableEntity)
+RCPP_EXPOSED_CLASS_NODECL(RcppVariable)
+RCPP_EXPOSED_CLASS_NODECL(ampl::VariableInstance)
 //RCPP_EXPOSED_CLASS(RcppVariable<ampl::VariableInstance>)
 
 #endif

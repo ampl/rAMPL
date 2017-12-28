@@ -187,8 +187,8 @@ void RcppAMPL::solve() {
   :rtype: :class:`Variable`
   :raises Error: If the specified variable does not exist.
 */
-RcppVariable<ampl::Variable> RcppAMPL::getVariable(std::string name) const {
-  return RcppVariable<ampl::Variable>(_impl.getVariable(name));
+RcppVariable RcppAMPL::getVariable(std::string name) const {
+  return RcppVariable(_impl.getVariable(name));
 }
 
 /*.. method:: AMPL.getConstraint(name)
@@ -256,7 +256,7 @@ Rcpp::List RcppAMPL::getVariables() const {
   ampl::EntityMap<ampl::Variable>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Variable>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Variable>::iterator itr = begin; itr != end; itr++){
-    list[itr->name()] = RcppVariable<ampl::Variable>(*itr);
+    list[itr->name()] = RcppVariable(*itr);
   }
   return list;
 }
