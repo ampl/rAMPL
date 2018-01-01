@@ -4,7 +4,7 @@
 #include <string>
 #include "ampl/ampl.h"
 #include "environment_mod.h"
-#include "variable_mod.h"
+#include "rvarentity.h"
 #include "constraint_mod.h"
 #include "objective_mod.h"
 #include "set_mod.h"
@@ -69,7 +69,7 @@ public:
   void eval(std::string amplstatements);
   void solve();
 
-  RcppVariable getVariable(std::string name) const;
+  RVariableEntity getVariable(std::string name) const;
   RcppConstraint getConstraint(std::string name) const;
   RcppObjective getObjective(std::string name) const;
   RcppSet getSet(std::string name) const;

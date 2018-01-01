@@ -11,8 +11,9 @@ RcppExport SEXP _rcpp_module_boot_constraint_module();
 RcppExport SEXP _rcpp_module_boot_environment_module();
 RcppExport SEXP _rcpp_module_boot_objective_module();
 RcppExport SEXP _rcpp_module_boot_parameter_module();
+RcppExport SEXP _rcpp_module_boot_rvarentity();
+RcppExport SEXP _rcpp_module_boot_rvarinstance();
 RcppExport SEXP _rcpp_module_boot_set_module();
-RcppExport SEXP _rcpp_module_boot_variable_module();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_ampl_module", (DL_FUNC) &_rcpp_module_boot_ampl_module, 0},
@@ -20,8 +21,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_environment_module", (DL_FUNC) &_rcpp_module_boot_environment_module, 0},
     {"_rcpp_module_boot_objective_module", (DL_FUNC) &_rcpp_module_boot_objective_module, 0},
     {"_rcpp_module_boot_parameter_module", (DL_FUNC) &_rcpp_module_boot_parameter_module, 0},
+    {"_rcpp_module_boot_rvarentity", (DL_FUNC) &_rcpp_module_boot_rvarentity, 0},
+    {"_rcpp_module_boot_rvarinstance", (DL_FUNC) &_rcpp_module_boot_rvarinstance, 0},
     {"_rcpp_module_boot_set_module", (DL_FUNC) &_rcpp_module_boot_set_module, 0},
-    {"_rcpp_module_boot_variable_module", (DL_FUNC) &_rcpp_module_boot_variable_module, 0},
     {NULL, NULL, 0}
 };
 

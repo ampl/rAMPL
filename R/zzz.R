@@ -1,6 +1,9 @@
 loadModule("ampl_module", TRUE)
 loadModule("environment_module", TRUE)
-loadModule("variable_module", TRUE)
+
+loadModule("rvarentity", TRUE)
+loadModule("rvarinstance", TRUE)
+
 loadModule("constraint_module", TRUE)
 loadModule("objective_module", TRUE)
 loadModule("set_module", TRUE)

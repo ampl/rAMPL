@@ -1,4 +1,4 @@
-#include "entity_mod.h"
+#include "rbasicentity.h"
 #include "utils.h"
 #include <Rcpp.h>
 /*.. _secRrefEntity:
@@ -10,15 +10,15 @@ Entity
 */
 
 // Fix ld error: undefined symbol
-template class RcppBasicEntity<ampl::VariableInstance>;
+template class RBasicEntity<ampl::VariableInstance, RVariableInstance>;
 
 /*.. class:: Entity
 
   Infrastructure class to enable the inheriting classes type-safe access to instances.
 
 */
-template <class T>
-RcppBasicEntity<T>::RcppBasicEntity(ampl::BasicEntity<T> impl): _impl(impl) { }
+template <class T, class TW>
+RBasicEntity<T, TW>::RBasicEntity(ampl::BasicEntity<T> impl): _impl(impl) { }
 
 /*.. method:: Entity.get(index)
 
@@ -30,15 +30,20 @@ RcppBasicEntity<T>::RcppBasicEntity(ampl::BasicEntity<T> impl): _impl(impl) { }
 
   :return: The corresponding instance.
 */
-template <class T>
-T RcppBasicEntity<T>::get(Rcpp::List index) const {
-  return _impl.get(list2tuple(index));
+template <class T, class TW>
+TW RBasicEntity<T, TW>::get(Rcpp::List index) const {
+  return TW(_impl.get(list2tuple(index)));
+}
+
+template <class T, class TW>
+std::string RBasicEntity<T, TW>::name() const {
+  return _impl.name();
 }
 
 // *** RCPP_MODULE ***
 /*RCPP_MODULE(entity_module){
-    Rcpp::class_<RcppBasicEntity>( "Entity" )
-        .method("get", &RcppBasicEntity::get, "Get the instance with the specified index")
-        .const_method( "[[", &RcppBasicEntity::get)
+    Rcpp::class_<RBasicEntity>( "Entity" )
+        .method("get", &RBasicEntity::get, "Get the instance with the specified index")
+        .const_method( "[[", &RBasicEntity::get)
         ;
 }*/

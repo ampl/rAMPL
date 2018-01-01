@@ -1,4 +1,4 @@
-#include "variable_mod.h"
+#include "rvarentity.h"
 #include "utils.h"
 #include <Rcpp.h>
 /*.. _secRrefVariable:
@@ -18,8 +18,7 @@ Variable
   See http://www.ampl.com/NEW/suffbuiltin.html for a list of the available
   suffixes.
 
-  All these methods throw a TypeError if called for a non scalar
-  objective and an RuntimeError if called on an entity which has been deleted
+  All these methods throw an error if called on an entity which has been deleted
   in the underlying intepreter.
 
   To gain access to all the values in an entity (for all instances and all
@@ -27,7 +26,7 @@ Variable
   :class:`DataFrame` class.
 
 */
-RcppVariable::RcppVariable(ampl::Variable impl): RcppBasicEntity<ampl::VariableInstance>(impl), _impl(impl) { }
+RVariableEntity::RVariableEntity(ampl::Variable impl): RBasicEntity<ampl::VariableInstance, RVariableInstance>(impl), _impl(impl) { }
 
 /*.. method:: Variable.value()
 
@@ -35,7 +34,7 @@ RcppVariable::RcppVariable(ampl::Variable impl): RcppBasicEntity<ampl::VariableI
 
   :return: Value of the variable.
 */
-double RcppVariable::value() const {
+double RVariableEntity::value() const {
   return _impl.value();
 }
 
@@ -46,7 +45,7 @@ double RcppVariable::value() const {
   :return: Integrality type of the variable ("C" - continuous, "B" - binary, "I" - integer).
   :rtype: str
 */
-std::string RcppVariable::integrality() const {
+std::string RVariableEntity::integrality() const {
   ampl::var::Integrality typ = _impl.integrality();
   switch(typ){
     case ampl::var::CONTINUOUS: return "C"; break;
@@ -64,10 +63,10 @@ std::string RcppVariable::integrality() const {
 
   :return: ``NULL``.
 */
-void RcppVariable::fix() {
+void RVariableEntity::fix() {
   _impl.fix();
 }
-void RcppVariable::fixDbl(double value) {
+void RVariableEntity::fixDbl(double value) {
   _impl.fix(value);
 }
 
@@ -77,7 +76,7 @@ void RcppVariable::fixDbl(double value) {
 
   :return: ``NULL``.
 */
-void RcppVariable::unfix() {
+void RVariableEntity::unfix() {
   _impl.unfix();
 }
 
@@ -92,7 +91,7 @@ void RcppVariable::unfix() {
 
   :return: ``NULL``.
 */
-void RcppVariable::setValue(double value) {
+void RVariableEntity::setValue(double value) {
   _impl.setValue(value);
 }
 
@@ -103,7 +102,7 @@ void RcppVariable::setValue(double value) {
   :return: Variable status.
   :rtype: str
 */
-std::string RcppVariable::astatus() const {
+std::string RVariableEntity::astatus() const {
   return _impl.astatus();
 }
 
@@ -114,7 +113,7 @@ std::string RcppVariable::astatus() const {
   :return: Index of the defining constraint.
   :rtype: int
 */
-int RcppVariable::defeqn() const {
+int RVariableEntity::defeqn() const {
   return _impl.defeqn();
 }
 
@@ -125,7 +124,7 @@ int RcppVariable::defeqn() const {
   :return: Dual value.
   :rtype: float
 */
-double RcppVariable::dual() const {
+double RVariableEntity::dual() const {
   return _impl.dual();
 }
 
@@ -136,7 +135,7 @@ double RcppVariable::dual() const {
   :return: The initial guess.
   :rtype: float
 */
-double RcppVariable::init() const {
+double RVariableEntity::init() const {
   return _impl.init();
 }
 
@@ -147,7 +146,7 @@ double RcppVariable::init() const {
   :return: The original initial guess.
   :rtype: float
 */
-double RcppVariable::init0() const {
+double RVariableEntity::init0() const {
   return _impl.init0();
 }
 
@@ -158,7 +157,7 @@ double RcppVariable::init0() const {
   :return: The current lower bound.
   :rtype: float
 */
-double RcppVariable::lb() const {
+double RVariableEntity::lb() const {
   return _impl.lb();
 }
 
@@ -169,7 +168,7 @@ double RcppVariable::lb() const {
   :return: The current upper bound.
   :rtype: float
 */
-double RcppVariable::ub() const {
+double RVariableEntity::ub() const {
   return _impl.ub();
 }
 
@@ -180,7 +179,7 @@ double RcppVariable::ub() const {
   :return: The intial lower bound.
   :rtype: float
 */
-double RcppVariable::lb0() const {
+double RVariableEntity::lb0() const {
   return _impl.lb0();
 }
 
@@ -191,7 +190,7 @@ double RcppVariable::lb0() const {
   :return: The intial upper bound.
   :rtype: float
 */
-double RcppVariable::ub0() const {
+double RVariableEntity::ub0() const {
   return _impl.ub0();
 }
 
@@ -202,7 +201,7 @@ double RcppVariable::ub0() const {
   :return: The weaker lower bound.
   :rtype: float
 */
-double RcppVariable::lb1() const {
+double RVariableEntity::lb1() const {
   return _impl.lb1();
 }
 
@@ -213,7 +212,7 @@ double RcppVariable::lb1() const {
   :return: The weaker upper bound.
   :rtype: float
 */
-double RcppVariable::ub1() const {
+double RVariableEntity::ub1() const {
   return _impl.ub1();
 }
 
@@ -224,7 +223,7 @@ double RcppVariable::ub1() const {
   :return: The stronger lower bound.
   :rtype: float
 */
-double RcppVariable::lb2() const {
+double RVariableEntity::lb2() const {
   return _impl.lb2();
 }
 
@@ -235,7 +234,7 @@ double RcppVariable::lb2() const {
   :return: The stronger upper bound.
   :rtype: float
 */
-double RcppVariable::ub2() const {
+double RVariableEntity::ub2() const {
   return _impl.ub2();
 }
 
@@ -246,7 +245,7 @@ double RcppVariable::ub2() const {
   :return: The reduced cost at lower bound.
   :rtype: float
 */
-double RcppVariable::lrc() const {
+double RVariableEntity::lrc() const {
   return _impl.lrc();
 }
 
@@ -257,7 +256,7 @@ double RcppVariable::lrc() const {
   :return: The reduced cost at upper bound.
   :rtype: float
 */
-double RcppVariable::urc() const {
+double RVariableEntity::urc() const {
   return _impl.urc();
 }
 
@@ -268,7 +267,7 @@ double RcppVariable::urc() const {
   :return: The slack at lower bound.
   :rtype: float
 */
-double RcppVariable::lslack() const {
+double RVariableEntity::lslack() const {
   return _impl.lslack();
 }
 
@@ -279,7 +278,7 @@ double RcppVariable::lslack() const {
   :return: The slack at upper bound.
   :rtype: float
 */
-double RcppVariable::uslack() const {
+double RVariableEntity::uslack() const {
   return _impl.uslack();
 }
 
@@ -290,7 +289,7 @@ double RcppVariable::uslack() const {
   :return: The reduced cost.
   :rtype: float
 */
-double RcppVariable::rc() const {
+double RVariableEntity::rc() const {
   return _impl.rc();
 }
 
@@ -301,7 +300,7 @@ double RcppVariable::rc() const {
   :return: The smaller slack.
   :rtype: float
 */
-double RcppVariable::slack() const {
+double RVariableEntity::slack() const {
   return _impl.slack();
 }
 
@@ -312,7 +311,7 @@ double RcppVariable::slack() const {
   :return: The basis status of the variable.
   :rtype: str
 */
-std::string RcppVariable::sstatus() const {
+std::string RVariableEntity::sstatus() const {
   return _impl.sstatus();
 }
 
@@ -323,43 +322,45 @@ std::string RcppVariable::sstatus() const {
   :return: The status of the variable.
   :rtype: str
 */
-std::string RcppVariable::status() const {
+std::string RVariableEntity::status() const {
   return _impl.status();
 }
 
 // *** RCPP_MODULE ***
-RCPP_MODULE(variable_module){
-    Rcpp::class_<RcppVariableEntity>( "VariableEntity" )
-        .const_method( "[[", &RcppVariableEntity::get)
+RCPP_MODULE(rvarentity){
+    Rcpp::class_<RBasicEntity<ampl::VariableInstance, RVariableInstance> >( "BasicEntity" )
+        .const_method( "name", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::name)
+        .const_method( "get", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::get)
+        .const_method( "[[", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::get)
         ;
-    Rcpp::class_<RcppVariable>( "Variable" )
-        .derives<RcppVariableEntity>("VariableEntity")
-        .method("value", &RcppVariable::value, "Get the current value of this variable")
-        .method("integrality", &RcppVariable::integrality, "Get the integrality type for this variable")
-        .method("fix", &RcppVariable::fix, "Fix all instances of this variable to their current value")
-        .method("fix", &RcppVariable::fixDbl, "Fix all instances of this variable to the specified value")
-        .method("unfix", &RcppVariable::unfix, "Unfix this variable instances")
-        .method("setValue", &RcppVariable::setValue, "Set the current value of this variable")
-        .method("astatus", &RcppVariable::astatus, "Get the variable status")
-        .method("defeqn", &RcppVariable::defeqn, "Get the index of the defining constraint")
-        .method("dual", &RcppVariable::dual, "Get the dual value on defining constraint")
-        .method("init", &RcppVariable::init, "Get the current initial guess")
-        .method("init0", &RcppVariable::init0, "Get the original initial guess")
-        .method("lb", &RcppVariable::lb, "Returns the current lower bound")
-        .method("ub", &RcppVariable::ub, "Returns the current upper bound")
-        .method("lb0", &RcppVariable::lb0, "Returns the initial lower bound")
-        .method("ub0", &RcppVariable::ub0, "Returns the initial upper bound")
-        .method("lb1", &RcppVariable::lb1, "Returns the weaker lower bound")
-        .method("ub1", &RcppVariable::ub1, "Returns the weaker upper bound")
-        .method("lb2", &RcppVariable::lb2, "Returns the stronger lower bound")
-        .method("ub2", &RcppVariable::ub2, "Returns the stronger upper bound")
-        .method("lrc", &RcppVariable::lrc, "Returns the reduced cost at lower bound")
-        .method("urc", &RcppVariable::urc, "Returns the reduced cost at upper bound")
-        .method("lslack", &RcppVariable::lslack, "Returns the slack at lower bound")
-        .method("uslack", &RcppVariable::uslack, "Returns the slack at upper bound")
-        .method("rc", &RcppVariable::rc, "Get the reduced cost")
-        .method("slack", &RcppVariable::slack, "Returns the smaller slack")
-        .method("sstatus", &RcppVariable::sstatus, "Returns the solver status")
-        .method("status", &RcppVariable::status, "Returns the AMPL status")
+    Rcpp::class_<RVariableEntity>( "Variable" )
+        .derives<RBasicEntity<ampl::VariableInstance, RVariableInstance> >("BasicEntity")
+        .method("value", &RVariableEntity::value, "Get the current value of this variable")
+        .method("integrality", &RVariableEntity::integrality, "Get the integrality type for this variable")
+        .method("fix", &RVariableEntity::fix, "Fix all instances of this variable to their current value")
+        .method("fix", &RVariableEntity::fixDbl, "Fix all instances of this variable to the specified value")
+        .method("unfix", &RVariableEntity::unfix, "Unfix this variable instances")
+        .method("setValue", &RVariableEntity::setValue, "Set the current value of this variable")
+        .method("astatus", &RVariableEntity::astatus, "Get the variable status")
+        .method("defeqn", &RVariableEntity::defeqn, "Get the index of the defining constraint")
+        .method("dual", &RVariableEntity::dual, "Get the dual value on defining constraint")
+        .method("init", &RVariableEntity::init, "Get the current initial guess")
+        .method("init0", &RVariableEntity::init0, "Get the original initial guess")
+        .method("lb", &RVariableEntity::lb, "Returns the current lower bound")
+        .method("ub", &RVariableEntity::ub, "Returns the current upper bound")
+        .method("lb0", &RVariableEntity::lb0, "Returns the initial lower bound")
+        .method("ub0", &RVariableEntity::ub0, "Returns the initial upper bound")
+        .method("lb1", &RVariableEntity::lb1, "Returns the weaker lower bound")
+        .method("ub1", &RVariableEntity::ub1, "Returns the weaker upper bound")
+        .method("lb2", &RVariableEntity::lb2, "Returns the stronger lower bound")
+        .method("ub2", &RVariableEntity::ub2, "Returns the stronger upper bound")
+        .method("lrc", &RVariableEntity::lrc, "Returns the reduced cost at lower bound")
+        .method("urc", &RVariableEntity::urc, "Returns the reduced cost at upper bound")
+        .method("lslack", &RVariableEntity::lslack, "Returns the slack at lower bound")
+        .method("uslack", &RVariableEntity::uslack, "Returns the slack at upper bound")
+        .method("rc", &RVariableEntity::rc, "Get the reduced cost")
+        .method("slack", &RVariableEntity::slack, "Returns the smaller slack")
+        .method("sstatus", &RVariableEntity::sstatus, "Returns the solver status")
+        .method("status", &RVariableEntity::status, "Returns the AMPL status")
         ;
 }

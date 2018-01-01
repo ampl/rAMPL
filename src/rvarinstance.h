@@ -1,19 +1,21 @@
-#ifndef GUARD_RcppVariable_h
-#define GUARD_RcppVariable_h
+#ifndef GUARD_RVariableInstance_h
+#define GUARD_RVariableInstance_h
 
 #include <string>
 #include "ampl/entity.h"
 #include "ampl/instance.h"
-#include "entity_mod.h"
+#include "rbasicinstance.h"
 #include <Rcpp.h>
 
-class RcppVariable: public RcppBasicEntity<ampl::VariableInstance> {
+
+class RVariableInstance {
 public:
-  ampl::Variable _impl;
-  using RcppBasicEntity<ampl::VariableInstance>::get;
-  RcppVariable(ampl::Variable impl);
+  ampl::VariableInstance _impl;
+  RVariableInstance(ampl::VariableInstance impl);
+  std::string name() const;
+  std::string toString() const;
   double value() const;
-  std::string integrality() const;
+  // std::string integrality() const;
   void fix();
   void fixDbl(double value);
   void unfix();
@@ -41,7 +43,6 @@ public:
   std::string status() const;
 };
 
-RCPP_EXPOSED_CLASS_NODECL(RcppVariable)
-RCPP_EXPOSED_CLASS_NODECL(ampl::VariableInstance)
+RCPP_EXPOSED_CLASS(RVariableInstance)
 
 #endif
