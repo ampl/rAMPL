@@ -4,7 +4,8 @@
 #include <string>
 #include "ampl/entity.h"
 #include "ampl/instance.h"
-#include "rvarinstance.h"
+#include "rvar_instance.h"
+#include "robj_instance.h"
 #include <Rcpp.h>
 
 template <class T, class TW>

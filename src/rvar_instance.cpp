@@ -1,4 +1,4 @@
-#include "rvarinstance.h"
+#include "rvar_instance.h"
 #include "utils.h"
 #include <Rcpp.h>
 /*.. _secRrefVariableInstance:

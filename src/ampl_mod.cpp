@@ -213,8 +213,8 @@ RcppConstraint RcppAMPL::getConstraint(std::string name) const {
   :rtype: :class:`Objective`
   :raises Error: If the specified objective does not exist.
 */
-RcppObjective RcppAMPL::getObjective(std::string name) const {
-  return RcppObjective(_impl.getObjective(name));
+RObjectiveEntity RcppAMPL::getObjective(std::string name) const {
+  return RObjectiveEntity(_impl.getObjective(name));
 }
 
 /*.. method:: AMPL.getSet(name)
@@ -290,7 +290,7 @@ Rcpp::List RcppAMPL::getObjectives() const {
   ampl::EntityMap<ampl::Objective>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Objective>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Objective>::iterator itr = begin; itr != end; itr++){
-    list[itr->name()] = RcppObjective(*itr);
+    list[itr->name()] = RObjectiveEntity(*itr);
   }
   return list;
 }

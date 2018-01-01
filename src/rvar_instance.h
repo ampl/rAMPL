@@ -4,7 +4,6 @@
 #include <string>
 #include "ampl/entity.h"
 #include "ampl/instance.h"
-#include "rbasicinstance.h"
 #include <Rcpp.h>
 
 
