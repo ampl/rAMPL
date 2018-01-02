@@ -5,7 +5,7 @@
 #include "ampl/ampl.h"
 #include "environment_mod.h"
 #include "rvar_entity.h"
-#include "constraint_mod.h"
+#include "rcon_entity.h"
 #include "robj_entity.h"
 #include "set_mod.h"
 #include "parameter_mod.h"
@@ -70,7 +70,7 @@ public:
   void solve();
 
   RVariableEntity getVariable(std::string name) const;
-  RcppConstraint getConstraint(std::string name) const;
+  RConstraintEntity getConstraint(std::string name) const;
   RObjectiveEntity getObjective(std::string name) const;
   RcppSet getSet(std::string name) const;
   RcppParameter getParameter(std::string name) const;

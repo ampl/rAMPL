@@ -108,7 +108,7 @@ void RObjectiveInstance::restore() {
 
   Get the sense of this objective
 
-  :return: TRUE if minimize, FALSE if maximize.
+  :return: ``TRUE`` if minimize, ``FALSE`` if maximize.
 */
 bool RObjectiveInstance::minimization() const {
   return _impl.minimization();

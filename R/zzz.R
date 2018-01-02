@@ -7,7 +7,8 @@ loadModule("rvarinstance", TRUE)
 loadModule("robj_entity", TRUE)
 loadModule("robj_instance", TRUE)
 
-loadModule("constraint_module", TRUE)
+loadModule("rcon_entity", TRUE)
+loadModule("rcon_instance", TRUE)
 
 loadModule("set_module", TRUE)
 loadModule("parameter_module", TRUE)

@@ -12,6 +12,7 @@ Entity
 // Fix ld error: undefined symbol
 template class RBasicEntity<ampl::VariableInstance, RVariableInstance>;
 template class RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>;
+template class RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>;
 
 /*.. class:: Entity
 

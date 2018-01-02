@@ -200,8 +200,8 @@ RVariableEntity RcppAMPL::getVariable(std::string name) const {
   :rtype: :class:`Variable`
   :raises Error: If the specified constraint does not exist.
 */
-RcppConstraint RcppAMPL::getConstraint(std::string name) const {
-  return RcppConstraint(_impl.getConstraint(name));
+RConstraintEntity RcppAMPL::getConstraint(std::string name) const {
+  return RConstraintEntity(_impl.getConstraint(name));
 }
 
 /*.. method:: AMPL.getObjective(name)
@@ -273,7 +273,7 @@ Rcpp::List RcppAMPL::getConstraints() const {
   ampl::EntityMap<ampl::Constraint>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Constraint>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Constraint>::iterator itr = begin; itr != end; itr++){
-    list[itr->name()] = RcppConstraint(*itr);
+    list[itr->name()] = RConstraintEntity(*itr);
   }
   return list;
 }

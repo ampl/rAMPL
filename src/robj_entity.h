@@ -1,5 +1,5 @@
-#ifndef GUARD_RObjective_h
-#define GUARD_RObjective_h
+#ifndef GUARD_RObjectiveEntity_h
+#define GUARD_RObjectiveEntity_h
 
 #include <string>
 #include "ampl/entity.h"
