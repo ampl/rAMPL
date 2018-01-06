@@ -33,13 +33,18 @@ RBasicEntity<T, TW>::RBasicEntity(ampl::BasicEntity<T> impl): _impl(impl) { }
   :return: The corresponding instance.
 */
 template <class T, class TW>
-TW RBasicEntity<T, TW>::get(Rcpp::List index) const {
+TW RBasicEntity<T, TW>::get(Rcpp::List &index) const {
   return TW(_impl.get(list2tuple(index)));
 }
 
 template <class T, class TW>
 std::string RBasicEntity<T, TW>::name() const {
   return _impl.name();
+}
+
+template <class T, class TW>
+void RBasicEntity<T, TW>::setValuesDf(Rcpp::DataFrame &df) {
+  return _impl.setValues(rdf2df(df));
 }
 
 // *** RCPP_MODULE ***

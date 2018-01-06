@@ -1,2 +1,3 @@
+#PKG_CXXFLAGS = -std=c++11
 PKG_LIBS = -L../inst/libs/x64/ -lampl -Wl,-rpath,\$$ORIGIN/../libs/x64/ -Wl,-rpath,\$$ORIGIN/../inst/libs/x64/ -Wl,-rpath,@loader_path/../libs/x64/
 PKG_CPPFLAGS =  -I../src/include/

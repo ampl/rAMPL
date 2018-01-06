@@ -239,8 +239,8 @@ RcppSet RcppAMPL::getSet(std::string name) const {
   :rtype: :class:`Parameter`
   :raises Error: If the specified parameter does not exist.
 */
-RcppParameter RcppAMPL::getParameter(std::string name) const {
-  return RcppParameter(_impl.getParameter(name));
+RParameterEntity RcppAMPL::getParameter(std::string name) const {
+  return RParameterEntity(_impl.getParameter(name));
 }
 
 
@@ -324,7 +324,7 @@ Rcpp::List RcppAMPL::getParameters() const {
   ampl::EntityMap<ampl::Parameter>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Parameter>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Parameter>::iterator itr = begin; itr != end; itr++){
-    list[itr->name()] = RcppParameter(*itr);
+    list[itr->name()] = RParameterEntity(*itr);
   }
   return list;
 }

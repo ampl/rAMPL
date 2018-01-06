@@ -15,7 +15,8 @@ public:
   ampl::BasicEntity<T> _impl;
   RBasicEntity(ampl::BasicEntity<T>);
   std::string name() const;
-  TW get(Rcpp::List) const;
+  TW get(Rcpp::List&) const;
+  void setValuesDf(Rcpp::DataFrame&);
 };
 
 #endif

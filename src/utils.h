@@ -1,8 +1,8 @@
 #ifndef GUARD_utils_h
 #define GUARD_utils_h
-
 #include <string>
 #include "ampl/tuple.h"
+#include "ampl/dataframe.h"
 #include <Rcpp.h>
 
 template <class T>
@@ -17,6 +17,9 @@ Rcpp::XPtr<T> getObj(const std::string &type, SEXP s) {
   return xptr;
 }
 
-ampl::Tuple list2tuple(Rcpp::List index);
+ampl::Tuple list2tuple(Rcpp::List &index);
+
+ampl::DataFrame rdf2df(Rcpp::DataFrame &rdf);
+
 
 #endif
