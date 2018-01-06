@@ -3,9 +3,10 @@
 
 #include <string>
 #include "ampl/entity.h"
+#include "rbasicentity.h"
 #include <Rcpp.h>
 
-class RParameterEntity {
+class RParameterEntity: public RBasicEntity<ampl::VariantRef, ampl::VariantRef>{
 public:
   ampl::Parameter _impl;
   RParameterEntity(ampl::Parameter impl);
@@ -14,6 +15,8 @@ public:
   void setValues(Rcpp::DataFrame &df);
   Rcpp::DataFrame getValues() const;
   void set(SEXP value);
+  void setIndVal(Rcpp::List &index, SEXP value);
+  SEXP get(Rcpp::List &index) const;
 };
 
 RCPP_EXPOSED_CLASS_NODECL(RParameterEntity)

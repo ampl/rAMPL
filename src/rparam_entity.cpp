@@ -19,7 +19,7 @@ Parameter
   using :meth:`~AMPL.setData` and an object of class
   :class:`~DataFrame`.
 */
-RParameterEntity::RParameterEntity(ampl::Parameter impl): _impl(impl) { }
+RParameterEntity::RParameterEntity(ampl::Parameter impl): RBasicEntity<ampl::VariantRef, ampl::VariantRef>(impl), _impl(impl) { }
 
 /*.. method:: Parameter.isSymbolic()
 
@@ -114,12 +114,51 @@ void RParameterEntity::set(SEXP value) {
   }
 }
 
+/*.. method:: Parameter.set(index, value)
+
+  Set the value of a single instance of this parameter.
+
+  :param list index: index of the instance to be set.
+  :param value: Value to be assigned.
+*/
+void RParameterEntity::setIndVal(Rcpp::List &index, SEXP value) {
+  switch(TYPEOF(value)) {
+    case REALSXP:
+      _impl.set(list2tuple(index), Rcpp::as<double>(value));
+      break;
+    case INTSXP:
+      _impl.set(list2tuple(index), Rcpp::as<int>(value));
+      break;
+    case STRSXP:
+      _impl.set(list2tuple(index), Rcpp::as<std::string>(value));
+      break;
+    default:
+      Rcpp::stop("the value must be number or string");
+  }
+}
+
+SEXP RParameterEntity::get(Rcpp::List &index) const {
+  ampl::VariantRef value = _impl.get(list2tuple(index));
+  if(value.type() == ampl::NUMERIC) {
+    return Rcpp::wrap(value.dbl());
+  } else {
+    return Rcpp::wrap(value.str());
+  }
+}
+
 // *** RCPP_MODULE ***
 RCPP_MODULE(rparam_entity){
+  Rcpp::class_<RBasicEntity<ampl::VariantRef, ampl::VariantRef> >( "PEntity" )
+    .const_method( "name", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::name)
+    ;
   Rcpp::class_<RParameterEntity>( "Parameter" )
+    .derives<RBasicEntity<ampl::VariantRef, ampl::VariantRef> >("PEntity")
+    .const_method( "get", &RParameterEntity::get)
+    .const_method( "[[", &RParameterEntity::get)
     .method("isSymbolic", &RParameterEntity::isSymbolic, "Returns true if the parameter is declared as symbolic")
     .method("setValues", &RParameterEntity::setValues, "Assign the specified values to this parameter")
     .method("getValues", &RParameterEntity::getValues, "Get the values of this parameter")
     .method("set", &RParameterEntity::set, "Set the value of a scalar parameter")
+    .method("set", &RParameterEntity::setIndVal, "Set the value of an indexed parameter")
     ;
 }

@@ -20,4 +20,7 @@ public:
   Rcpp::DataFrame getValues() const;
 };
 
+RCPP_EXPOSED_CLASS_NODECL(ampl::VariantRef);
+
+
 #endif

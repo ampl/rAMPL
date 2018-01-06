@@ -13,6 +13,7 @@ Entity
 template class RBasicEntity<ampl::VariableInstance, RVariableInstance>;
 template class RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>;
 template class RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>;
+template class RBasicEntity<ampl::VariantRef, ampl::VariantRef>;
 
 /*.. class:: Entity
 
