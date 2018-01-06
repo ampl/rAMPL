@@ -21,5 +21,6 @@ ampl::Tuple list2tuple(Rcpp::List &index);
 
 ampl::DataFrame rdf2df(Rcpp::DataFrame &rdf);
 
+Rcpp::DataFrame df2rdf(const ampl::DataFrame &df);
 
 #endif

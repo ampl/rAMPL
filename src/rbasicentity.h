@@ -17,6 +17,7 @@ public:
   std::string name() const;
   TW get(Rcpp::List&) const;
   void setValuesDf(Rcpp::DataFrame&);
+  Rcpp::DataFrame getValues() const;
 };
 
 #endif

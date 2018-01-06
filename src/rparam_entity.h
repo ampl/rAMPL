@@ -11,9 +11,8 @@ public:
   RParameterEntity(ampl::Parameter impl);
   bool isSymbolic() const;
   bool hasDefault() const;
-  void setValuesIndVal(Rcpp::List indices, Rcpp::List values);
-  void setValuesDf(Rcpp::DataFrame& df);
-  void setValuesList(Rcpp::List &values);
+  void setValues(Rcpp::DataFrame &df);
+  Rcpp::DataFrame getValues() const;
   void set(SEXP value);
 };
 

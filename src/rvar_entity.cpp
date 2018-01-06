@@ -332,6 +332,7 @@ RCPP_MODULE(rvarentity){
     .const_method( "name", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::name)
     .const_method( "get", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::get)
     .const_method( "[[", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::get)
+    .const_method( "getValues", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::getValues)
     ;
   Rcpp::class_<RVariableEntity>( "Variable" )
     .derives<RBasicEntity<ampl::VariableInstance, RVariableInstance> >("VEntity")

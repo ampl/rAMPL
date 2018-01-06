@@ -27,48 +27,70 @@ ampl::Tuple list2tuple(Rcpp::List &index) {
 ampl::DataFrame rdf2df(Rcpp::DataFrame &rdf){
   int nrows = rdf.nrows();
   int ncols = rdf.length();
-  Rcpp::CharacterVector colnames = rdf.names();
-  int p = 0;
   const char *names[ncols];
-  for(Rcpp::CharacterVector::iterator it = colnames.begin(); it != colnames.end(); it++){
-    names[p++] = Rcpp::as<const char *>(*it);
-    printf(">>%s<<\n", names[p-1]);
+  Rcpp::CharacterVector colnames = rdf.names();
+  for(int i = 0; i < colnames.size(); i++){
+    names[i] = Rcpp::as<const char *>(colnames[i]);
   }
   ampl::DataFrame df(ncols-1, ampl::StringArgs(names, ncols));
-  p = 0;
-  const char *str_column[nrows];
+  int p = 0;
   for(Rcpp::DataFrame::iterator it = rdf.begin(); it != rdf.end(); it++){
     switch(TYPEOF(*it)) {
       case REALSXP:
-        {
-          printf("$$real$$\n");
-          df.setColumn(names[p++], Rcpp::as<std::vector<double> >(*it).data(), nrows);
-        }
+        df.setColumn(names[p++], Rcpp::as<std::vector<double> >(*it).data(), nrows);
         break;
       case INTSXP:
         if(::Rf_isFactor(*it) == false) {
-          printf("$$integer$$\n");
-          df.setColumn(names[p++], Rcpp::as<std::vector<double> >(*it).data(), nrows);
-        } else{
-          printf("$$factor$$\n");
           Rcpp::IntegerVector iv = *it;
+          std::vector<double> dbl_column(iv.size());
+          for(int i = 0; i < iv.size(); i++) {
+            dbl_column[i] = iv[i];
+          }
+          df.setColumn(names[p++], dbl_column.data(), dbl_column.size());
+        } else{
+          Rcpp::IntegerVector iv = *it;
+          std::vector<const char *> str_column(iv.size());
           std::vector<std::string > levels = Rcpp::as<std::vector<std::string> >(iv.attr("levels"));
-          for(int i = 0; i < levels.size(); i++) printf(">>>%s\n", levels[i].c_str());
-          for(int i = 0; i < iv.size(); i++) str_column[i] = levels[iv[i]-1].c_str();
-          df.setColumn(names[p++], str_column, nrows);
-        }
-        break;
-      case STRSXP:
-        {
-          printf("$$string$$\n");
-          std::vector<std::string> vs = Rcpp::as<std::vector<std::string> >(*it);
-          for(int i = 0; i < vs.size(); i++) str_column[i] = vs[i].c_str();
-          df.setColumn(names[p++], str_column, nrows);
+          for(int i = 0; i < iv.size(); i++) {
+            str_column[i] = levels[iv[i]-1].c_str();
+          }
+          df.setColumn(names[p++], str_column.data(), str_column.size());
         }
         break;
       default:
-        Rcpp::stop("only accepts lists containing numbers and strings");
+        Rcpp::stop("invalid type");
     }
   }
   return df;
+}
+
+Rcpp::DataFrame df2rdf(const ampl::DataFrame &df){
+  Rcpp::List tmp;
+  int nrows = df.getNumRows();
+  int ncols = df.getNumCols();
+  ampl::StringRefArray headers = df.getHeaders();
+  for(int i = 0; i < ncols; i++){
+    ampl::DataFrame::Column col = df.getColumn(headers[i]);
+    bool numeric = true;
+    for(ampl::DataFrame::Column::iterator it = col.begin(); it != col.end(); it++){
+      if(it->type() != ampl::NUMERIC) {
+        numeric = false;
+        break;
+      }
+    }
+    if(numeric) {
+      std::vector<double> dbl_column;
+      for(ampl::DataFrame::Column::iterator it = col.begin(); it != col.end(); it++){
+        dbl_column.push_back(it->dbl());
+      }
+      tmp[headers[i]] = dbl_column;
+    } else {
+      std::vector<std::string> str_column;
+      for(ampl::DataFrame::Column::iterator it = col.begin(); it != col.end(); it++){
+        str_column.push_back(it->str());
+      }
+      tmp[headers[i]] = str_column;
+    }
+  }
+  return Rcpp::DataFrame(tmp);
 }

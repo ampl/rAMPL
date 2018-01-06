@@ -47,6 +47,11 @@ void RBasicEntity<T, TW>::setValuesDf(Rcpp::DataFrame &df) {
   return _impl.setValues(rdf2df(df));
 }
 
+template <class T, class TW>
+Rcpp::DataFrame RBasicEntity<T, TW>::getValues() const {
+  return df2rdf(_impl.getValues());
+}
+
 // *** RCPP_MODULE ***
 /*RCPP_MODULE(entity_module){
     Rcpp::class_<RBasicEntity>( "Entity" )

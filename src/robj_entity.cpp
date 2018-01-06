@@ -120,6 +120,7 @@ RCPP_MODULE(robj_entity){
     .const_method( "name", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::name)
     .const_method( "get", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::get)
     .const_method( "[[", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::get)
+    .const_method( "getValues", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::getValues)
     ;
   Rcpp::class_<RObjectiveEntity>( "Objective" )
     .derives<RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance> >("OEntity")

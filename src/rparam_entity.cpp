@@ -48,83 +48,48 @@ bool RParameterEntity::hasDefault() const {
   return _impl.hasDefault();
 }
 
-/*.. method:: Parameter.setValues(indices, values)
 
-  Assign the values (string or numeric) to the parameter instances with the
-  specified indices, equivalent to the AMPL code::
+/*.. method:: Parameter.setValues(values)
 
-    let {i in indices} par[i] := values[i];
+  If the argument is a `list`,
+  assign the specified values to this parameter, assigning them to
+  the parameter in the same order as the indices in the entity.
+  The number of values in the array must be equal to the
+  specified size.
 
+  If the argument is a `data.frame`,
+  set the values of this parameter to the correponding values of the `data.frame`
+  indexed over the same sets (or a subset). All columns but the last are used as index, and the last is used as value.
 
-  :param list indices: An array of indices of the instances to be set.
-  :param list values: Values to set.
+  :param list/data.frame values: An array of indices of the instances to be set.
 */
-void RParameterEntity::setValuesIndVal(Rcpp::List indices, Rcpp::List values) {
-  //ampl::Tuple _indices[indices.size()];
-  //ampl::Variant _values[indices.size()];
-  //return _impl.setValues(_indices, _values, indices.size());
-}
-
-void RParameterEntity::setValuesDf(Rcpp::DataFrame& df) {
+void RParameterEntity::setValues(Rcpp::DataFrame& df) {
   if(df.length() == 1){
-    Rcpp::List  values = df[0];
-    this->setValuesList(values);
+    switch(TYPEOF(df[0])) {
+      case REALSXP:
+        _impl.setValues(Rcpp::as<std::vector<double> >(df[0]).data(), df.nrows());
+        break;
+      case INTSXP:
+        if(::Rf_isFactor(df[0]) == false) {
+          _impl.setValues(Rcpp::as<std::vector<double> >(df[0]).data(), df.nrows());
+        } else {
+          Rcpp::IntegerVector iv = df[0];
+          std::vector<const char *> values(iv.size());
+          std::vector<std::string > levels = Rcpp::as<std::vector<std::string> >(iv.attr("levels"));
+          for(int i = 0; i < iv.size(); i++) values[i] = levels[iv[i]-1].c_str();
+          _impl.setValues(values.data(), values.size());
+        }
+        break;
+	    default:
+        Rcpp::stop("invalid type");
+    }
   } else {
     _impl.setValues(rdf2df(df));
   }
 }
 
-/*.. method:: Parameter.setValues(values)
-
-  Assign the specified values to this parameter, assigning them to
-  the parameter in the same order as the indices in the entity.
-  The number of values in the array must be equal to the
-  specified size.
-
-  :param list values: An array of indices of the instances to be set.
-  :param values indices: Values to be assigned.
-*/
-void RParameterEntity::setValuesList(Rcpp::List &values) {
-  bool numeric = true;
-  for(Rcpp::List::iterator it = values.begin(); it != values.end(); it++) {
-    if(TYPEOF(*it) == STRSXP) {
-      numeric = false;
-      break;
-    }
-  }
-  if(numeric) {
-    int p = 0;
-    double _values[values.size()];
-    for(Rcpp::List::iterator it = values.begin(); it != values.end(); it++) {
-      switch(TYPEOF(*it)) {
-        case REALSXP:
-          _values[p++] = Rcpp::as<double>(*it);
-          break;
-        case INTSXP:
-          _values[p++] = Rcpp::as<int>(*it);
-          break;
-  	    default:
-          Rcpp::stop("all values must be of the same type (numeric/strings)");
-      }
-    }
-    _impl.setValues(_values, values.size());
-  } else {
-    int p = 0;
-    std::string _tmp[values.size()];
-    const char *_values[values.size()];
-    for(Rcpp::List::iterator it = values.begin(); it != values.end(); it++) {
-      switch(TYPEOF(*it)) {
-        case STRSXP:
-          _tmp[p] = Rcpp::as<std::string>(*it);
-          _values[p] = _tmp[p].c_str();
-          p++;
-          break;
-        default:
-          Rcpp::stop("all values must be of the same type (numeric/strings)");
-      }
-    }
-    _impl.setValues(_values, values.size());
-  }
+Rcpp::DataFrame RParameterEntity::getValues() const {
+  return df2rdf(_impl.getValues());
 }
 
 /*.. method:: Parameter.set(value)
@@ -153,7 +118,8 @@ void RParameterEntity::set(SEXP value) {
 RCPP_MODULE(rparam_entity){
   Rcpp::class_<RParameterEntity>( "Parameter" )
     .method("isSymbolic", &RParameterEntity::isSymbolic, "Returns true if the parameter is declared as symbolic")
-    .method("setValues", &RParameterEntity::setValuesDf, "Assign the specified values to this parameter")
+    .method("setValues", &RParameterEntity::setValues, "Assign the specified values to this parameter")
+    .method("getValues", &RParameterEntity::getValues, "Get the values of this parameter")
     .method("set", &RParameterEntity::set, "Set the value of a scalar parameter")
     ;
 }
