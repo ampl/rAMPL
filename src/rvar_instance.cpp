@@ -327,7 +327,7 @@ std::string RVariableInstance::status() const {
 }
 
 // *** RCPP_MODULE ***
-RCPP_MODULE(rvarinstance){
+RCPP_MODULE(rvar_instance){
   Rcpp::class_<RVariableInstance>("VariableInstance")
     .method("name", &RVariableInstance::name, "Returns the name of this instance")
     .method("toString", &RVariableInstance::toString, "Returns a string representation of this instance")

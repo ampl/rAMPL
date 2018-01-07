@@ -13,9 +13,10 @@ RcppExport SEXP _rcpp_module_boot_rcon_instance();
 RcppExport SEXP _rcpp_module_boot_robj_entity();
 RcppExport SEXP _rcpp_module_boot_robj_instance();
 RcppExport SEXP _rcpp_module_boot_rparam_entity();
-RcppExport SEXP _rcpp_module_boot_rvarentity();
-RcppExport SEXP _rcpp_module_boot_rvarinstance();
-RcppExport SEXP _rcpp_module_boot_set_module();
+RcppExport SEXP _rcpp_module_boot_rset_entity();
+RcppExport SEXP _rcpp_module_boot_rset_instance();
+RcppExport SEXP _rcpp_module_boot_rvar_entity();
+RcppExport SEXP _rcpp_module_boot_rvar_instance();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_ampl_module", (DL_FUNC) &_rcpp_module_boot_ampl_module, 0},
@@ -25,9 +26,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_robj_entity", (DL_FUNC) &_rcpp_module_boot_robj_entity, 0},
     {"_rcpp_module_boot_robj_instance", (DL_FUNC) &_rcpp_module_boot_robj_instance, 0},
     {"_rcpp_module_boot_rparam_entity", (DL_FUNC) &_rcpp_module_boot_rparam_entity, 0},
-    {"_rcpp_module_boot_rvarentity", (DL_FUNC) &_rcpp_module_boot_rvarentity, 0},
-    {"_rcpp_module_boot_rvarinstance", (DL_FUNC) &_rcpp_module_boot_rvarinstance, 0},
-    {"_rcpp_module_boot_set_module", (DL_FUNC) &_rcpp_module_boot_set_module, 0},
+    {"_rcpp_module_boot_rset_entity", (DL_FUNC) &_rcpp_module_boot_rset_entity, 0},
+    {"_rcpp_module_boot_rset_instance", (DL_FUNC) &_rcpp_module_boot_rset_instance, 0},
+    {"_rcpp_module_boot_rvar_entity", (DL_FUNC) &_rcpp_module_boot_rvar_entity, 0},
+    {"_rcpp_module_boot_rvar_instance", (DL_FUNC) &_rcpp_module_boot_rvar_instance, 0},
     {NULL, NULL, 0}
 };
 

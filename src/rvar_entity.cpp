@@ -327,7 +327,7 @@ std::string RVariableEntity::status() const {
 }
 
 // *** RCPP_MODULE ***
-RCPP_MODULE(rvarentity){
+RCPP_MODULE(rvar_entity){
   Rcpp::class_<RBasicEntity<ampl::VariableInstance, RVariableInstance> >( "VEntity" )
     .const_method( "name", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::name)
     .const_method( "get", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::get)

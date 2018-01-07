@@ -17,9 +17,10 @@ Rcpp::XPtr<T> getObj(const std::string &type, SEXP s) {
   return xptr;
 }
 
-ampl::Tuple list2tuple(Rcpp::List &index);
+ampl::Tuple list2tuple(const Rcpp::List &list);
+Rcpp::List tuple2list(const ampl::TupleRef &tuple);
 
-ampl::DataFrame rdf2df(Rcpp::DataFrame &rdf);
+ampl::DataFrame rdf2df(const Rcpp::DataFrame &rdf);
 
 Rcpp::DataFrame df2rdf(const ampl::DataFrame &df);
 

@@ -7,6 +7,7 @@
 #include "rvar_instance.h"
 #include "rcon_instance.h"
 #include "robj_instance.h"
+#include "rset_instance.h"
 #include <Rcpp.h>
 
 template <class T, class TW>
@@ -15,12 +16,11 @@ public:
   ampl::BasicEntity<T> _impl;
   RBasicEntity(ampl::BasicEntity<T>);
   std::string name() const;
-  TW get(Rcpp::List&) const;
-  void setValuesDf(Rcpp::DataFrame&);
+  TW get(const Rcpp::List&) const;
+  void setValues(const Rcpp::DataFrame&);
   Rcpp::DataFrame getValues() const;
 };
 
 RCPP_EXPOSED_CLASS_NODECL(ampl::VariantRef);
-
 
 #endif

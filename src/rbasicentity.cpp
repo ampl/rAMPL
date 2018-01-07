@@ -13,6 +13,7 @@ Entity
 template class RBasicEntity<ampl::VariableInstance, RVariableInstance>;
 template class RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>;
 template class RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>;
+template class RBasicEntity<ampl::SetInstance, RSetInstance>;
 template class RBasicEntity<ampl::VariantRef, ampl::VariantRef>;
 
 /*.. class:: Entity
@@ -34,7 +35,7 @@ RBasicEntity<T, TW>::RBasicEntity(ampl::BasicEntity<T> impl): _impl(impl) { }
   :return: The corresponding instance.
 */
 template <class T, class TW>
-TW RBasicEntity<T, TW>::get(Rcpp::List &index) const {
+TW RBasicEntity<T, TW>::get(const Rcpp::List &index) const {
   return TW(_impl.get(list2tuple(index)));
 }
 
@@ -44,7 +45,7 @@ std::string RBasicEntity<T, TW>::name() const {
 }
 
 template <class T, class TW>
-void RBasicEntity<T, TW>::setValuesDf(Rcpp::DataFrame &df) {
+void RBasicEntity<T, TW>::setValues(const Rcpp::DataFrame &df) {
   return _impl.setValues(rdf2df(df));
 }
 
@@ -52,11 +53,3 @@ template <class T, class TW>
 Rcpp::DataFrame RBasicEntity<T, TW>::getValues() const {
   return df2rdf(_impl.getValues());
 }
-
-// *** RCPP_MODULE ***
-/*RCPP_MODULE(entity_module){
-    Rcpp::class_<RBasicEntity>( "Entity" )
-        .method("get", &RBasicEntity::get, "Get the instance with the specified index")
-        .const_method( "[[", &RBasicEntity::get)
-        ;
-}*/

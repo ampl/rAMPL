@@ -3,10 +3,10 @@
 
 
 
-ampl::Tuple list2tuple(Rcpp::List &index) {
+ampl::Tuple list2tuple(const Rcpp::List &list) {
   int p = 0;
-  ampl::Variant arguments[index.size()];
-  for(Rcpp::List::iterator it = index.begin(); it != index.end(); it++) {
+  ampl::Variant arguments[list.size()];
+  for(Rcpp::List::const_iterator it = list.begin(); it != list.end(); it++) {
     switch(TYPEOF(*it)) {
       case REALSXP:
         arguments[p++] = ampl::Variant(Rcpp::as<double>(*it));
@@ -21,10 +21,23 @@ ampl::Tuple list2tuple(Rcpp::List &index) {
         Rcpp::stop("only accepts lists containing numbers and strings");
     }
   }
-  return ampl::Tuple(arguments, index.size());
+  return ampl::Tuple(arguments, list.size());
 }
 
-ampl::DataFrame rdf2df(Rcpp::DataFrame &rdf){
+Rcpp::List tuple2list(const ampl::TupleRef &tuple) {
+  Rcpp::List list(tuple.size());
+  for(int i = 0; i < tuple.size(); i++) {
+    const ampl::VariantRef &e = tuple[i];
+    if(e.type() == ampl::NUMERIC) {
+      list[i] = e.dbl();
+    } else {
+      list[i] = e.str();
+    }
+  }
+  return list;
+}
+
+ampl::DataFrame rdf2df(const Rcpp::DataFrame &rdf){
   int nrows = rdf.nrows();
   int ncols = rdf.length();
   const char *names[ncols];
@@ -34,7 +47,7 @@ ampl::DataFrame rdf2df(Rcpp::DataFrame &rdf){
   }
   ampl::DataFrame df(ncols-1, ampl::StringArgs(names, ncols));
   int p = 0;
-  for(Rcpp::DataFrame::iterator it = rdf.begin(); it != rdf.end(); it++){
+  for(Rcpp::DataFrame::const_iterator it = rdf.begin(); it != rdf.end(); it++){
     switch(TYPEOF(*it)) {
       case REALSXP:
         df.setColumn(names[p++], Rcpp::as<std::vector<double> >(*it).data(), nrows);

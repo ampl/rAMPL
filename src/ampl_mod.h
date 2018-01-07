@@ -7,8 +7,8 @@
 #include "rvar_entity.h"
 #include "rcon_entity.h"
 #include "robj_entity.h"
+#include "rset_entity.h"
 #include "rparam_entity.h"
-#include "set_mod.h"
 #include <Rcpp.h>
 
 class AMPLOutputHandler : public ampl::OutputHandler {
@@ -72,7 +72,7 @@ public:
   RVariableEntity getVariable(std::string name) const;
   RConstraintEntity getConstraint(std::string name) const;
   RObjectiveEntity getObjective(std::string name) const;
-  RcppSet getSet(std::string name) const;
+  RSetEntity getSet(std::string name) const;
   RParameterEntity getParameter(std::string name) const;
 
   Rcpp::List getVariables() const;

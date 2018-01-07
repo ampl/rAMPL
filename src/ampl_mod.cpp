@@ -226,8 +226,8 @@ RObjectiveEntity RcppAMPL::getObjective(std::string name) const {
   :rtype: :class:`Set`
   :raises Error: If the specified set does not exist.
 */
-RcppSet RcppAMPL::getSet(std::string name) const {
-  return RcppSet(_impl.getSet(name));
+RSetEntity RcppAMPL::getSet(std::string name) const {
+  return RSetEntity(_impl.getSet(name));
 }
 
 /*.. method:: AMPL.getParameter(name)
@@ -307,7 +307,7 @@ Rcpp::List RcppAMPL::getSets() const {
   ampl::EntityMap<ampl::Set>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Set>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Set>::iterator itr = begin; itr != end; itr++){
-    list[itr->name()] = RcppSet(*itr);
+    list[itr->name()] = RSetEntity(*itr);
   }
   return list;
 }
