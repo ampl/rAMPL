@@ -1,7 +1,7 @@
 #include "rvar_instance.h"
 #include "utils.h"
 #include <Rcpp.h>
-/*.. _secRrefVariableInstance:
+/*.. _secRrefVarInstance:
 .. highlight:: r
 
 VariableInstance

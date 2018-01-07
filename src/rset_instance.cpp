@@ -1,7 +1,7 @@
 #include "rset_instance.h"
 #include "utils.h"
 #include <Rcpp.h>
-/*.. _secRrefAMPL:
+/*.. _secRrefSetInstance:
 .. highlight:: r
 
 SetInstance

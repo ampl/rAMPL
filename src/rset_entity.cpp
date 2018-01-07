@@ -1,7 +1,7 @@
 #include "rset_entity.h"
 #include "utils.h"
 #include <Rcpp.h>
-/*.. _secRrefAMPL:
+/*.. _secRrefSetEntity:
 .. highlight:: r
 
 Set

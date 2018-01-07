@@ -1,7 +1,7 @@
 #include "robj_entity.h"
 #include "utils.h"
 #include <Rcpp.h>
-/*.. _secRrefAMPL:
+/*.. _secRrefObjEntity:
 .. highlight:: r
 
 Objective

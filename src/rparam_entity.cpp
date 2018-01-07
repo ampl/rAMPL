@@ -1,7 +1,7 @@
 #include "rparam_entity.h"
 #include "utils.h"
 #include <Rcpp.h>
-/*.. _secRrefAMPL:
+/*.. _secRrefParamEntity:
 .. highlight:: r
 
 Parameter

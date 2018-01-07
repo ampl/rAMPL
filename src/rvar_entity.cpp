@@ -1,7 +1,7 @@
 #include "rvar_entity.h"
 #include "utils.h"
 #include <Rcpp.h>
-/*.. _secRrefVariable:
+/*.. _secRrefVarEntity:
 .. highlight:: r
 
 Variable

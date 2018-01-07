@@ -1,5 +1,5 @@
-loadModule("ampl_module", TRUE)
-loadModule("environment_module", TRUE)
+loadModule("rampl", TRUE)
+loadModule("renvironment", TRUE)
 
 loadModule("rvar_entity", TRUE)
 loadModule("rvar_instance", TRUE)

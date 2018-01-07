@@ -1,7 +1,7 @@
 #include "robj_instance.h"
 #include "utils.h"
 #include <Rcpp.h>
-/*.. _secRrefAMPL:
+/*.. _secRrefObjInstance:
 .. highlight:: r
 
 ObjectiveInstance

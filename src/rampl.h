@@ -1,9 +1,9 @@
-#ifndef GUARD_RcppAMPL_h
-#define GUARD_RcppAMPL_h
+#ifndef GUARD_RAMPL_h
+#define GUARD_RAMPL_h
 
 #include <string>
 #include "ampl/ampl.h"
-#include "environment_mod.h"
+#include "renvironment.h"
 #include "rvar_entity.h"
 #include "rcon_entity.h"
 #include "robj_entity.h"
@@ -48,14 +48,14 @@ public:
   }
 };
 
-class RcppAMPL{
+class RAMPL{
 private:
   AMPLOutputHandler *OHandler = NULL;
   AMPLErrorHandler *EHandler = NULL;
 public:
   ampl::AMPL _impl;
-  RcppAMPL();
-  RcppAMPL(SEXP);
+  RAMPL();
+  RAMPL(SEXP);
 
   Rcpp::String cd();
   Rcpp::String cdStr(std::string);

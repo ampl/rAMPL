@@ -1,4 +1,4 @@
-#include "ampl_mod.h"
+#include "rampl.h"
 #include "utils.h"
 #include <Rcpp.h>
 /*.. _secRrefAMPL:
@@ -59,8 +59,8 @@ AMPL
   :raises Error: If no valid AMPL license has been found or if the translator
     cannot be started for any other reason.
 */
-RcppAMPL::RcppAMPL() { }
-RcppAMPL::RcppAMPL(SEXP s): _impl(getObj<RcppEnvironment>("Environment", s)->_impl) { }
+RAMPL::RAMPL() { }
+RAMPL::RAMPL(SEXP s): _impl(getObj<REnvironment>("Environment", s)->_impl) { }
 
 /*.. method:: AMPL.cd(path = NULL)
 
@@ -71,10 +71,10 @@ RcppAMPL::RcppAMPL(SEXP s): _impl(getObj<RcppEnvironment>("Environment", s)->_im
   :type path: str or ``NULL``
   :return: The current working directory.
 */
-Rcpp::String RcppAMPL::cd(){
+Rcpp::String RAMPL::cd(){
   return _impl.cd();
 }
-Rcpp::String RcppAMPL::cdStr(std::string path){
+Rcpp::String RAMPL::cdStr(std::string path){
   return _impl.cd(path);
 }
 
@@ -87,7 +87,7 @@ Rcpp::String RcppAMPL::cdStr(std::string path){
   :return: ``NULL``
   :raises Error: If the option name is not valid.
 */
-void RcppAMPL::setOption(std::string name, std::string value){
+void RAMPL::setOption(std::string name, std::string value){
   _impl.setOption(name, value);
 }
 
@@ -100,7 +100,7 @@ void RcppAMPL::setOption(std::string name, std::string value){
   :return: Value of the option as a string or ``NA``.
   :raises Error: If the option name is not valid.
 */
-Rcpp::String RcppAMPL::getOption(std::string name){
+Rcpp::String RAMPL::getOption(std::string name){
   if (ampl::Optional<std::string> value = _impl.getOption(name)) {
     return *value;
   } else {
@@ -119,7 +119,7 @@ Rcpp::String RcppAMPL::getOption(std::string name){
   :return: ``NULL``
   :raises Error: In case the file does not exist.
 */
-void RcppAMPL::read(std::string fileName){
+void RAMPL::read(std::string fileName){
   _impl.read(fileName);
 }
 
@@ -135,7 +135,7 @@ void RcppAMPL::read(std::string fileName){
   :return: ``NULL``
   :raises Error: In case the file does not exist.
 */
-void RcppAMPL::readData(std::string fileName){
+void RAMPL::readData(std::string fileName){
   _impl.readData(fileName);
 }
 
@@ -163,7 +163,7 @@ void RcppAMPL::readData(std::string fileName){
     if it does not end with semicolon) or if the underlying
     interpreter is not running
 */
-void RcppAMPL::eval(std::string amplstatements) {
+void RAMPL::eval(std::string amplstatements) {
   return _impl.eval(amplstatements);
 }
 
@@ -174,7 +174,7 @@ void RcppAMPL::eval(std::string amplstatements) {
   :return: ``NULL``.
   :raises Error: If the underlying interpreter is not running.
 */
-void RcppAMPL::solve() {
+void RAMPL::solve() {
   return _impl.solve();
 }
 
@@ -187,7 +187,7 @@ void RcppAMPL::solve() {
   :rtype: :class:`Variable`
   :raises Error: If the specified variable does not exist.
 */
-RVariableEntity RcppAMPL::getVariable(std::string name) const {
+RVariableEntity RAMPL::getVariable(std::string name) const {
   return RVariableEntity(_impl.getVariable(name));
 }
 
@@ -200,7 +200,7 @@ RVariableEntity RcppAMPL::getVariable(std::string name) const {
   :rtype: :class:`Variable`
   :raises Error: If the specified constraint does not exist.
 */
-RConstraintEntity RcppAMPL::getConstraint(std::string name) const {
+RConstraintEntity RAMPL::getConstraint(std::string name) const {
   return RConstraintEntity(_impl.getConstraint(name));
 }
 
@@ -213,7 +213,7 @@ RConstraintEntity RcppAMPL::getConstraint(std::string name) const {
   :rtype: :class:`Objective`
   :raises Error: If the specified objective does not exist.
 */
-RObjectiveEntity RcppAMPL::getObjective(std::string name) const {
+RObjectiveEntity RAMPL::getObjective(std::string name) const {
   return RObjectiveEntity(_impl.getObjective(name));
 }
 
@@ -226,7 +226,7 @@ RObjectiveEntity RcppAMPL::getObjective(std::string name) const {
   :rtype: :class:`Set`
   :raises Error: If the specified set does not exist.
 */
-RSetEntity RcppAMPL::getSet(std::string name) const {
+RSetEntity RAMPL::getSet(std::string name) const {
   return RSetEntity(_impl.getSet(name));
 }
 
@@ -239,7 +239,7 @@ RSetEntity RcppAMPL::getSet(std::string name) const {
   :rtype: :class:`Parameter`
   :raises Error: If the specified parameter does not exist.
 */
-RParameterEntity RcppAMPL::getParameter(std::string name) const {
+RParameterEntity RAMPL::getParameter(std::string name) const {
   return RParameterEntity(_impl.getParameter(name));
 }
 
@@ -250,7 +250,7 @@ RParameterEntity RcppAMPL::getParameter(std::string name) const {
 
   :return: List of :class:`Variable` objects.
 */
-Rcpp::List RcppAMPL::getVariables() const {
+Rcpp::List RAMPL::getVariables() const {
   Rcpp::List list;
   const ampl::EntityMap<ampl::Variable> map = _impl.getVariables();
   ampl::EntityMap<ampl::Variable>::iterator begin = map.begin();
@@ -267,7 +267,7 @@ Rcpp::List RcppAMPL::getVariables() const {
 
   :return: List of :class:`Constraint` objects.
 */
-Rcpp::List RcppAMPL::getConstraints() const {
+Rcpp::List RAMPL::getConstraints() const {
   Rcpp::List list;
   const ampl::EntityMap<ampl::Constraint> map = _impl.getConstraints();
   ampl::EntityMap<ampl::Constraint>::iterator begin = map.begin();
@@ -284,7 +284,7 @@ Rcpp::List RcppAMPL::getConstraints() const {
 
   :return: List of :class:`Objective` objects.
 */
-Rcpp::List RcppAMPL::getObjectives() const {
+Rcpp::List RAMPL::getObjectives() const {
   Rcpp::List list;
   const ampl::EntityMap<ampl::Objective> map = _impl.getObjectives();
   ampl::EntityMap<ampl::Objective>::iterator begin = map.begin();
@@ -301,7 +301,7 @@ Rcpp::List RcppAMPL::getObjectives() const {
 
   :return: List of :class:`Set` objects.
 */
-Rcpp::List RcppAMPL::getSets() const {
+Rcpp::List RAMPL::getSets() const {
   Rcpp::List list;
   const ampl::EntityMap<ampl::Set> map = _impl.getSets();
   ampl::EntityMap<ampl::Set>::iterator begin = map.begin();
@@ -318,7 +318,7 @@ Rcpp::List RcppAMPL::getSets() const {
 
   :return: List of :class:`Parameter` objects.
 */
-Rcpp::List RcppAMPL::getParameters() const {
+Rcpp::List RAMPL::getParameters() const {
   Rcpp::List list;
   const ampl::EntityMap<ampl::Parameter> map = _impl.getParameters();
   ampl::EntityMap<ampl::Parameter>::iterator begin = map.begin();
@@ -336,7 +336,7 @@ Rcpp::List RcppAMPL::getParameters() const {
   :param function outputhandler: The function handling the AMPL output derived from interpreting user commands.
   :return: ``NULL``.
 */
-void RcppAMPL::setOutputHandler(Rcpp::Function outputhandler) {
+void RAMPL::setOutputHandler(Rcpp::Function outputhandler) {
   free(OHandler);
   OHandler = new AMPLOutputHandler(outputhandler);
   _impl.setOutputHandler(OHandler);
@@ -350,7 +350,7 @@ void RcppAMPL::setOutputHandler(Rcpp::Function outputhandler) {
   :rtype: function
   :raises Error: If no output handler was set.
 */
-Rcpp::Function RcppAMPL::getOutputHandler() const {
+Rcpp::Function RAMPL::getOutputHandler() const {
   if(OHandler != NULL) {
     return OHandler->outputhandler;
   } else {
@@ -370,7 +370,7 @@ Rcpp::Function RcppAMPL::getOutputHandler() const {
   :param function errorhandler: The function handling AMPL errors and warnings.
   :return: ``NULL``.
 */
-void RcppAMPL::setErrorHandler(Rcpp::Function errorhandler) {
+void RAMPL::setErrorHandler(Rcpp::Function errorhandler) {
   free(EHandler);
   EHandler = new AMPLErrorHandler(errorhandler);
   _impl.setErrorHandler(EHandler);
@@ -384,7 +384,7 @@ void RcppAMPL::setErrorHandler(Rcpp::Function errorhandler) {
   :rtype: function
   :raises Error: If no error handler was set.
 */
-Rcpp::Function RcppAMPL::getErrorHandler() const {
+Rcpp::Function RAMPL::getErrorHandler() const {
   if(EHandler != NULL) {
     return EHandler->errorhandler;
   } else {
@@ -393,38 +393,38 @@ Rcpp::Function RcppAMPL::getErrorHandler() const {
 }
 
 // *** RCPP_MODULE ***
-RCPP_MODULE(ampl_module){
-    Rcpp::class_<RcppAMPL>( "AMPL" )
-        .constructor("An AMPL translator")
-        .constructor<SEXP>("An AMPL translator")
+RCPP_MODULE(rampl){
+  Rcpp::class_<RAMPL>( "AMPL" )
+    .constructor("An AMPL translator")
+    .constructor<SEXP>("An AMPL translator")
 
-        .method("cd", &RcppAMPL::cd, "Display the current working directory")
-        .method("cd", &RcppAMPL::cdStr, "Change the current working directory")
+    .method("cd", &RAMPL::cd, "Display the current working directory")
+    .method("cd", &RAMPL::cdStr, "Change the current working directory")
 
-        .method("getOption", &RcppAMPL::getOption, "Get the current value of the specified option")
-        .method("setOption", &RcppAMPL::setOption, "Set an AMPL option to a specified value")
+    .method("getOption", &RAMPL::getOption, "Get the current value of the specified option")
+    .method("setOption", &RAMPL::setOption, "Set an AMPL option to a specified value")
 
-        .method("read", &RcppAMPL::read, "Interprets the specified file")
-        .method("readData", &RcppAMPL::readData, "Interprets the specified file as an AMPL data file")
+    .method("read", &RAMPL::read, "Interprets the specified file")
+    .method("readData", &RAMPL::readData, "Interprets the specified file as an AMPL data file")
 
-        .method("eval", &RcppAMPL::eval, "Parses AMPL code and evaluates it")
-        .method("solve", &RcppAMPL::solve, "Solve the current model")
+    .method("eval", &RAMPL::eval, "Parses AMPL code and evaluates it")
+    .method("solve", &RAMPL::solve, "Solve the current model")
 
-        .method("getVariable", &RcppAMPL::getVariable, "Get the variable with the corresponding name")
-        .method("getConstraint", &RcppAMPL::getConstraint, "Get the constraint with the corresponding name")
-        .method("getObjective", &RcppAMPL::getObjective, "Get the objective with the corresponding name")
-        .method("getSet", &RcppAMPL::getSet, "Get the set with the corresponding name")
-        .method("getParameter", &RcppAMPL::getParameter, "Get the parameter with the corresponding name")
+    .method("getVariable", &RAMPL::getVariable, "Get the variable with the corresponding name")
+    .method("getConstraint", &RAMPL::getConstraint, "Get the constraint with the corresponding name")
+    .method("getObjective", &RAMPL::getObjective, "Get the objective with the corresponding name")
+    .method("getSet", &RAMPL::getSet, "Get the set with the corresponding name")
+    .method("getParameter", &RAMPL::getParameter, "Get the parameter with the corresponding name")
 
-        .method("getVariables", &RcppAMPL::getVariables, "Get all the variables declared")
-        .method("getConstraints", &RcppAMPL::getConstraints, "Get all the constraints declared")
-        .method("getObjectives", &RcppAMPL::getObjectives, "Get all the objectives declared")
-        .method("getSets", &RcppAMPL::getSets, "Get all the sets declared")
-        .method("getParameters", &RcppAMPL::getParameters, "Get all the parameters declared")
+    .method("getVariables", &RAMPL::getVariables, "Get all the variables declared")
+    .method("getConstraints", &RAMPL::getConstraints, "Get all the constraints declared")
+    .method("getObjectives", &RAMPL::getObjectives, "Get all the objectives declared")
+    .method("getSets", &RAMPL::getSets, "Get all the sets declared")
+    .method("getParameters", &RAMPL::getParameters, "Get all the parameters declared")
 
-        .method("setOutputHandler", &RcppAMPL::setOutputHandler, "Sets a new output handler")
-        .method("getOutputHandler", &RcppAMPL::getOutputHandler, "Get the current output handler")
-        .method("setErrorHandler", &RcppAMPL::setErrorHandler, "Sets a new error handler")
-        .method("getErrorHandler", &RcppAMPL::getErrorHandler, "Get the current error handler")
-        ;
+    .method("setOutputHandler", &RAMPL::setOutputHandler, "Sets a new output handler")
+    .method("getOutputHandler", &RAMPL::getOutputHandler, "Get the current output handler")
+    .method("setErrorHandler", &RAMPL::setErrorHandler, "Sets a new error handler")
+    .method("getErrorHandler", &RAMPL::getErrorHandler, "Get the current error handler")
+    ;
 }
