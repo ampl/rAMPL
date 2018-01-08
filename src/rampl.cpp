@@ -51,11 +51,22 @@ AMPL
   :meth:`~.AMPL.getOutputHandler` and
   :meth:`~.AMPL.setOutputHandler`.
 
+.. function:: AMPL()
 
-  :param env: The AMPL environment (optional). This allows the user to specify
-    the location of the AMPL binaries to be used and to modify the environment
-    variables in which the AMPL interpreter will run.
-  :type env: :py:class:`Environemnt`
+  Default constructor.
+
+  :raises Error: If no valid AMPL license has been found or if the translator
+    cannot be started for any other reason.
+
+.. function:: AMPL(environment)
+
+  Constructor: creates a new AMPL instance with the specified environment.
+  This allows the user to specify the location of the AMPL binaries to be used
+  and to modify the environment variables in which the AMPL interpreter will
+  run.
+
+  :param env: The AMPL environment.
+  :type env: :py:class:`Environment`
   :raises Error: If no valid AMPL license has been found or if the translator
     cannot be started for any other reason.
 */
