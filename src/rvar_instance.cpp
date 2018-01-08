@@ -329,8 +329,8 @@ std::string RVariableInstance::status() const {
 // *** RCPP_MODULE ***
 RCPP_MODULE(rvar_instance){
   Rcpp::class_<RVariableInstance>("VariableInstance")
-    .method("name", &RVariableInstance::name, "Returns the name of this instance")
-    .method("toString", &RVariableInstance::toString, "Returns a string representation of this instance")
+    .method("name", &RVariableInstance::name)
+    .method("toString", &RVariableInstance::toString)
     .method("value", &RVariableInstance::value, "Get the current value of this variable")
     //.method("integrality", &RVariableInstance::integrality, "Get the integrality type for this variable")
     .method("fix", &RVariableInstance::fix, "Fix all instances of this variable to their current value")

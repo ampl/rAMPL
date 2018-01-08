@@ -116,13 +116,14 @@ bool RObjectiveEntity::minimization() const {
 
 // *** RCPP_MODULE ***
 RCPP_MODULE(robj_entity){
-  Rcpp::class_<RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance> >( "OEntity" )
-    .const_method( "name", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::name)
-    .const_method( "get", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::get)
-    .const_method( "[[", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::get)
-    .const_method( "getValues", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::getValues)
+  Rcpp::class_<RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance> >("OEntity")
+    .const_method("name", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::name)
+    .const_method("get", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::get)
+    .const_method("[[", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::get)
+    .const_method("getValues", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::getValues)
+    .const_method("toString", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::toString)
     ;
-  Rcpp::class_<RObjectiveEntity>( "Objective" )
+  Rcpp::class_<RObjectiveEntity>("Objective")
     .derives<RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance> >("OEntity")
     .method("value", &RObjectiveEntity::value, "Get the value of the objective instance")
     .method("astatus", &RObjectiveEntity::astatus, "Return the AMPL status")

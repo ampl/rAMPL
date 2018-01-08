@@ -14,6 +14,7 @@ public:
   bool hasDefault() const;
   void setValues(Rcpp::DataFrame &df);
   Rcpp::DataFrame getValues() const;
+  SEXP value() const;
   void set(SEXP value);
   void setIndVal(Rcpp::List &index, SEXP value);
   SEXP get(Rcpp::List &index) const;

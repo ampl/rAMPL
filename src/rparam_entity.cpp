@@ -92,6 +92,19 @@ Rcpp::DataFrame RParameterEntity::getValues() const {
   return df2rdf(_impl.getValues());
 }
 
+/*.. method:: Parameter.value()
+
+  Get the value of a scalar parameter.
+*/
+SEXP RParameterEntity::value() const {
+  ampl::VariantRef value = _impl.get();
+  if(value.type() == ampl::NUMERIC) {
+    return Rcpp::wrap(value.dbl());
+  } else {
+    return Rcpp::wrap(value.str());
+  }
+}
+
 /*.. method:: Parameter.set(value)
 
   Set the value of a scalar parameter.
@@ -148,16 +161,19 @@ SEXP RParameterEntity::get(Rcpp::List &index) const {
 
 // *** RCPP_MODULE ***
 RCPP_MODULE(rparam_entity){
-  Rcpp::class_<RBasicEntity<ampl::VariantRef, ampl::VariantRef> >( "PEntity" )
-    .const_method( "name", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::name)
+  Rcpp::class_<RBasicEntity<ampl::VariantRef, ampl::VariantRef> >("PEntity")
+    .const_method("name", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::name)
+    .const_method("toString", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::toString)
     ;
-  Rcpp::class_<RParameterEntity>( "Parameter" )
+  Rcpp::class_<RParameterEntity>("Parameter")
     .derives<RBasicEntity<ampl::VariantRef, ampl::VariantRef> >("PEntity")
-    .const_method( "get", &RParameterEntity::get)
-    .const_method( "[[", &RParameterEntity::get)
+    .const_method("get", &RParameterEntity::get)
+    .const_method("[[", &RParameterEntity::get)
+    .method("[[<-", &RParameterEntity::setIndVal)
     .method("isSymbolic", &RParameterEntity::isSymbolic, "Returns true if the parameter is declared as symbolic")
     .method("setValues", &RParameterEntity::setValues, "Assign the specified values to this parameter")
     .method("getValues", &RParameterEntity::getValues, "Get the values of this parameter")
+    .method("value", &RParameterEntity::value, "Get the value of a scalar parameter")
     .method("set", &RParameterEntity::set, "Set the value of a scalar parameter")
     .method("set", &RParameterEntity::setIndVal, "Set the value of an indexed parameter")
     ;

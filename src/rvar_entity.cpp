@@ -328,13 +328,14 @@ std::string RVariableEntity::status() const {
 
 // *** RCPP_MODULE ***
 RCPP_MODULE(rvar_entity){
-  Rcpp::class_<RBasicEntity<ampl::VariableInstance, RVariableInstance> >( "VEntity" )
-    .const_method( "name", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::name)
-    .const_method( "get", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::get)
-    .const_method( "[[", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::get)
-    .const_method( "getValues", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::getValues)
+  Rcpp::class_<RBasicEntity<ampl::VariableInstance, RVariableInstance> >("VEntity")
+    .const_method("name", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::name)
+    .const_method("get", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::get)
+    .const_method("[[", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::get)
+    .const_method("getValues", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::getValues)
+    .const_method("toString", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::toString)
     ;
-  Rcpp::class_<RVariableEntity>( "Variable" )
+  Rcpp::class_<RVariableEntity>("Variable")
     .derives<RBasicEntity<ampl::VariableInstance, RVariableInstance> >("VEntity")
     .method("value", &RVariableEntity::value, "Get the current value of this variable")
     .method("integrality", &RVariableEntity::integrality, "Get the integrality type for this variable")

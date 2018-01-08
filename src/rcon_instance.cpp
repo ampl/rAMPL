@@ -27,6 +27,26 @@ ConstraintInstance
 */
 RConstraintInstance::RConstraintInstance(ampl::ConstraintInstance impl): _impl(impl) { }
 
+/*.. method:: ConstraintInstance.name()
+
+  Returns the name of this instance.
+
+  :return: Name of the instance.
+*/
+std::string RConstraintInstance::name() const {
+  return _impl.name();
+}
+
+/*.. method:: ConstraintInstance.toString()
+
+  Returns a string representation of this instance.
+
+  :return: String representation of this instance.
+*/
+std::string RConstraintInstance::toString() const {
+  return _impl.toString();
+}
+
 /*.. method:: ConstraintInstance.drop()
 
   Drop this constraint instance, corresponding to the AMPL
@@ -254,6 +274,8 @@ double RConstraintInstance::val() const {
 // *** RCPP_MODULE ***
 RCPP_MODULE(rcon_instance){
   Rcpp::class_<RConstraintInstance>( "ConstraintInstance" )
+    .method("name", &RConstraintInstance::name)
+    .method("toString", &RConstraintInstance::toString)
     .method("drop", &RConstraintInstance::drop, "Drop this constraint instance")
     .method("restore", &RConstraintInstance::restore, "Restore this constraint instance")
     .method("body", &RConstraintInstance::body, "Get the current value of the constraint's body")

@@ -276,11 +276,12 @@ double RConstraintEntity::val() const {
 
 // *** RCPP_MODULE ***
 RCPP_MODULE(rcon_entity){
-  Rcpp::class_<RBasicEntity<ampl::ConstraintInstance, RConstraintInstance> >( "CEntity" )
-    .const_method( "name", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::name)
-    .const_method( "get", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::get)
-    .const_method( "[[", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::get)
-    .const_method( "getValues", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::getValues)
+  Rcpp::class_<RBasicEntity<ampl::ConstraintInstance, RConstraintInstance> >("CEntity")
+    .const_method("name", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::name)
+    .const_method("get", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::get)
+    .const_method("[[", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::get)
+    .const_method("getValues", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::getValues)
+    .const_method("toString", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::toString)
     ;
   Rcpp::class_<RConstraintEntity>("Constraint")
     .derives<RBasicEntity<ampl::ConstraintInstance, RConstraintInstance> >("CEntity")

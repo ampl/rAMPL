@@ -19,6 +19,7 @@ public:
   TW get(const Rcpp::List&) const;
   void setValues(const Rcpp::DataFrame&);
   Rcpp::DataFrame getValues() const;
+  std::string toString() const;
 };
 
 RCPP_EXPOSED_CLASS_NODECL(ampl::VariantRef);

@@ -53,3 +53,8 @@ template <class T, class TW>
 Rcpp::DataFrame RBasicEntity<T, TW>::getValues() const {
   return df2rdf(_impl.getValues());
 }
+
+template <class T, class TW>
+std::string RBasicEntity<T, TW>::toString() const {
+  return _impl.toString();
+}

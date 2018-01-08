@@ -12,6 +12,8 @@ class RConstraintInstance {
 public:
   ampl::ConstraintInstance _impl;
   RConstraintInstance(ampl::ConstraintInstance impl);
+  std::string name() const;
+  std::string toString() const;
   // bool isLogical() const;
   void drop();
   void restore();

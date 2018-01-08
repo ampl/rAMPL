@@ -15,6 +15,26 @@ SetInstance
 */
 RSetInstance::RSetInstance(ampl::SetInstance impl): _impl(impl) { }
 
+/*.. method:: SetInstance.name()
+
+  Returns the name of this instance.
+
+  :return: Name of the instance.
+*/
+std::string RSetInstance::name() const {
+  return _impl.name();
+}
+
+/*.. method:: SetInstance.toString()
+
+  Returns a string representation of this instance.
+
+  :return: String representation of this instance.
+*/
+std::string RSetInstance::toString() const {
+  return _impl.toString();
+}
+
 /*.. method:: SetInstance.size()
 
   Get the number of tuples in this set. Valid only for non indexed sets.
@@ -84,7 +104,9 @@ void RSetInstance::setValuesList(const Rcpp::List &values) {
 
 // *** RCPP_MODULE ***
 RCPP_MODULE(rset_instance){
-  Rcpp::class_<RSetInstance>( "SetInstance" )
+  Rcpp::class_<RSetInstance>("SetInstance")
+    .method("name", &RSetInstance::name)
+    .method("toString", &RSetInstance::toString)
     .method("size", &RSetInstance::size, "The number of tuples in the set")
     .method("members", &RSetInstance::members, "The members of the set")
     .method("contains", &RSetInstance::contains, "Check wether this set instance contains the specified tuple")

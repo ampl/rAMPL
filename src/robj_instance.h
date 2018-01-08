@@ -9,6 +9,8 @@ class RObjectiveInstance {
 public:
   ampl::ObjectiveInstance _impl;
   RObjectiveInstance(ampl::ObjectiveInstance impl);
+  std::string name() const;
+  std::string toString() const;
   double value() const;
   std::string astatus() const;
   std::string sstatus() const;

@@ -108,18 +108,19 @@ void RSetEntity::setValuesList(const Rcpp::List &values) {
 
 // *** RCPP_MODULE ***
 RCPP_MODULE(rset_entity){
-  Rcpp::class_<RBasicEntity<ampl::SetInstance, RSetInstance> >( "SEntity" )
-    .const_method( "name", &RBasicEntity<ampl::SetInstance, RSetInstance>::name)
-    .const_method( "get", &RBasicEntity<ampl::SetInstance, RSetInstance>::get)
-    .const_method( "[[", &RBasicEntity<ampl::SetInstance, RSetInstance>::get)
+  Rcpp::class_<RBasicEntity<ampl::SetInstance, RSetInstance> >("SEntity")
+    .const_method("name", &RBasicEntity<ampl::SetInstance, RSetInstance>::name)
+    .const_method("get", &RBasicEntity<ampl::SetInstance, RSetInstance>::get)
+    .const_method("[[", &RBasicEntity<ampl::SetInstance, RSetInstance>::get)
+    .const_method("toString", &RBasicEntity<ampl::SetInstance, RSetInstance>::toString)
     ;
-  Rcpp::class_<RSetEntity>( "Set" )
+  Rcpp::class_<RSetEntity>("Set")
     .derives<RBasicEntity<ampl::SetInstance, RSetInstance> >("SEntity")
     .method("arity", &RSetEntity::arity, "The arity of the set")
     .method("size", &RSetEntity::size, "The number of tuples in the set")
     .method("members", &RSetEntity::members, "The members of the set")
     .method("contains", &RSetEntity::contains, "Check wether this set instance contains the specified tuple")
-    .method( "getValues", &RSetEntity::getValues)
+    .method("getValues", &RSetEntity::getValues)
     .method("setValues", &RSetEntity::setValues, "Set values")
     ;
 }

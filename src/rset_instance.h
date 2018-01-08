@@ -9,6 +9,8 @@ class RSetInstance {
 public:
   ampl::SetInstance _impl;
   RSetInstance(ampl::SetInstance impl);
+  std::string name() const;
+  std::string toString() const;
   //int arity() const; FIXME: ?
   int size() const;
   std::vector<Rcpp::List> members() const;

@@ -27,6 +27,26 @@ ObjectiveInstance
 */
 RObjectiveInstance::RObjectiveInstance(ampl::ObjectiveInstance impl): _impl(impl) { }
 
+/*.. method:: ObjectiveInstance.name()
+
+  Returns the name of this instance.
+
+  :return: Name of the instance.
+*/
+std::string RObjectiveInstance::name() const {
+  return _impl.name();
+}
+
+/*.. method:: ObjectiveInstance.toString()
+
+  Returns a string representation of this instance.
+
+  :return: String representation of this instance.
+*/
+std::string RObjectiveInstance::toString() const {
+  return _impl.toString();
+}
+
 /*.. method:: ObjectiveInstance.value()
 
   Get the value of the objective instance.
@@ -116,7 +136,9 @@ bool RObjectiveInstance::minimization() const {
 
 // *** RCPP_MODULE ***
 RCPP_MODULE(robj_instance){
-  Rcpp::class_<RObjectiveInstance>( "ObjectiveInstance" )
+  Rcpp::class_<RObjectiveInstance>("ObjectiveInstance")
+    .method("name", &RObjectiveInstance::name)
+    .method("toString", &RObjectiveInstance::toString)
     .method("value", &RObjectiveInstance::value, "Get the value of the objective instance")
     .method("astatus", &RObjectiveInstance::astatus, "Return the AMPL status")
     .method("sstatus", &RObjectiveInstance::sstatus, "Return the solver status")
