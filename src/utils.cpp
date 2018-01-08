@@ -1,8 +1,6 @@
 #include "utils.h"
 #include <Rcpp.h>
 
-
-
 ampl::Tuple list2tuple(const Rcpp::List &list) {
   int p = 0;
   ampl::Variant arguments[list.size()];
@@ -26,7 +24,7 @@ ampl::Tuple list2tuple(const Rcpp::List &list) {
 
 Rcpp::List tuple2list(const ampl::TupleRef &tuple) {
   Rcpp::List list(tuple.size());
-  for(int i = 0; i < tuple.size(); i++) {
+  for(std::size_t i = 0; i < tuple.size(); i++) {
     const ampl::VariantRef &e = tuple[i];
     if(e.type() == ampl::NUMERIC) {
       list[i] = e.dbl();
@@ -79,7 +77,6 @@ ampl::DataFrame rdf2df(const Rcpp::DataFrame &rdf){
 
 Rcpp::DataFrame df2rdf(const ampl::DataFrame &df){
   Rcpp::List tmp;
-  int nrows = df.getNumRows();
   int ncols = df.getNumCols();
   ampl::StringRefArray headers = df.getHeaders();
   for(int i = 0; i < ncols; i++){
