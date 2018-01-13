@@ -150,31 +150,32 @@ void RParameterEntity::setIndVal(Rcpp::List &index, SEXP value) {
   }
 }
 
-SEXP RParameterEntity::get(Rcpp::List &index) const {
-  ampl::VariantRef value = _impl.get(list2tuple(index));
-  if(value.type() == ampl::NUMERIC) {
-    return Rcpp::wrap(value.dbl());
-  } else {
-    return Rcpp::wrap(value.str());
-  }
-}
-
 // *** RCPP_MODULE ***
 RCPP_MODULE(rparam_entity){
   Rcpp::class_<RBasicEntity<ampl::VariantRef, ampl::VariantRef> >("PEntity")
     .const_method("name", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::name)
     .const_method("toString", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::toString)
+    .const_method("indexarity", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::indexarity)
+    .const_method("isScalar", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::isScalar)
+    .const_method("numInstances", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::numInstances)
+    .const_method("getIndexingSets", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getIndexingSets)
+    .const_method("getValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getSuffixValues)
+    .const_method("getValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getValues)
+    .method("setValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::setValues)
+    .const_method("[[", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::get)
+    .const_method("get", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::get)
+    .const_method("get", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getScalar)
+    .const_method("find", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::find)
+    .const_method("instances", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::instances)
     ;
   Rcpp::class_<RParameterEntity>("Parameter")
     .derives<RBasicEntity<ampl::VariantRef, ampl::VariantRef> >("PEntity")
-    .const_method("get", &RParameterEntity::get)
-    .const_method("[[", &RParameterEntity::get)
     .method("[[<-", &RParameterEntity::setIndVal)
     .method("isSymbolic", &RParameterEntity::isSymbolic, "Returns true if the parameter is declared as symbolic")
     .method("setValues", &RParameterEntity::setValues, "Assign the specified values to this parameter")
     .method("getValues", &RParameterEntity::getValues, "Get the values of this parameter")
     .method("value", &RParameterEntity::value, "Get the value of a scalar parameter")
-    .method("set", &RParameterEntity::set, "Set the value of a scalar parameter")
     .method("set", &RParameterEntity::setIndVal, "Set the value of an indexed parameter")
+    .method("set", &RParameterEntity::set, "Set the value of a scalar parameter")
     ;
 }

@@ -24,4 +24,7 @@ ampl::DataFrame rdf2df(const Rcpp::DataFrame &rdf);
 
 Rcpp::DataFrame df2rdf(const ampl::DataFrame &df);
 
+SEXP variant2sexp(const ampl::VariantRef &value);
+SEXP variant2sexp(const ampl::Variant &value);
+
 #endif

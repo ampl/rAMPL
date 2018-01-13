@@ -17,7 +17,6 @@ public:
   SEXP value() const;
   void set(SEXP value);
   void setIndVal(Rcpp::List &index, SEXP value);
-  SEXP get(Rcpp::List &index) const;
 };
 
 RCPP_EXPOSED_CLASS_NODECL(RParameterEntity)

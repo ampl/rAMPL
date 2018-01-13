@@ -2,6 +2,7 @@
 #define GUARD_RBasicEntity_h
 
 #include <string>
+#include <map>
 #include "ampl/entity.h"
 #include "ampl/instance.h"
 #include "rvar_instance.h"
@@ -16,10 +17,18 @@ public:
   ampl::BasicEntity<T> _impl;
   RBasicEntity(ampl::BasicEntity<T>);
   std::string name() const;
-  TW get(const Rcpp::List&) const;
-  void setValues(const Rcpp::DataFrame&);
-  Rcpp::DataFrame getValues() const;
   std::string toString() const;
+  int indexarity() const;
+  bool isScalar() const;
+  int numInstances() const;
+  std::vector<const char *> getIndexingSets() const;
+  Rcpp::DataFrame getSuffixValues(const Rcpp::List&) const;
+  Rcpp::DataFrame getValues() const;
+  void setValues(const Rcpp::DataFrame&);
+  SEXP get(const Rcpp::List &index) const;
+  SEXP getScalar() const;
+  SEXP find(const Rcpp::List &index) const;
+  Rcpp::List instances() const;
 };
 
 RCPP_EXPOSED_CLASS_NODECL(ampl::VariantRef);

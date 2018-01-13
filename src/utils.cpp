@@ -104,3 +104,23 @@ Rcpp::DataFrame df2rdf(const ampl::DataFrame &df){
   }
   return Rcpp::DataFrame(tmp);
 }
+
+SEXP variant2sexp(const ampl::VariantRef &value) {
+  if(value.type() == ampl::NUMERIC) {
+    return Rcpp::wrap(value.dbl());
+  } else if(value.type() == ampl::STRING) {
+    return Rcpp::wrap(value.str());
+  } else {
+    return Rcpp::wrap(Rcpp::String(NA_STRING));
+  }
+}
+
+SEXP variant2sexp(const ampl::Variant &value) {
+  if(value.type() == ampl::NUMERIC) {
+    return Rcpp::wrap(value.dbl());
+  } else if(value.type() == ampl::STRING) {
+    return Rcpp::wrap(value.str());
+  } else {
+    return Rcpp::wrap(Rcpp::String(NA_STRING));
+  }
+}
