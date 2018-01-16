@@ -21,14 +21,14 @@ public:
   int indexarity() const;
   bool isScalar() const;
   int numInstances() const;
-  std::vector<const char *> getIndexingSets() const;
+  std::vector<std::string> getIndexingSets() const;
   Rcpp::DataFrame getSuffixValues(const Rcpp::List&) const;
   Rcpp::DataFrame getValues() const;
   void setValues(const Rcpp::DataFrame&);
   SEXP get(const Rcpp::List &index) const;
   SEXP getScalar() const;
   SEXP find(const Rcpp::List &index) const;
-  Rcpp::List instances() const;
+  Rcpp::List getInstances() const;
 };
 
 RCPP_EXPOSED_CLASS_NODECL(ampl::VariantRef);

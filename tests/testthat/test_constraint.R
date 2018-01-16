@@ -5,8 +5,22 @@ test_that('test constraint entity', {
   ampl$eval('var x;');
   ampl$eval('s.t. c: x = 0;')
   c <- ampl$getConstraint('c')
+
   expect_equal(c$name(), 'c')
   expect_equal(c$toString(), 'subject to c: x == 0;')
+  expect_equal(c$indexarity(), 0)
+  expect_equal(c$isScalar(), TRUE)
+  expect_equal(c$numInstances(), 1)
+  expect_equal(length(c$getIndexingSets()), 0)
+  expect_equal(c$getValues()$c.dual, 0)
+  expect_equal(c$getValues('ub')$c.ub, 0)
+  ampl$eval('s.t. c2: x = 0;')
+  c2 <- ampl$getConstraint('c2')
+  c2$setValues(c$getValues())
+  expect_equal(c$find(c())$name(), 'c')
+  expect_equal(c$find(c(123)), NULL)
+  expect_equal(c$getInstances()$c$name(), 'c')
+
   expect_equal(c$isLogical(), FALSE)
   expect_equal(c$astatus(), 'pre')
   c$drop()
@@ -40,8 +54,10 @@ test_that('test constraint instance', {
   ampl$eval('var x;');
   ampl$eval('s.t. c: x = 0;')
   c <- ampl$getConstraint('c')$get(c())
+
   expect_equal(c$name(), 'c')
   # expect_equal(c$toString(), 'subject to c: x == 0;') # FIXME: "subject to c:\n\tx = 0;"?
+
   # expect_equal(c$isLogical(), FALSE) # FIXME: missing in C++?
   expect_equal(c$astatus(), 'pre')
   c$drop()

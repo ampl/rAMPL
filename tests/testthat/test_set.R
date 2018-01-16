@@ -6,8 +6,22 @@ test_that('test set entity', {
   ampl$eval('set s2 := {1..10, 1..10};')
   s <- ampl$getSet('s')
   s2 <- ampl$getSet('s2')
+
   expect_equal(s$name(), 's')
   expect_equal(s$toString(), 'set s = 1 .. 10;')
+  expect_equal(s$indexarity(), 0)
+  expect_equal(s$isScalar(), TRUE)
+  expect_equal(s$numInstances(), 1)
+  expect_equal(length(s$getIndexingSets()), 0)
+  expect_equal(length(s$getValues()$s), 10)
+  ampl$eval('set scopy;')
+  scopy <- ampl$getSet('scopy')
+  scopy$setValues(s$getValues())
+  expect_equal(length(scopy$getValues()$scopy), 10)
+  expect_equal(s$find(c())$name(), 's')
+  expect_equal(s$find(c(123)), NULL)
+  expect_equal(s$getInstances()$s$name(), 's')
+
   expect_equal(s$arity(), 1)
   expect_equal(s$size(), 10)
   expect_equal(s$members()[[2]][[1]], 2)
@@ -34,8 +48,10 @@ test_that('test set instance', {
   ampl$eval('set s2 := {1..10, 1..10};')
   s <- ampl$getSet('s')$get(c())
   s2 <- ampl$getSet('s2')$get(c())
+
   expect_equal(s$name(), 's')
   expect_equal(s$toString(), 'set s = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};')
+
   # expect_equal(s$arity(), 1) # FIXME: missing in C++?
   expect_equal(s$size(), 10)
   expect_equal(s$members()[[2]][[1]], 2)

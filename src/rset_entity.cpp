@@ -90,9 +90,8 @@ Rcpp::DataFrame RSetEntity::getValues() const {
 */
 void RSetEntity::setValues(SEXP values) {
   if(::Rf_inherits(values, "data.frame")) {
-    Rcpp::DataFrame df = values;
-    df.push_front(Rcpp::Range(1, df.nrows()), "index"); // FIXME: shouldn't be necessary
-    _impl.setValues(rdf2df(df));
+    const Rcpp::DataFrame &rdf = values;
+    _impl.setValues(rdf2df(rdf, rdf.size()));
   } else {
     setValuesList(values);
   }
@@ -115,14 +114,14 @@ RCPP_MODULE(rset_entity){
     .const_method("isScalar", &RBasicEntity<ampl::SetInstance, RSetInstance>::isScalar)
     .const_method("numInstances", &RBasicEntity<ampl::SetInstance, RSetInstance>::numInstances)
     .const_method("getIndexingSets", &RBasicEntity<ampl::SetInstance, RSetInstance>::getIndexingSets)
-    .const_method("getValues", &RBasicEntity<ampl::SetInstance, RSetInstance>::getSuffixValues)
-    .const_method("getValues", &RBasicEntity<ampl::SetInstance, RSetInstance>::getValues)
-    .method("setValues", &RBasicEntity<ampl::SetInstance, RSetInstance>::setValues)
+    //.const_method("getValues", &RBasicEntity<ampl::SetInstance, RSetInstance>::getSuffixValues)
+    //.const_method("getValues", &RBasicEntity<ampl::SetInstance, RSetInstance>::getValues)
+    //.method("setValues", &RBasicEntity<ampl::SetInstance, RSetInstance>::setValues)
     .const_method("[[", &RBasicEntity<ampl::SetInstance, RSetInstance>::get)
     .const_method("get", &RBasicEntity<ampl::SetInstance, RSetInstance>::get)
     .const_method("get", &RBasicEntity<ampl::SetInstance, RSetInstance>::getScalar)
     .const_method("find", &RBasicEntity<ampl::SetInstance, RSetInstance>::find)
-    .const_method("instances", &RBasicEntity<ampl::SetInstance, RSetInstance>::instances)
+    .const_method("getInstances", &RBasicEntity<ampl::SetInstance, RSetInstance>::getInstances)
     ;
   Rcpp::class_<RSetEntity>("Set")
     .derives<RBasicEntity<ampl::SetInstance, RSetInstance> >("SEntity")

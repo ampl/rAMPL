@@ -35,7 +35,7 @@ Rcpp::List tuple2list(const ampl::TupleRef &tuple) {
   return list;
 }
 
-ampl::DataFrame rdf2df(const Rcpp::DataFrame &rdf){
+ampl::DataFrame rdf2df(const Rcpp::DataFrame &rdf, int numberOfIndexColumns){
   int nrows = rdf.nrows();
   int ncols = rdf.length();
   const char *names[ncols];
@@ -43,7 +43,10 @@ ampl::DataFrame rdf2df(const Rcpp::DataFrame &rdf){
   for(int i = 0; i < colnames.size(); i++){
     names[i] = Rcpp::as<const char *>(colnames[i]);
   }
-  ampl::DataFrame df(ncols-1, ampl::StringArgs(names, ncols));
+  if(numberOfIndexColumns == -1){
+    numberOfIndexColumns = ncols - 1;
+  }
+  ampl::DataFrame df(numberOfIndexColumns, ampl::StringArgs(names, ncols));
   int p = 0;
   for(Rcpp::DataFrame::const_iterator it = rdf.begin(); it != rdf.end(); it++){
     switch(TYPEOF(*it)) {

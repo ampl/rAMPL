@@ -342,7 +342,7 @@ RCPP_MODULE(rvar_entity){
     .const_method("get", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::get)
     .const_method("get", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::getScalar)
     .const_method("find", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::find)
-    .const_method("instances", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::instances)
+    .const_method("getInstances", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::getInstances)
     ;
   Rcpp::class_<RVariableEntity>("Variable")
     .derives<RBasicEntity<ampl::VariableInstance, RVariableInstance> >("VEntity")

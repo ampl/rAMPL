@@ -4,8 +4,23 @@ test_that('test parameter entity', {
   ampl <- new(AMPL)
   ampl$eval('param p = 1;')
   p <- ampl$getParameter('p')
+
   expect_equal(p$name(), 'p')
   expect_equal(p$toString(), 'param p = 1;')
+
+  expect_equal(p$indexarity(), 0)
+  expect_equal(p$isScalar(), TRUE)
+  expect_equal(p$numInstances(), 1)
+  expect_equal(length(p$getIndexingSets()), 0)
+  expect_equal(p$getValues()$p, 1)
+  ampl$eval('param px;')
+  px <- ampl$getParameter('px')
+  px$setValues(p$getValues())
+  expect_equal(px$getValues()$px, 1)
+  expect_equal(p$find(c()), 1)
+  expect_equal(p$find(c(123)), NULL)
+  expect_equal(length(p$getInstances()[[1]]), 1)
+
   expect_equal(p$get(c()), 1)
   expect_equal(p$value(), 1)
   expect_equal(p$isSymbolic(), FALSE)

@@ -290,7 +290,7 @@ RCPP_MODULE(rcon_entity){
     .const_method("get", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::get)
     .const_method("get", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::getScalar)
     .const_method("find", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::find)
-    .const_method("instances", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::instances)
+    .const_method("getInstances", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::getInstances)
     ;
   Rcpp::class_<RConstraintEntity>("Constraint")
     .derives<RBasicEntity<ampl::ConstraintInstance, RConstraintInstance> >("CEntity")

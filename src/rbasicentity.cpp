@@ -98,9 +98,9 @@ int RBasicEntity<T, TW>::numInstances() const {
   :return: The string representation of the indexing sets for this entity or an empty list if the entity is scalar.
 */
 template <class T, class TW>
-std::vector<const char *> RBasicEntity<T, TW>::getIndexingSets() const {
+std::vector<std::string> RBasicEntity<T, TW>::getIndexingSets() const {
   ampl::StringArray sa = _impl.getIndexingSets();
-  return std::vector<const char *>(sa.begin(), sa.end());
+  return std::vector<std::string>(sa.begin(), sa.end());
 }
 
 /*.. method:: Entity.getValues()
@@ -157,7 +157,7 @@ Rcpp::DataFrame RBasicEntity<T, TW>::getSuffixValues(const Rcpp::List &suffixes)
 */
 template <class T, class TW>
 void RBasicEntity<T, TW>::setValues(const Rcpp::DataFrame &data) {
-  return _impl.setValues(rdf2df(data));
+  _impl.setValues(rdf2df(data));
 }
 
 /*.. method:: Entity.get(index)
@@ -205,18 +205,28 @@ SEXP RBasicEntity<T, TW>::find(const Rcpp::List &index) const {
   if(it != _impl.end()) {
     return Rcpp::wrap(TW(it->second));
   } else {
-    return NULL;
+    return R_NilValue;
   }
 }
 
-/*.. method:: Entity.instances()
+template <>
+SEXP RBasicEntity<ampl::VariantRef, ampl::VariantRef>::find(const Rcpp::List &index) const {
+  ampl::internal::CountedIterator<ampl::internal::EntityWrapper<ampl::VariantRef> > it = _impl.find(list2tuple(index));
+  if(it != _impl.end()) {
+    return variant2sexp(it->second);
+  } else {
+    return R_NilValue;
+  }
+}
+
+/*.. method:: Entity.getInstances()
 
   Get all the instances of this entity.
 
   :return: A list with all the instances of this entity.
 */
 template <class T, class TW>
-Rcpp::List RBasicEntity<T, TW>::instances() const {
+Rcpp::List RBasicEntity<T, TW>::getInstances() const {
   Rcpp::List list;
   for(typename ampl::BasicEntity<T>::iterator it = _impl.begin(); it != _impl.end(); it++) {
     list[it->second.name()] = TW(it->second);
@@ -225,6 +235,12 @@ Rcpp::List RBasicEntity<T, TW>::instances() const {
 }
 
 template <>
-Rcpp::List RBasicEntity<ampl::VariantRef, ampl::VariantRef>::instances() const {
-  return Rcpp::List();
+Rcpp::List RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getInstances() const {
+  Rcpp::List list;
+  for(typename ampl::BasicEntity<ampl::VariantRef>::iterator it = _impl.begin(); it != _impl.end(); it++) {
+    Rcpp::List row = tuple2list(it->first);
+    row.push_back(variant2sexp(it->second));
+    list.push_back(row);
+  }
+  return list;
 }
