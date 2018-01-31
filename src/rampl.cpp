@@ -73,6 +73,19 @@ AMPL
 RAMPL::RAMPL() { }
 RAMPL::RAMPL(SEXP s): _impl(getObj<REnvironment>("Environment", s)->_impl) { }
 
+/*.. method:: AMPL.toString()
+
+  Get a string describing the object. Returns the version of the API and
+  either the version of the interpreter or the message "AMPL is not
+  running" if the interpreter is not running (e.g. due to unexpected
+  internal error or to a call AMPL::close)
+
+  :return: A string that represents this object.
+*/
+Rcpp::String RAMPL::toString() const {
+  return _impl.toString();
+}
+
 /*.. method:: AMPL.cd(path = NULL)
 
   Change or display the current working directory (see
@@ -94,28 +107,75 @@ Rcpp::String RAMPL::cdStr(std::string path){
   Set an AMPL option to a specified value.
 
   :param str name: Name of the option to be set (alphanumeric without spaces).
-  :param str value: String representing the value the option must be set to.
+  :param value: string/number/boolean representing the value the option must be set to.
   :return: ``NULL``
   :raises Error: If the option name is not valid.
 */
-void RAMPL::setOption(std::string name, std::string value){
-  _impl.setOption(name, value);
+void RAMPL::setOption(std::string name, SEXP value){
+  switch(TYPEOF(value)) {
+    case REALSXP:
+      _impl.setDblOption(name, Rcpp::as<double>(value));
+      break;
+    case LGLSXP:
+      _impl.setBoolOption(name, Rcpp::as<bool>(value));
+      break;
+    case STRSXP:
+      _impl.setOption(name, Rcpp::as<std::string>(value));
+      break;
+    default:
+      Rcpp::stop("invalid type");
+  }
 }
 
 /*.. method:: AMPL.getOption(name)
 
   Get the current value of the specified option. If the option does not
-  exist, the returned Optional object will not have value.
+  exist, returns ``NA``.
 
   :param str name: Option name (alphanumeric)
   :return: Value of the option as a string or ``NA``.
   :raises Error: If the option name is not valid.
 */
-Rcpp::String RAMPL::getOption(std::string name){
+Rcpp::String RAMPL::getOption(std::string name) const {
   if (ampl::Optional<std::string> value = _impl.getOption(name)) {
     return *value;
   } else {
     return NA_STRING;
+  }
+}
+
+
+/*.. method:: AMPL.getDblOption(name)
+
+  Get the current value of the specified double option. If the option does not
+  exist, returns ``NA``.
+
+  :param str name: Option name (alphanumeric)
+  :return: Value of the option as numeric or ``NA``.
+  :raises Error: If the option name is not valid, or if the value could not be casted.
+*/
+double RAMPL::getDblOption(std::string name) const {
+  if (ampl::Optional<double> value = _impl.getDblOption(name)) {
+    return *value;
+  } else {
+    return NA_REAL;
+  }
+}
+
+/*.. method:: AMPL.getBoolOption(name)
+
+  Get the current value of the specified boolean option. If the option does not
+  exist, returns ``NA``.
+
+  :param str name: Option name (alphanumeric)
+  :return: Value of the option as boolean or ``NA``.
+  :raises Error: If the option name is not valid, or if the value could not be casted.
+*/
+bool RAMPL::getBoolOption(std::string name) const {
+  if (ampl::Optional<bool> value = _impl.getBoolOption(name)) {
+    return *value;
+  } else {
+    return NA_LOGICAL;
   }
 }
 
@@ -178,6 +238,34 @@ void RAMPL::eval(std::string amplstatements) {
   return _impl.eval(amplstatements);
 }
 
+
+/*.. method:: AMPL.reset()
+
+  Clears all entities in the underlying %AMPL interpreter, clears all maps
+  and invalidates all entities.
+*/
+void RAMPL::reset() {
+  return _impl.reset();
+}
+
+
+/*.. method:: AMPL.close()
+
+  Stops the underlying engine, and release all any further attempt to execute
+  optimisation commands without restarting it will throw an exception.
+*/
+void RAMPL::close() {
+  return _impl.close();
+}
+
+/*.. method:: AMPL.isRunning()
+
+  Returns ``TRUE``  if the underlying engine is running.
+*/
+bool RAMPL::isRunning() const {
+  return _impl.isRunning();
+}
+
 /*.. method:: AMPL.solve()
 
   Solve the current model.
@@ -187,6 +275,62 @@ void RAMPL::eval(std::string amplstatements) {
 */
 void RAMPL::solve() {
   return _impl.solve();
+}
+
+
+/*.. method:: AMPL.getData(statements)
+  Get the data corresponding to the display statements. The statements can
+  be AMPL expressions, or entities. It captures the equivalent of the
+  command:
+
+  .. code-block:: ampl
+
+    display ds1, ..., dsn;
+
+
+  where ``ds1, ..., dsn`` are the ``statements`` with which the function is called.
+
+  As only one DataFrame is returned, the operation will fail if the results
+  of the display statements cannot be indexed over the same set. As a
+  result, any attempt to get data from more than one set, or to get data
+  for multiple parameters with a different number of indexing sets will
+  fail.
+
+  :param list statements: The display statements to be fetched.
+  :return: DataFrame capturing the output of the display command in tabular form.
+  :rtype: DataFrame
+  :raises Error: if the AMPL visualization command does not succeed for one of the reasons listed above.
+*/
+Rcpp::DataFrame RAMPL::getData(Rcpp::List statements) const {
+  std::vector<const char *> tmp(statements.size());
+  for(int i = 0; i < statements.size(); i++) {
+    tmp[i] = Rcpp::as<const char *>(statements[i]);
+  }
+  return df2rdf(_impl.getData(ampl::StringArgs(tmp.data(), tmp.size())));
+}
+
+/*.. method:: AMPL.getValue(scalarExpression)
+
+  Get a scalar value from the underlying %AMPL interpreter, as a double or a string.
+  :param string scalarExpression: An AMPL expression which evaluates to a scalar value.
+  :return: The value of the expression.
+*/
+SEXP RAMPL::getValue(std::string scalarExpression) const {
+  return variant2sexp(_impl.getValue(scalarExpression));
+}
+
+/*.. method:: AMPL.setData(df, setName)
+
+  Assign the data in the dataframe to the AMPL entities with the names
+  corresponding to the column names. If setName is ``NULL``, only the
+  parameters value will be assigned.
+
+  :param DataFrame df: The dataframe containing the data to be assigned.
+  :param string setName:  The name of the set to which the indices values of the DataFrame are to be assigned.
+  :raises Error: If the data assignment procedure was not successful.
+*/
+void RAMPL::setData(const Rcpp::DataFrame &rdf, std::string setName = "") {
+  return _impl.setData(rdf2df(rdf), setName);
 }
 
 /*.. method:: AMPL.getVariable(name)
@@ -409,17 +553,28 @@ RCPP_MODULE(rampl){
     .constructor("An AMPL translator")
     .constructor<SEXP>("An AMPL translator")
 
-    .method("cd", &RAMPL::cd, "Display the current working directory")
-    .method("cd", &RAMPL::cdStr, "Change the current working directory")
+    .method("toString", &RAMPL::toString)
 
-    .method("getOption", &RAMPL::getOption, "Get the current value of the specified option")
+    .method("cd", &RAMPL::cdStr, "Change the current working directory")
+    .method("cd", &RAMPL::cd, "Display the current working directory")
+
+    .method("getOption", &RAMPL::getOption)
+    .method("getDblOption", &RAMPL::getDblOption)
+    .method("getBoolOption", &RAMPL::getBoolOption)
     .method("setOption", &RAMPL::setOption, "Set an AMPL option to a specified value")
 
     .method("read", &RAMPL::read, "Interprets the specified file")
     .method("readData", &RAMPL::readData, "Interprets the specified file as an AMPL data file")
 
     .method("eval", &RAMPL::eval, "Parses AMPL code and evaluates it")
-    .method("solve", &RAMPL::solve, "Solve the current model")
+    .method("reset", &RAMPL::reset)
+    .method("close", &RAMPL::close)
+    .method("isRunning", &RAMPL::isRunning)
+    .method("solve", &RAMPL::solve)
+
+    .method("getData", &RAMPL::getData)
+    .method("getValue", &RAMPL::getValue)
+    .method("setData", &RAMPL::setData)
 
     .method("getVariable", &RAMPL::getVariable, "Get the variable with the corresponding name")
     .method("getConstraint", &RAMPL::getConstraint, "Get the constraint with the corresponding name")

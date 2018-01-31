@@ -139,14 +139,11 @@ void RParameterEntity::setIndVal(Rcpp::List &index, SEXP value) {
     case REALSXP:
       _impl.set(list2tuple(index), Rcpp::as<double>(value));
       break;
-    case INTSXP:
-      _impl.set(list2tuple(index), Rcpp::as<int>(value));
-      break;
     case STRSXP:
       _impl.set(list2tuple(index), Rcpp::as<std::string>(value));
       break;
     default:
-      Rcpp::stop("the value must be number or string");
+      Rcpp::stop("the value must be numeric or string");
   }
 }
 

@@ -57,17 +57,28 @@ public:
   RAMPL();
   RAMPL(SEXP);
 
+  Rcpp::String toString() const;
+
   Rcpp::String cd();
   Rcpp::String cdStr(std::string);
 
-  void setOption(std::string name, std::string value);
-  Rcpp::String getOption(std::string);
+  void setOption(std::string name, SEXP value);
+  Rcpp::String getOption(std::string) const;
+  double getDblOption(std::string) const;
+  bool getBoolOption(std::string) const;
 
   void read(std::string fileName);
   void readData(std::string fileName);
 
   void eval(std::string amplstatements);
+  void reset();
+  void close();
+  bool isRunning() const;
   void solve();
+
+  Rcpp::DataFrame getData(Rcpp::List statements) const;
+  SEXP getValue(std::string scalarExpression) const;
+  void setData(const Rcpp::DataFrame &rdf, std::string setName);
 
   RVariableEntity getVariable(std::string name) const;
   RConstraintEntity getConstraint(std::string name) const;
