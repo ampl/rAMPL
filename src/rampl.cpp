@@ -162,6 +162,23 @@ double RAMPL::getDblOption(std::string name) const {
   }
 }
 
+/*.. method:: AMPL.getIntOption(name)
+
+  Get the current value of the specified integer option. If the option does not
+  exist, returns ``NA``.
+
+  :param str name: Option name (alphanumeric)
+  :return: Value of the option as numeric or ``NA``.
+  :raises Error: If the option name is not valid, or if the value could not be casted.
+*/
+int RAMPL::getIntOption(std::string name) const {
+  if (ampl::Optional<int> value = _impl.getIntOption(name)) {
+    return *value;
+  } else {
+    return NA_INTEGER;
+  }
+}
+
 /*.. method:: AMPL.getBoolOption(name)
 
   Get the current value of the specified boolean option. If the option does not
@@ -206,8 +223,37 @@ void RAMPL::read(std::string fileName){
   :return: ``NULL``
   :raises Error: In case the file does not exist.
 */
-void RAMPL::readData(std::string fileName){
+void RAMPL::readData(std::string fileName) {
   _impl.readData(fileName);
+}
+
+/*.. method:: AMPL.readTable(tableName)
+
+  Read the table corresponding to the specified name, equivalent to the AMPL statement:
+
+  .. code-block:: ampl
+
+    read table tableName;
+
+
+  :param string tableName: Name of the table to be read.
+*/
+void RAMPL::readTable(std::string tableName) {
+  _impl.readTable(tableName);
+}
+
+/*.. method:: AMPL.writeTable(tableName)
+
+  Write the table corresponding to the specified name, equivalent to the AMPL statement:
+
+  .. code-block:: ampl
+
+    write table tableName;
+
+  :param string tableName: Name of the table to be written.
+*/
+void RAMPL::writeTable(std::string tableName) {
+  _impl.writeTable(tableName);
 }
 
 /*.. method:: AMPL.eval(amplstatements)
@@ -319,18 +365,19 @@ SEXP RAMPL::getValue(std::string scalarExpression) const {
   return variant2sexp(_impl.getValue(scalarExpression));
 }
 
-/*.. method:: AMPL.setData(df, setName)
+/*.. method:: AMPL.setData(df, numberOfIndexColumns, setName)
 
   Assign the data in the dataframe to the AMPL entities with the names
   corresponding to the column names. If setName is ``NULL``, only the
   parameters value will be assigned.
 
   :param DataFrame df: The dataframe containing the data to be assigned.
+  :param integer numberOfIndexColumns: Number of index columns.
   :param string setName:  The name of the set to which the indices values of the DataFrame are to be assigned.
   :raises Error: If the data assignment procedure was not successful.
 */
-void RAMPL::setData(const Rcpp::DataFrame &rdf, std::string setName = "") {
-  return _impl.setData(rdf2df(rdf), setName);
+void RAMPL::setData(const Rcpp::DataFrame &rdf, int numberOfIndexColumns = 1, std::string setName = "") {
+  _impl.setData(rdf2df(rdf, numberOfIndexColumns), setName);
 }
 
 /*.. method:: AMPL.getVariable(name)
@@ -560,11 +607,15 @@ RCPP_MODULE(rampl){
 
     .method("getOption", &RAMPL::getOption)
     .method("getDblOption", &RAMPL::getDblOption)
+    .method("getIntOption", &RAMPL::getIntOption)
     .method("getBoolOption", &RAMPL::getBoolOption)
     .method("setOption", &RAMPL::setOption, "Set an AMPL option to a specified value")
 
     .method("read", &RAMPL::read, "Interprets the specified file")
     .method("readData", &RAMPL::readData, "Interprets the specified file as an AMPL data file")
+
+    .method("readTable", &RAMPL::readTable)
+    .method("writeTable", &RAMPL::writeTable)
 
     .method("eval", &RAMPL::eval, "Parses AMPL code and evaluates it")
     .method("reset", &RAMPL::reset)

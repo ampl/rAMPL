@@ -65,10 +65,14 @@ public:
   void setOption(std::string name, SEXP value);
   Rcpp::String getOption(std::string) const;
   double getDblOption(std::string) const;
+  int getIntOption(std::string name) const;
   bool getBoolOption(std::string) const;
 
   void read(std::string fileName);
   void readData(std::string fileName);
+
+  void readTable(std::string tableName);
+  void writeTable(std::string tableName);
 
   void eval(std::string amplstatements);
   void reset();
@@ -78,7 +82,7 @@ public:
 
   Rcpp::DataFrame getData(Rcpp::List statements) const;
   SEXP getValue(std::string scalarExpression) const;
-  void setData(const Rcpp::DataFrame &rdf, std::string setName);
+  void setData(const Rcpp::DataFrame &rdf, int numberOfIndexColumns, std::string setName);
 
   RVariableEntity getVariable(std::string name) const;
   RConstraintEntity getConstraint(std::string name) const;

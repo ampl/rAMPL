@@ -12,7 +12,7 @@ public:
   RParameterEntity(ampl::Parameter impl);
   bool isSymbolic() const;
   bool hasDefault() const;
-  void setValues(Rcpp::DataFrame &df);
+  void setValues(const Rcpp::DataFrame &df);
   Rcpp::DataFrame getValues() const;
   SEXP value() const;
   void set(SEXP value);

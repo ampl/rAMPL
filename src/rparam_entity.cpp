@@ -48,7 +48,6 @@ bool RParameterEntity::hasDefault() const {
   return _impl.hasDefault();
 }
 
-
 /*.. method:: Parameter.setValues(values)
 
   If the argument is a `list`,
@@ -63,7 +62,7 @@ bool RParameterEntity::hasDefault() const {
 
   :param list/data.frame values: An array of indices of the instances to be set.
 */
-void RParameterEntity::setValues(Rcpp::DataFrame& df) {
+void RParameterEntity::setValues(const Rcpp::DataFrame& df) {
   if(df.length() == 1){
     switch(TYPEOF(df[0])) {
       case REALSXP:
@@ -156,9 +155,9 @@ RCPP_MODULE(rparam_entity){
     .const_method("isScalar", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::isScalar)
     .const_method("numInstances", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::numInstances)
     .const_method("getIndexingSets", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getIndexingSets)
-    .const_method("getValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getSuffixValues)
-    .const_method("getValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getValues)
-    .method("setValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::setValues)
+    //.const_method("getValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getSuffixValues)
+    //.const_method("getValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getValues)
+    //.method("setValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::setValues)
     .const_method("[[", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::get)
     .const_method("get", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::get)
     .const_method("get", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getScalar)
