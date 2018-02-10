@@ -10,9 +10,8 @@ test_that("test AMPL", {
   expect_equal(ampl$cd(), ampl$cd())
   expect_true(grepl("^AMPL API", ampl$toString()))
 
-  ampl$cd(find.package("rAMPL"))
-  expect_equal(ampl$cd(), find.package("rAMPL"))
-
+  path <- ampl$cd(find.package("rAMPL"))
+  expect_equal(ampl$cd(), path)
 
   ampl <- new(AMPL)
   ampl$setOption("x", 1)
