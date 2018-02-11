@@ -5,7 +5,7 @@ Author: Filipe Brandao
 Maintainer: Filipe Brandão <fdabrandao@ampl.com>
 Description: AMPL API for R.
 Depends: R (>= 3.2.3)
-License: GPL
+License: BSD-3
 Encoding: UTF-8
 LazyData: true
 LinkingTo: Rcpp
