@@ -30,11 +30,12 @@ In order to install the latest version of the R API you just need to run:
 ```
 > install.packages("Rcpp", type="source")
 > install.packages("https://ampl.com/dl/API/rAMPL.tar.gz", repos=NULL)
+```
 
 Note: this package requires R development tools on Windows and macOS, which can be installed as follows:
 * Windows: https://cran.r-project.org/bin/windows/Rtools/
 * macOS: https://cran.r-project.org/bin/macosx/tools/
-On Linux, this package requires a C++ compiler such as g++.
+* On Linux, this package requires a C++ compiler such as g++.
 
 Alternatively, you can download, build, and install the package locally:
 ```
@@ -52,3 +53,4 @@ BSD-3
 
 ***
 Copyright © 2018 AMPL Optimization inc. All rights reserved.
+
