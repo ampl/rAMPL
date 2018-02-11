@@ -62,7 +62,7 @@ bool RParameterEntity::hasDefault() const {
 
   :param list/data.frame values: An array of indices of the instances to be set.
 */
-void RParameterEntity::setValues(const Rcpp::DataFrame& df) {
+void RParameterEntity::setValues(Rcpp::DataFrame df) {
   if(df.length() == 1){
     switch(TYPEOF(df[0])) {
       case REALSXP:
@@ -133,7 +133,7 @@ void RParameterEntity::set(SEXP value) {
   :param list index: index of the instance to be set.
   :param value: Value to be assigned.
 */
-void RParameterEntity::setIndVal(Rcpp::List &index, SEXP value) {
+void RParameterEntity::setIndVal(Rcpp::List index, SEXP value) {
   switch(TYPEOF(value)) {
     case REALSXP:
       _impl.set(list2tuple(index), Rcpp::as<double>(value));
@@ -144,6 +144,38 @@ void RParameterEntity::setIndVal(Rcpp::List &index, SEXP value) {
     default:
       Rcpp::stop("the value must be numeric or string");
   }
+}
+
+// RBasicEntity<ampl::VariantRef, ampl::VariantRef>
+template <>
+SEXP RBasicEntity<ampl::VariantRef, ampl::VariantRef>::get(Rcpp::List index) const {
+  return variant2sexp(_impl.get(list2tuple(index)));
+}
+
+template <>
+SEXP RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getScalar() const {
+  return variant2sexp(_impl.get());
+}
+
+template <>
+SEXP RBasicEntity<ampl::VariantRef, ampl::VariantRef>::find(Rcpp::List index) const {
+  ampl::internal::CountedIterator<ampl::internal::EntityWrapper<ampl::VariantRef> > it = _impl.find(list2tuple(index));
+  if(it != _impl.end()) {
+    return variant2sexp(it->second);
+  } else {
+    return R_NilValue;
+  }
+}
+
+template <>
+Rcpp::List RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getInstances() const {
+  Rcpp::List list;
+  for(ampl::BasicEntity<ampl::VariantRef>::iterator it = _impl.begin(); it != _impl.end(); it++) {
+    Rcpp::List row = tuple2list(it->first);
+    row.push_back(variant2sexp(it->second));
+    list.push_back(row);
+  }
+  return list;
 }
 
 // *** RCPP_MODULE ***

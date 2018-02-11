@@ -70,8 +70,8 @@ AMPL
   :raises Error: If no valid AMPL license has been found or if the translator
     cannot be started for any other reason.
 */
-RAMPL::RAMPL() { }
-RAMPL::RAMPL(SEXP s): _impl(getObj<REnvironment>("Environment", s)->_impl) { }
+RAMPL::RAMPL(): OHandler(NULL), EHandler(NULL) { }
+RAMPL::RAMPL(SEXP s): OHandler(NULL), EHandler(NULL), _impl(getObj<REnvironment>("Environment", s)->_impl) { }
 
 /*.. method:: AMPL.toString()
 
@@ -376,7 +376,7 @@ SEXP RAMPL::getValue(std::string scalarExpression) const {
   :param string setName:  The name of the set to which the indices values of the DataFrame are to be assigned.
   :raises Error: If the data assignment procedure was not successful.
 */
-void RAMPL::setData(const Rcpp::DataFrame &rdf, int numberOfIndexColumns = 1, std::string setName = "") {
+void RAMPL::setData(Rcpp::DataFrame rdf, int numberOfIndexColumns = 1, std::string setName = "") {
   _impl.setData(rdf2df(rdf, numberOfIndexColumns), setName);
 }
 

@@ -5,6 +5,7 @@
 #include "ampl/entity.h"
 #include "ampl/instance.h"
 #include "rbasicentity.h"
+#include "rvar_instance.h"
 #include <Rcpp.h>
 
 class RVariableEntity: public RBasicEntity<ampl::VariableInstance, RVariableInstance> {

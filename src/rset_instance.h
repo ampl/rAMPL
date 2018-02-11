@@ -17,7 +17,7 @@ public:
   bool contains(Rcpp::List tuple) const;
   Rcpp::DataFrame getValues() const;
   void setValues(SEXP values);
-  void setValuesList(const Rcpp::List &values);
+  void setValuesList(Rcpp::List values);
 };
 
 RCPP_EXPOSED_CLASS(RSetInstance)

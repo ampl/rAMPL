@@ -90,14 +90,14 @@ Rcpp::DataFrame RSetEntity::getValues() const {
 */
 void RSetEntity::setValues(SEXP values) {
   if(::Rf_inherits(values, "data.frame")) {
-    const Rcpp::DataFrame &rdf = values;
+    Rcpp::DataFrame rdf = values;
     _impl.setValues(rdf2df(rdf, rdf.size()));
   } else {
     setValuesList(values);
   }
 }
 
-void RSetEntity::setValuesList(const Rcpp::List &values) {
+void RSetEntity::setValuesList(Rcpp::List values) {
   std::vector<ampl::Tuple> objects(values.size());
   for(int i = 0; i < values.size(); i++){
     objects[i] = list2tuple(values[i]);

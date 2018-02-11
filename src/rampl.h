@@ -5,9 +5,13 @@
 #include "ampl/ampl.h"
 #include "renvironment.h"
 #include "rvar_entity.h"
+#include "rvar_instance.h"
 #include "rcon_entity.h"
+#include "rcon_instance.h"
 #include "robj_entity.h"
+#include "robj_instance.h"
 #include "rset_entity.h"
+#include "rset_instance.h"
 #include "rparam_entity.h"
 #include <Rcpp.h>
 
@@ -50,8 +54,8 @@ public:
 
 class RAMPL{
 private:
-  AMPLOutputHandler *OHandler = NULL;
-  AMPLErrorHandler *EHandler = NULL;
+  AMPLOutputHandler *OHandler;
+  AMPLErrorHandler *EHandler;
 public:
   ampl::AMPL _impl;
   RAMPL();
@@ -82,7 +86,7 @@ public:
 
   Rcpp::DataFrame getData(Rcpp::List statements) const;
   SEXP getValue(std::string scalarExpression) const;
-  void setData(const Rcpp::DataFrame &rdf, int numberOfIndexColumns, std::string setName);
+  void setData(Rcpp::DataFrame rdf, int numberOfIndexColumns, std::string setName);
 
   RVariableEntity getVariable(std::string name) const;
   RConstraintEntity getConstraint(std::string name) const;

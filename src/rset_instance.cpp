@@ -94,7 +94,7 @@ void RSetInstance::setValues(SEXP values) {
   }
 }
 
-void RSetInstance::setValuesList(const Rcpp::List &values) {
+void RSetInstance::setValuesList(Rcpp::List values) {
   std::vector<ampl::Tuple> objects(values.size());
   for(int i = 0; i < values.size(); i++){
     objects[i] = list2tuple(values[i]);

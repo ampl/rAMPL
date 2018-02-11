@@ -12,11 +12,11 @@ public:
   RParameterEntity(ampl::Parameter impl);
   bool isSymbolic() const;
   bool hasDefault() const;
-  void setValues(const Rcpp::DataFrame &df);
+  void setValues(Rcpp::DataFrame df);
   Rcpp::DataFrame getValues() const;
   SEXP value() const;
   void set(SEXP value);
-  void setIndVal(Rcpp::List &index, SEXP value);
+  void setIndVal(Rcpp::List index, SEXP value);
 };
 
 RCPP_EXPOSED_CLASS_NODECL(RParameterEntity)
