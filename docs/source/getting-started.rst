@@ -47,6 +47,18 @@ where optionally ``solver="<solver>"`` is the name of a solver that has been ins
 several small diet problems and then display the optimal amounts of the foods
 from the last solution.
 
+Note that the folder containing the AMPL executable should be in the system search path.
+Otherwise, the error message "AMPL could not be started" will be shown.
+If the AMPL installation directory is not in the system search path,
+you can add it by running the following command before loading the library.
+
+.. code-block:: R
+
+   Sys.setenv(PATH = paste(Sys.getenv("PATH"), "full path to the AMPL installation directory", sep = ";"))
+
+Note that you may need to escape backslashes (e.g., `'C:\\\\\\ampl\\\\\\ampl.mswin64'`) if included in the path.
+
+
 Development
 -----------
 
