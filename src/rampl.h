@@ -15,6 +15,23 @@
 #include "rparam_entity.h"
 #include <Rcpp.h>
 
+class DefaultOutputHandler : public ampl::OutputHandler {
+public:
+  void output(ampl::output::Kind kind, const char* output) {
+    Rprintf("%s", output);
+  }
+};
+
+class DefaultErrorHandler : public ampl::ErrorHandler {
+public:
+  void error(const ampl::AMPLException& e) {
+    Rcpp::stop(e.getMessage());
+  }
+  void warning(const ampl::AMPLException& e) {
+    Rprintf("Warning: %s\n", e.getMessage().c_str());
+  }
+};
+
 class AMPLOutputHandler : public ampl::OutputHandler {
 public:
   Rcpp::Function outputhandler;
@@ -52,8 +69,13 @@ public:
   }
 };
 
-class RAMPL{
+class RAMPL {
 private:
+  // Default Output and Error handlers
+  DefaultOutputHandler DefOHandler;
+  DefaultErrorHandler DefEHandler;
+
+  // Output and Error handlers
   AMPLOutputHandler *OHandler;
   AMPLErrorHandler *EHandler;
 public:

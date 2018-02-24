@@ -70,8 +70,14 @@ AMPL
   :raises Error: If no valid AMPL license has been found or if the translator
     cannot be started for any other reason.
 */
-RAMPL::RAMPL(): OHandler(NULL), EHandler(NULL) { }
-RAMPL::RAMPL(SEXP s): OHandler(NULL), EHandler(NULL), _impl(getObj<REnvironment>("Environment", s)->_impl) { }
+RAMPL::RAMPL(): OHandler(NULL), EHandler(NULL) {
+  _impl.setOutputHandler(&DefOHandler);
+  _impl.setErrorHandler(&DefEHandler);
+}
+RAMPL::RAMPL(SEXP s): OHandler(NULL), EHandler(NULL), _impl(getObj<REnvironment>("Environment", s)->_impl) {
+  _impl.setOutputHandler(&DefOHandler);
+  _impl.setErrorHandler(&DefEHandler);
+}
 
 /*.. method:: AMPL.toString()
 
@@ -320,7 +326,8 @@ bool RAMPL::isRunning() const {
   :raises Error: If the underlying interpreter is not running.
 */
 void RAMPL::solve() {
-  return _impl.solve();
+  _impl.eval("solve;");
+  //return _impl.solve(); // FIXME: does not print to stdout with R IDE on Windows
 }
 
 
