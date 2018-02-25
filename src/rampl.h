@@ -25,7 +25,7 @@ public:
 class DefaultErrorHandler : public ampl::ErrorHandler {
 public:
   void error(const ampl::AMPLException& e) {
-    Rcpp::stop(e.getMessage());
+    Rprintf("Error: %s\n", e.getMessage().c_str());
   }
   void warning(const ampl::AMPLException& e) {
     Rprintf("Warning: %s\n", e.getMessage().c_str());

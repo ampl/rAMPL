@@ -37,8 +37,7 @@ AMPL
   - Generic errors coming from misusing the API, which are detected in
     R, are thrown as exceptions.
 
-  The default implementation of the error handler throws exceptions on errors
-  and prints to console on warnings.
+  The default implementation of the error handler prints errors and warnings to the console.
 
   The output of every user interaction with the underlying translator is
   handled implementing the abstract class :class:`~amplpy.OutputHandler`.
@@ -90,7 +89,6 @@ AMPL
 
   :param str name: Name of the option to be set (alphanumeric without spaces).
   :param value: string/number/boolean representing the value the option must be set to.
-  :return: ``NULL``
   :raises Error: If the option name is not valid.
 
 .. method:: AMPL.getOption(name)
@@ -137,7 +135,6 @@ AMPL
   access)
 
   :param str fileName: Full path to the file.
-  :return: ``NULL``
   :raises Error: In case the file does not exist.
 
 .. method:: AMPL.readData(fileName)
@@ -149,7 +146,6 @@ AMPL
   mode.
 
   :param str filName: Full path to the file.
-  :return: ``NULL``
   :raises Error: In case the file does not exist.
 
 .. method:: AMPL.readTable(tableName)
@@ -183,16 +179,15 @@ AMPL
   re-populated lazily (at first access)
 
   The output of interpreting the statements is passed to the current
-  OutputHandler (see :meth:`~.AMPL.getOutputHandler` and
+  output handler (see :meth:`~.AMPL.getOutputHandler` and
   :meth:`~.AMPL.setOutputHandler`).
 
-  By default, errors are reported as exceptions and warnings are printed on
-  stdout. This behavior can be changed reassigning an
-  ErrorHandler using setErrorHandler.
+  By default, errors and warnings are printed to stdout.
+  This behavior can be changed reassigning an
+  error handler using setErrorHandler.
 
   :param str amplstatements: A collection of AMPL statements and declarations
     to be passed to the interpreter.
-  :return: ``NULL``
   :raises Error: if the input is not a complete AMPL statement (e.g.
     if it does not end with semicolon) or if the underlying
     interpreter is not running
@@ -215,10 +210,10 @@ AMPL
 
   Solve the current model.
 
-  :return: ``NULL``.
   :raises Error: If the underlying interpreter is not running.
 
 .. method:: AMPL.getData(statements)
+
   Get the data corresponding to the display statements. The statements can
   be AMPL expressions, or entities. It captures the equivalent of the
   command:
@@ -338,7 +333,6 @@ AMPL
   Sets a new output handler.
 
   :param function outputhandler: The function handling the AMPL output derived from interpreting user commands.
-  :return: ``NULL``.
 
 .. method:: AMPL.getOutputHandler()
 
@@ -358,7 +352,6 @@ AMPL
   - ``$message``: the error message.
 
   :param function errorhandler: The function handling AMPL errors and warnings.
-  :return: ``NULL``.
 
 .. method:: AMPL.getErrorHandler()
 

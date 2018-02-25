@@ -41,8 +41,7 @@ AMPL
   - Generic errors coming from misusing the API, which are detected in
     R, are thrown as exceptions.
 
-  The default implementation of the error handler throws exceptions on errors
-  and prints to console on warnings.
+  The default implementation of the error handler prints errors and warnings to the console.
 
   The output of every user interaction with the underlying translator is
   handled implementing the abstract class :class:`~amplpy.OutputHandler`.
@@ -114,7 +113,6 @@ Rcpp::String RAMPL::cdStr(std::string path){
 
   :param str name: Name of the option to be set (alphanumeric without spaces).
   :param value: string/number/boolean representing the value the option must be set to.
-  :return: ``NULL``
   :raises Error: If the option name is not valid.
 */
 void RAMPL::setOption(std::string name, SEXP value){
@@ -210,7 +208,6 @@ bool RAMPL::getBoolOption(std::string name) const {
   access)
 
   :param str fileName: Full path to the file.
-  :return: ``NULL``
   :raises Error: In case the file does not exist.
 */
 void RAMPL::read(std::string fileName){
@@ -226,7 +223,6 @@ void RAMPL::read(std::string fileName){
   mode.
 
   :param str filName: Full path to the file.
-  :return: ``NULL``
   :raises Error: In case the file does not exist.
 */
 void RAMPL::readData(std::string fileName) {
@@ -272,16 +268,15 @@ void RAMPL::writeTable(std::string tableName) {
   re-populated lazily (at first access)
 
   The output of interpreting the statements is passed to the current
-  OutputHandler (see :meth:`~.AMPL.getOutputHandler` and
+  output handler (see :meth:`~.AMPL.getOutputHandler` and
   :meth:`~.AMPL.setOutputHandler`).
 
-  By default, errors are reported as exceptions and warnings are printed on
-  stdout. This behavior can be changed reassigning an
-  ErrorHandler using setErrorHandler.
+  By default, errors and warnings are printed to stdout.
+  This behavior can be changed reassigning an
+  error handler using setErrorHandler.
 
   :param str amplstatements: A collection of AMPL statements and declarations
     to be passed to the interpreter.
-  :return: ``NULL``
   :raises Error: if the input is not a complete AMPL statement (e.g.
     if it does not end with semicolon) or if the underlying
     interpreter is not running
@@ -322,7 +317,6 @@ bool RAMPL::isRunning() const {
 
   Solve the current model.
 
-  :return: ``NULL``.
   :raises Error: If the underlying interpreter is not running.
 */
 void RAMPL::solve() {
@@ -332,6 +326,7 @@ void RAMPL::solve() {
 
 
 /*.. method:: AMPL.getData(statements)
+
   Get the data corresponding to the display statements. The statements can
   be AMPL expressions, or entities. It captures the equivalent of the
   command:
@@ -543,7 +538,6 @@ Rcpp::List RAMPL::getParameters() const {
   Sets a new output handler.
 
   :param function outputhandler: The function handling the AMPL output derived from interpreting user commands.
-  :return: ``NULL``.
 */
 void RAMPL::setOutputHandler(Rcpp::Function outputhandler) {
   free(OHandler);
@@ -577,7 +571,6 @@ Rcpp::Function RAMPL::getOutputHandler() const {
   - ``$message``: the error message.
 
   :param function errorhandler: The function handling AMPL errors and warnings.
-  :return: ``NULL``.
 */
 void RAMPL::setErrorHandler(Rcpp::Function errorhandler) {
   free(EHandler);
