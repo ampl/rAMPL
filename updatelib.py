@@ -45,6 +45,10 @@ def updatelib():
     except Exception:
         pass
     shutil.copytree(include_folder, ampl_include)
+    print(
+        '*\n!.gitignore\n',
+        file=open(os.path.join(ampl_include, '.gitignore'), 'w')
+    )
     print('headers: {}'.format(ampl_include))
 
     for lib, arch in [(lib32, 'i386'), (lib64, 'x64')]:
@@ -56,8 +60,16 @@ def updatelib():
             pass
         if not os.path.exists(dst):
             os.makedirs(dst)
+        print(
+            '*\n!.gitignore\n',
+            file=open(os.path.join(dst, '.gitignore'), 'w')
+        )
         for filename in os.listdir(lib):
-            if 'ampl' not in filename or filename.endswith('.jar'):
+            if filename.endswith('.jar'):
+                continue
+            if 'java' in filename:
+                continue
+            if 'csharp' in filename:
                 continue
             print('\t{}'.format(filename))
             shutil.copyfile(
