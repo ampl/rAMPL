@@ -104,4 +104,9 @@ test_that("test AMPL", {
   expect_equal(last_message, "syntax error")
   ampl$getErrorHandler()(list(message="foo"))
   expect_equal(last_message, "foo")
+
+  expect_equal(ampl$getOutput("display 5;"), "5 = 5\n\n")
+  expect_error(ampl$getOutput("display 3"))
+  expect_error(ampl$getOutput("for {i in 1..10} {"))
+  expect_equal(ampl$getOutput("display 5; display 1;"), "5 = 5\n\n1 = 1\n\n")
 })

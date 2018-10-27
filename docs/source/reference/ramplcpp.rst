@@ -194,7 +194,7 @@ AMPL
 
 .. method:: AMPL.reset()
 
-  Clears all entities in the underlying %AMPL interpreter, clears all maps
+  Clears all entities in the underlying AMPL interpreter, clears all maps
   and invalidates all entities.
 
 .. method:: AMPL.close()
@@ -238,9 +238,21 @@ AMPL
 
 .. method:: AMPL.getValue(scalarExpression)
 
-  Get a scalar value from the underlying %AMPL interpreter, as a double or a string.
+  Get a scalar value from the underlying AMPL interpreter, as a double or a string.
+
   :param string scalarExpression: An AMPL expression which evaluates to a scalar value.
   :return: The value of the expression.
+
+.. method:: AMPL.getOutput(amplstatements)
+
+  Equivalent to :meth:`~.AMPL.eval` but returns the output as a string.
+
+  :param str amplstatements: A collection of AMPL statements and declarations
+    to be passed to the interpreter.
+  :raises Error: if the input is not a complete AMPL statement (e.g.
+    if it does not end with semicolon) or if the underlying
+    interpreter is not running
+  :return: A string with the output.
 
 .. method:: AMPL.setData(df, numberOfIndexColumns, setName)
 

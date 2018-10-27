@@ -108,6 +108,7 @@ public:
 
   Rcpp::DataFrame getData(Rcpp::List statements) const;
   SEXP getValue(std::string scalarExpression) const;
+  Rcpp::String getOutput(std::string amplstatements);
   void setData(Rcpp::DataFrame rdf, int numberOfIndexColumns, std::string setName);
 
   RVariableEntity getVariable(std::string name) const;

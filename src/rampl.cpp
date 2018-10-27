@@ -288,7 +288,7 @@ void RAMPL::eval(std::string amplstatements) {
 
 /*.. method:: AMPL.reset()
 
-  Clears all entities in the underlying %AMPL interpreter, clears all maps
+  Clears all entities in the underlying AMPL interpreter, clears all maps
   and invalidates all entities.
 */
 void RAMPL::reset() {
@@ -359,12 +359,28 @@ Rcpp::DataFrame RAMPL::getData(Rcpp::List statements) const {
 
 /*.. method:: AMPL.getValue(scalarExpression)
 
-  Get a scalar value from the underlying %AMPL interpreter, as a double or a string.
+  Get a scalar value from the underlying AMPL interpreter, as a double or a string.
+
   :param string scalarExpression: An AMPL expression which evaluates to a scalar value.
   :return: The value of the expression.
 */
 SEXP RAMPL::getValue(std::string scalarExpression) const {
   return variant2sexp(_impl.getValue(scalarExpression));
+}
+
+/*.. method:: AMPL.getOutput(amplstatements)
+
+  Equivalent to :meth:`~.AMPL.eval` but returns the output as a string.
+
+  :param str amplstatements: A collection of AMPL statements and declarations
+    to be passed to the interpreter.
+  :raises Error: if the input is not a complete AMPL statement (e.g.
+    if it does not end with semicolon) or if the underlying
+    interpreter is not running
+  :return: A string with the output.
+*/
+Rcpp::String RAMPL::getOutput(std::string amplstatements) {
+  return _impl.getOutput(amplstatements);
 }
 
 /*.. method:: AMPL.setData(df, numberOfIndexColumns, setName)
@@ -625,6 +641,7 @@ RCPP_MODULE(rampl){
 
     .method("getData", &RAMPL::getData)
     .method("getValue", &RAMPL::getValue)
+    .method("getOutput", &RAMPL::getOutput)
     .method("setData", &RAMPL::setData)
 
     .method("getVariable", &RAMPL::getVariable, "Get the variable with the corresponding name")
