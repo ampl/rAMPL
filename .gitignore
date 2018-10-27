@@ -5,3 +5,5 @@
 bumpversion.sh
 /docs/venv/
 /tmp/
+
+rAMPL_*.tar.gz
