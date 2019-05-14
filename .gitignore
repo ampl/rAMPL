@@ -2,7 +2,6 @@
 *.o
 /man/
 
-bumpversion.sh
 /docs/venv/
 /tmp/
 
