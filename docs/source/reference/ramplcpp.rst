@@ -340,6 +340,18 @@ AMPL
 
   :return: List of :class:`Parameter` objects.
 
+.. method:: AMPL.exportModel(modfile)
+
+  Create a .mod file with the model that has been loaded.
+
+  :param str modfile: Path to the file (Relative to the current working directory or absolute).
+
+.. method:: AMPL.exportData(datfile)
+
+  Create a .dat file with the data that has been loaded.
+
+  :param str datfile: Path to the file (Relative to the current working directory or absolute).
+
 .. method:: AMPL.setOutputHandler(outputhandler)
 
   Sets a new output handler.
