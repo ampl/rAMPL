@@ -549,6 +549,26 @@ Rcpp::List RAMPL::getParameters() const {
   return list;
 }
 
+/*.. method:: AMPL.exportModel(modfile)
+
+  Create a .mod file with the model that has been loaded.
+
+  :param str modfile: Path to the file (Relative to the current working directory or absolute).
+*/
+void RAMPL::exportModel(std::string modfile) {
+  _impl.exportModel(modfile);
+}
+
+/*.. method:: AMPL.exportData(datfile)
+
+  Create a .dat file with the data that has been loaded.
+
+  :param str datfile: Path to the file (Relative to the current working directory or absolute).
+*/
+void RAMPL::exportData(std::string datfile) {
+  _impl.exportData(datfile);
+}
+
 /*.. method:: AMPL.setOutputHandler(outputhandler)
 
   Sets a new output handler.
@@ -655,6 +675,9 @@ RCPP_MODULE(rampl){
     .method("getObjectives", &RAMPL::getObjectives, "Get all the objectives declared")
     .method("getSets", &RAMPL::getSets, "Get all the sets declared")
     .method("getParameters", &RAMPL::getParameters, "Get all the parameters declared")
+
+    .method("exportModel", &RAMPL::exportModel, "Export model")
+    .method("exportData", &RAMPL::exportData, "Export data")
 
     .method("setOutputHandler", &RAMPL::setOutputHandler, "Sets a new output handler")
     .method("getOutputHandler", &RAMPL::getOutputHandler, "Get the current output handler")

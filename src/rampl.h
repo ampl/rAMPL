@@ -123,6 +123,9 @@ public:
   Rcpp::List getSets() const;
   Rcpp::List getParameters() const;
 
+  void exportModel(std::string modfile);
+  void exportData(std::string datfile);
+
   void setOutputHandler(Rcpp::Function outputhandler);
   Rcpp::Function getOutputHandler() const;
   void setErrorHandler(Rcpp::Function errorhandler);
