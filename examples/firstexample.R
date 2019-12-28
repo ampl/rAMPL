@@ -17,7 +17,7 @@ firstexample <- function(solver=NULL, modelDirectory=NULL) {
   ampl$solve()
 
   # Get objective entity by AMPL name
-  totalcost <- ampl$getObjective("total_cost")
+  totalcost <- ampl$getObjective("Total_Cost")
   # Print it
   cat(sprintf("Objective is: %f\n", totalcost$value()))
 

@@ -45,7 +45,7 @@ dietmodel <- function(solver=NULL, modelDirectory=NULL) {
   ampl$solve()
 
   # Print out the result
-  cat(sprintf("Objective: %f\n", ampl$getObjective("total_cost")$value()))
+  cat(sprintf("Objective: %f\n", ampl$getObjective("Total_Cost")$value()))
 
   # Get the values of the variable Buy in a data.frame
   df <- ampl$getVariable("Buy")$getValues()

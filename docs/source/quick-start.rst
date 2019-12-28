@@ -21,14 +21,14 @@ This is the complete listing of the example. Please note that, for clarity of pr
   ampl <- new(AMPL)
 
   # Interpret the two files
-  ampl$read("models/diet/diet.mod")
-  ampl$readData("models/diet/diet.dat")
+  ampl$read("models/diet.mod")
+  ampl$readData("models/diet.dat")
 
   # Solve
   ampl$solve()
 
   # Get objective entity by AMPL name
-  totalcost <- ampl$getObjective("total_cost")
+  totalcost <- ampl$getObjective("Total_Cost")
   # Print it
   cat(sprintf("Objective is: %g\n", totalcost$value()))
 
@@ -136,7 +136,7 @@ of interest for the programmer. The generic procedure is:
 
 .. code-block:: R
 
-    totalcost <- ampl$getObjective("total_cost")
+    totalcost <- ampl$getObjective("Total_Cost")
     cat(sprintf("Objective is: %g\n", totalcost$get()$value()))
 
 It can be noted that we access an Objective to interrogate AMPL API about the objective function.
