@@ -1,6 +1,11 @@
 trackingmodel <- function(solver=NULL, modelDirectory=NULL) {
   library(rAMPL)
+  # Create an AMPL instance
   ampl <- new(AMPL)
+
+  ## If the AMPL installation directory is not in the system search path:
+  # env <- new(Environment, "full path to the AMPL installation directory")
+  # ampl <- new(AMPL, env)
 
   if (!is.null(solver)) {
     ampl$setOption("solver", solver)

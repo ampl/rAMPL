@@ -18,7 +18,12 @@ This is the complete listing of the example. Please note that, for clarity of pr
 .. code-block:: R
 
   library(rAMPL)
+  # Create an AMPL instance
   ampl <- new(AMPL)
+
+  ## If the AMPL installation directory is not in the system search path:
+  # env <- new(Environment, "full path to the AMPL installation directory")
+  # ampl <- new(AMPL, env)
 
   # Interpret the two files
   ampl$read("models/diet.mod")

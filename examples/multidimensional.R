@@ -1,6 +1,11 @@
 multidimensional <- function(solver=NULL, modelDirectory=NULL) {
   library(rAMPL)
+  # Create an AMPL instance
   ampl <- new(AMPL)
+
+  ## If the AMPL installation directory is not in the system search path:
+  # env <- new(Environment, "full path to the AMPL installation directory")
+  # ampl <- new(AMPL, env)
 
   ampl$eval("set CITIES; set LINKS within (CITIES cross CITIES);")
   ampl$eval("param cost {LINKS} >= 0; param capacity {LINKS} >= 0;")
