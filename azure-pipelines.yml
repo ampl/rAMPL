@@ -1,0 +1,15 @@
+jobs:
+- job: macos
+  pool: {vmImage: 'macOS-10.15'}
+  steps:
+    - task: UsePythonVersion@0
+    - bash: |
+        set -ex
+        mkdir -p package
+        python updatelib.py
+        R CMD build .
+        cp rAMPL_*.tar.gz upload/
+        ls
+      displayName: Build package
+    - task: PublishBuildArtifacts@1
+      inputs: {pathtoPublish: 'upload'}
