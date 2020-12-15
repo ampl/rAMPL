@@ -71,6 +71,15 @@ ampl::DataFrame rdf2df(Rcpp::DataFrame rdf, int numberOfIndexColumns){
           df.setColumn(names[p++], str_column.data(), str_column.size());
         }
         break;
+      case STRSXP: {
+          Rcpp::StringVector iv = *it;
+          std::vector<const char *> str_column(iv.size());
+          for(int i = 0; i < iv.size(); i++) {
+            str_column[i] = iv[i];
+          }
+          df.setColumn(names[p++], str_column.data(), str_column.size());
+        }
+        break;
       default:
         Rcpp::stop("invalid type");
     }

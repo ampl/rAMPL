@@ -79,6 +79,15 @@ void RParameterEntity::setValues(Rcpp::DataFrame df) {
           _impl.setValues(values.data(), values.size());
         }
         break;
+      case STRSXP: {
+          Rcpp::StringVector iv = df[0];
+          std::vector<const char *> values(iv.size());
+          for(int i = 0; i < iv.size(); i++) {
+            values[i] = iv[i];
+          }
+          _impl.setValues(values.data(), values.size());
+        }
+        break;
 	    default:
         Rcpp::stop("invalid type");
     }
