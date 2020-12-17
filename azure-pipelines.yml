@@ -1,15 +1,96 @@
-jobs:
-- job: macos
-  pool: {vmImage: 'macOS-10.15'}
-  steps:
-    - task: UsePythonVersion@0
-    - bash: |
-        set -ex
-        mkdir -p package
-        python updatelib.py
-        R CMD build .
-        cp rAMPL_*.tar.gz upload/
-        ls
-      displayName: Build package
-    - task: PublishBuildArtifacts@1
-      inputs: {pathtoPublish: 'upload'}
+variables:
+  bundles_url: 'https://ampl.com/demo/'
+  linux64_bundle_name: 'ampl.linux64.tgz'
+  macos64_bundle_name: 'ampl.macos64.tgz'
+  mswin64_bundle_name: 'ampl.mswin64.zip'
+
+stages:
+- stage: build
+  displayName: 'Build'
+  jobs:
+  - job: macos
+    pool: {vmImage: 'macOS-10.15'}
+    steps:
+      - task: UsePythonVersion@0
+      - bash: |
+          set -ex
+          python updatelib.py
+          bash build.sh
+          mkdir -p upload/{macos,release}
+          cp rAMPL_*.tar.gz upload/macos/
+          cp rAMPL_*.tar.gz upload/release/
+          cp rAMPL_*.tar.gz upload/release/rAMPL.tar.gz
+        displayName: Build package
+      - task: PublishBuildArtifacts@1
+        inputs: {artifactName: 'drop', pathtoPublish: 'upload'}
+
+- stage: test
+  displayName: 'Test'
+  dependsOn: build
+  jobs:
+  - job: linux
+    pool: {vmImage: 'Ubuntu-16.04'}
+    steps:
+      - task: DownloadBuildArtifacts@0
+        inputs: {artifactName: 'drop', downloadPath: '.'}
+      - bash: |
+          cp drop/release/* .
+        displayName: Copy package
+      - bash: |
+          sudo R --no-save -q -e "install.packages(c('Rcpp', 'testthat'), repos='http://cran.us.r-project.org')"
+        displayName: Install Rcpp and testthat
+      - bash: |
+          sudo bash install.sh
+        displayName: Install package
+      - bash: |
+          set -ex
+          mkdir -p ampl
+          cd ampl
+          curl -O $BUNDLES_URL/$LINUX64_BUNDLE_NAME
+          tar xzvf $LINUX64_BUNDLE_NAME
+          sudo PATH="`pwd`:$PATH" R --no-save -q -e "library(testthat); test_package('rAMPL');"
+        displayName: Test package
+  - job: macos
+    pool: {vmImage: 'macOS-10.15'}
+    steps:
+      - task: DownloadBuildArtifacts@0
+        inputs: {artifactName: 'drop', downloadPath: '.'}
+      - bash: |
+          cp drop/release/* .
+        displayName: Copy package
+      - bash: |
+          R --no-save -q -e "install.packages(c('Rcpp', 'testthat'), repos='http://cran.us.r-project.org')"
+        displayName: Install Rcpp and testthat
+      - bash: |
+          bash install.sh
+        displayName: Install package
+      - bash: |
+          set -ex
+          mkdir -p ampl
+          cd ampl
+          curl -O $BUNDLES_URL/$MACOS64_BUNDLE_NAME
+          tar xzvf $MACOS64_BUNDLE_NAME
+          PATH="`pwd`:$PATH" R --no-save -q -e "library(testthat); test_package('rAMPL');"
+        displayName: Test package
+  - job: windows
+    pool: {vmImage: 'windows-2019'}
+    steps:
+      - task: DownloadBuildArtifacts@0
+        inputs: {artifactName: 'drop', downloadPath: '.'}
+      - bash: |
+          cp drop/release/* .
+        displayName: Copy package
+      - bash: |
+          R --no-save -q -e "install.packages(c('Rcpp', 'testthat'), repos='http://cran.us.r-project.org')"
+        displayName: Install Rcpp and testthat
+      - bash: |
+          bash install.sh
+        displayName: Install package
+      - bash: |
+          set -ex
+          mkdir -p ampl
+          cd ampl
+          curl -O $BUNDLES_URL/$MSWIN64_BUNDLE_NAME
+          unzip $MSWIN64_BUNDLE_NAME
+          PATH="`pwd`:$PATH" R --no-save -q -e "library(testthat); test_package('rAMPL');"
+        displayName: Test package
