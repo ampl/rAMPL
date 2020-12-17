@@ -83,17 +83,17 @@ stages:
       - bash: |
           R --no-save -q -e "install.packages(c('Rcpp', 'testthat'), repos='http://cran.us.r-project.org')"
         displayName: Install Rcpp and testthat
-      - bash: |
-          # Debug the following issue on azure pipelines:
-          # "C:/rtools40/mingw64/bin/"g++ -std=gnu++11  -shared -static-libgcc -o rAMPL.dll tmp.def RcppExports.o rampl.o rcon_entity.o rcon_instance.o renvironment.o robj_entity.o robj_instance.o rparam_entity.o rset_entity.o rset_instance.o rvar_entity.o rvar_instance.o utils.o -L../inst/libs/i386 -L../inst/libs/x64 -lampl -LC:/PROGRA~1/R/R-40~1.3/bin/x64 -lR
-          # /usr/bin/sh: line 8: "C:/rtools40/mingw64/bin/"g++ -std=gnu++11 : No such file or directory
-          # no DLL was created
-          set -ex
-          grep " -shared " -R  `R RHOME`
-          cat `R RHOME`/etc/x64/Makeconf
-          cat `R RHOME`/etc/i386/Makeconf
-          cat `R RHOME`/share/make/winshlib.mk
-        displayName: Debug azure-pipelines issue
+      # - bash: |
+      #     # Debug the following issue on azure pipelines:
+      #     # "C:/rtools40/mingw64/bin/"g++ -std=gnu++11  -shared -static-libgcc -o rAMPL.dll tmp.def RcppExports.o rampl.o rcon_entity.o rcon_instance.o renvironment.o robj_entity.o robj_instance.o rparam_entity.o rset_entity.o rset_instance.o rvar_entity.o rvar_instance.o utils.o -L../inst/libs/i386 -L../inst/libs/x64 -lampl -LC:/PROGRA~1/R/R-40~1.3/bin/x64 -lR
+      #     # /usr/bin/sh: line 8: "C:/rtools40/mingw64/bin/"g++ -std=gnu++11 : No such file or directory
+      #     # no DLL was created
+      #     set -ex
+      #     grep " -shared " -R  `R RHOME`
+      #     cat `R RHOME`/etc/x64/Makeconf
+      #     cat `R RHOME`/etc/i386/Makeconf
+      #     cat `R RHOME`/share/make/winshlib.mk
+      #   displayName: Debug azure-pipelines issue
       - bash: |
           sed -i 's/\$(SHLIB_LD) -shared/c:\/rtools40\/mingw64\/bin\/g++ -shared/g' `R RHOME`/share/make/winshlib.mk
         displayName: Hack to fix azure-pipelines issue
