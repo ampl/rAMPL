@@ -93,7 +93,10 @@ stages:
           cat `R RHOME`/etc/x64/Makeconf
           cat `R RHOME`/etc/i386/Makeconf
           cat `R RHOME`/share/make/winshlib.mk
-        displayName: Install package
+        displayName: Debug azure-pipelines issue
+      - bash: |
+          sed -i 's/\$(SHLIB_LD) -shared/c:\/rtools40\/mingw64\/bin\/g++ -shared/g' `R RHOME`/share/make/winshlib.mk
+        displayName: Hack to fix azure-pipelines issue
       - bash: |
           bash install.sh
         displayName: Install package
