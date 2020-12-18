@@ -30,6 +30,7 @@ stages:
   jobs:
   - job: linux
     pool: {vmImage: 'Ubuntu-16.04'}
+    variables: {bundle_name: $(linux64_bundle_name)}
     steps:
       - task: DownloadBuildArtifacts@0
         inputs: {artifactName: 'drop', downloadPath: '.'}
@@ -44,14 +45,14 @@ stages:
         displayName: Install package
       - bash: |
           set -ex
-          mkdir -p ampl
-          cd ampl
           curl -O $BUNDLES_URL/$LINUX64_BUNDLE_NAME
           tar xzvf $LINUX64_BUNDLE_NAME
-          sudo PATH="`pwd`:$PATH" R --no-save -q -e "library(testthat); test_package('rAMPL');"
+          export PATH="`pwd`/`basename $BUNDLE_NAME .tgz`:$PATH"
+          bash test.sh
         displayName: Test package
   - job: macos
     pool: {vmImage: 'macOS-10.15'}
+    variables: {bundle_name: $(macos64_bundle_name)}
     steps:
       - task: DownloadBuildArtifacts@0
         inputs: {artifactName: 'drop', downloadPath: '.'}
@@ -66,14 +67,14 @@ stages:
         displayName: Install package
       - bash: |
           set -ex
-          mkdir -p ampl
-          cd ampl
-          curl -O $BUNDLES_URL/$MACOS64_BUNDLE_NAME
-          tar xzvf $MACOS64_BUNDLE_NAME
-          PATH="`pwd`:$PATH" R --no-save -q -e "library(testthat); test_package('rAMPL');"
+          curl -O $BUNDLES_URL/$BUNDLE_NAME
+          tar xzvf $BUNDLE_NAME
+          export PATH="`pwd`/`basename $BUNDLE_NAME .tgz`:$PATH"
+          bash test.sh
         displayName: Test package
   - job: windows
     pool: {vmImage: 'windows-2019'}
+    variables: {bundle_name: $(mswin64_bundle_name)}
     steps:
       - task: DownloadBuildArtifacts@0
         inputs: {artifactName: 'drop', downloadPath: '.'}
@@ -102,9 +103,8 @@ stages:
         displayName: Install package
       - bash: |
           set -ex
-          mkdir -p ampl
-          cd ampl
-          curl -O $BUNDLES_URL/$MSWIN64_BUNDLE_NAME
-          unzip $MSWIN64_BUNDLE_NAME
-          PATH="`pwd`:$PATH" R --no-save -q -e "library(testthat); test_package('rAMPL');"
+          curl -O $BUNDLES_URL/$BUNDLE_NAME
+          unzip $BUNDLE_NAME
+          export PATH="`pwd`/`basename $BUNDLE_NAME .zip`:$PATH"
+          bash test.sh
         displayName: Test package
