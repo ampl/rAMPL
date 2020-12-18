@@ -30,8 +30,10 @@ test_that("test optionsexample.R", {
   optionsexample()
 })
 
-test_that("test trackingmodel.R", {
-  # setwd("../../examples/")
-  source("trackingmodel.R")
-  trackingmodel()
-})
+if (Sys.getenv("SKIP_BIG_TESTS") != "1") {
+  test_that("test trackingmodel.R", {
+      # setwd("../../examples/")
+      source("trackingmodel.R")
+      trackingmodel()
+  })
+}

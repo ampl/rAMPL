@@ -38,17 +38,18 @@ stages:
           cp drop/release/* .
         displayName: Copy package
       - bash: |
-          sudo R --no-save -q -e "install.packages(c('Rcpp', 'testthat'), repos='http://cran.us.r-project.org')"
+          sudo bash dependencies.sh
         displayName: Install Rcpp and testthat
       - bash: |
           sudo bash install.sh
         displayName: Install package
       - bash: |
           set -ex
-          curl -O $BUNDLES_URL/$LINUX64_BUNDLE_NAME
-          tar xzvf $LINUX64_BUNDLE_NAME
-          export PATH="`pwd`/`basename $BUNDLE_NAME .tgz`:$PATH"
-          bash test.sh
+          curl -O $BUNDLES_URL/$BUNDLE_NAME
+          tar xzvf $BUNDLE_NAME
+          rm $BUNDLE_NAME
+          mv ampl.* ampl
+          sudo SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH" bash test.sh
         displayName: Test package
   - job: macos
     pool: {vmImage: 'macOS-10.15'}
@@ -60,7 +61,7 @@ stages:
           cp drop/release/* .
         displayName: Copy package
       - bash: |
-          R --no-save -q -e "install.packages(c('Rcpp', 'testthat'), repos='http://cran.us.r-project.org')"
+          bash dependencies.sh
         displayName: Install Rcpp and testthat
       - bash: |
           bash install.sh
@@ -69,8 +70,9 @@ stages:
           set -ex
           curl -O $BUNDLES_URL/$BUNDLE_NAME
           tar xzvf $BUNDLE_NAME
-          export PATH="`pwd`/`basename $BUNDLE_NAME .tgz`:$PATH"
-          bash test.sh
+          rm $BUNDLE_NAME
+          mv ampl.* ampl
+          SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH"  bash test.sh
         displayName: Test package
   - job: windows
     pool: {vmImage: 'windows-2019'}
@@ -82,7 +84,7 @@ stages:
           cp drop/release/* .
         displayName: Copy package
       - bash: |
-          R --no-save -q -e "install.packages(c('Rcpp', 'testthat'), repos='http://cran.us.r-project.org')"
+          bash dependencies.sh
         displayName: Install Rcpp and testthat
       # - bash: |
       #     # Debug the following issue on azure pipelines:
@@ -105,6 +107,7 @@ stages:
           set -ex
           curl -O $BUNDLES_URL/$BUNDLE_NAME
           unzip $BUNDLE_NAME
-          export PATH="`pwd`/`basename $BUNDLE_NAME .zip`:$PATH"
-          bash test.sh
+          rm $BUNDLE_NAME
+          mv ampl.* ampl
+          SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH"  bash test.sh
         displayName: Test package

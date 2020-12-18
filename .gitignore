@@ -6,3 +6,6 @@
 /tmp/
 
 rAMPL_*.tar.gz
+
+.DS_Store
+.vscode
