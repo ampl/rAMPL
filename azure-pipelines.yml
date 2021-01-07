@@ -1,8 +1,9 @@
 variables:
-  bundles_url: 'https://ampl.com/demo/'
-  linux64_bundle_name: 'ampl.linux64.tgz'
-  macos64_bundle_name: 'ampl.macos64.tgz'
-  mswin64_bundle_name: 'ampl.mswin64.zip'
+  BUNDLES_URL: 'https://ampl.com/demo/'
+  LINUX32_BUNDLE_NAME: 'ampl.linux32.tgz'
+  LINUX64_BUNDLE_NAME: 'ampl.linux64.tgz'
+  MACOS64_BUNDLE_NAME: 'ampl.macos64.tgz'
+  MSWIN64_BUNDLE_NAME: 'ampl.mswin64.zip'
 
 stages:
 - stage: build
@@ -30,61 +31,45 @@ stages:
   jobs:
   - job: linux
     pool: {vmImage: 'Ubuntu-16.04'}
-    variables: {bundle_name: $(linux64_bundle_name)}
+    variables: {AMPL_URL: '$(BUNDLES_URL)/$(LINUX64_BUNDLE_NAME)'}
     steps:
       - task: DownloadBuildArtifacts@0
         inputs: {artifactName: 'drop', downloadPath: '.'}
-      - bash: |
-          cp drop/release/* .
+      - bash: cp drop/release/* .
         displayName: Copy package
-      - bash: |
-          sudo bash dependencies.sh
+      - bash: sudo bash dependencies.sh
         displayName: Install Rcpp and testthat
-      - bash: |
-          sudo bash install.sh
+      - bash: sudo bash install.sh
         displayName: Install package
-      - bash: |
-          set -ex
-          curl -O $BUNDLES_URL/$BUNDLE_NAME
-          tar xzvf $BUNDLE_NAME
-          rm $BUNDLE_NAME
-          mv ampl.* ampl
-          sudo SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH" bash test.sh
+      - bash: bash download-ampl.sh $AMPL_URL
+        displayName: Install AMPL
+      - bash: sudo SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH" bash test.sh
         displayName: Test package
   - job: macos
     pool: {vmImage: 'macOS-10.15'}
-    variables: {bundle_name: $(macos64_bundle_name)}
+    variables: {AMPL_URL: '$(BUNDLES_URL)/$(MACOS64_BUNDLE_NAME)'}
     steps:
       - task: DownloadBuildArtifacts@0
         inputs: {artifactName: 'drop', downloadPath: '.'}
-      - bash: |
-          cp drop/release/* .
+      - bash: cp drop/release/* .
         displayName: Copy package
-      - bash: |
-          bash dependencies.sh
+      - bash: bash dependencies.sh
         displayName: Install Rcpp and testthat
-      - bash: |
-          bash install.sh
+      - bash: bash install.sh
         displayName: Install package
-      - bash: |
-          set -ex
-          curl -O $BUNDLES_URL/$BUNDLE_NAME
-          tar xzvf $BUNDLE_NAME
-          rm $BUNDLE_NAME
-          mv ampl.* ampl
-          SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH"  bash test.sh
+      - bash: bash download-ampl.sh $AMPL_URL
+        displayName: Install AMPL
+      - bash: SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH"  bash test.sh
         displayName: Test package
   - job: windows
     pool: {vmImage: 'windows-2019'}
-    variables: {bundle_name: $(mswin64_bundle_name)}
+    variables: {AMPL_URL: '$(BUNDLES_URL)/$(MSWIN64_BUNDLE_NAME)'}
     steps:
       - task: DownloadBuildArtifacts@0
         inputs: {artifactName: 'drop', downloadPath: '.'}
-      - bash: |
-          cp drop/release/* .
+      - bash: cp drop/release/* .
         displayName: Copy package
-      - bash: |
-          bash dependencies.sh
+      - bash: bash dependencies.sh
         displayName: Install Rcpp and testthat
       # - bash: |
       #     # Debug the following issue on azure pipelines:
@@ -97,17 +82,11 @@ stages:
       #     cat `R RHOME`/etc/i386/Makeconf
       #     cat `R RHOME`/share/make/winshlib.mk
       #   displayName: Debug azure-pipelines issue
-      - bash: |
-          sed -i 's/\$(SHLIB_LD) -shared/c:\/rtools40\/mingw64\/bin\/g++ -shared/g' `R RHOME`/share/make/winshlib.mk
+      - bash: sed -i 's/\$(SHLIB_LD) -shared/c:\/rtools40\/mingw64\/bin\/g++ -shared/g' `R RHOME`/share/make/winshlib.mk
         displayName: Hack to fix azure-pipelines issue
-      - bash: |
-          bash install.sh
+      - bash: bash install.sh
         displayName: Install package
-      - bash: |
-          set -ex
-          curl -O $BUNDLES_URL/$BUNDLE_NAME
-          unzip $BUNDLE_NAME
-          rm $BUNDLE_NAME
-          mv ampl.* ampl
-          SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH"  bash test.sh
+      - bash: bash download-ampl.sh $AMPL_URL
+        displayName: Install AMPL
+      - bash: SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH" bash test.sh
         displayName: Test package
