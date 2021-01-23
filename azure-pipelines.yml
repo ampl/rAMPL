@@ -17,10 +17,11 @@ stages:
           set -ex
           python updatelib.py
           bash build.sh
-          mkdir -p upload/{macos,release}
+          mkdir -p upload/{macos,release,doc}
           cp rAMPL_*.tar.gz upload/macos/
           cp rAMPL_*.tar.gz upload/release/
           cp rAMPL_*.tar.gz upload/release/rAMPL.tar.gz
+          cp -r docs/build/html upload/doc/R
         displayName: Build package
       - task: PublishBuildArtifacts@1
         inputs: {artifactName: 'drop', pathtoPublish: 'upload'}

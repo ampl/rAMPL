@@ -40,13 +40,13 @@ master_doc = u'index'
 # General information about the project.
 project = u'AMPL API'
 
-copyright = u'2013-2020, AMPL Inc'
+copyright = u'2013-2021, AMPL Inc'
 
 # Version numbers to be  defined at command line
 # The short X.Y version.
 version =  '2.0'
 # The full version, including alpha/beta/rc tags.
-release = '2.0.3.0-151220'
+release = '2.0.4.0-230121'
 
 
 
