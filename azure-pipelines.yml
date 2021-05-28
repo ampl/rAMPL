@@ -31,7 +31,7 @@ stages:
   dependsOn: build
   jobs:
   - job: linux
-    pool: {vmImage: 'Ubuntu-16.04'}
+    pool: {vmImage: 'Ubuntu-20.04'}
     variables: {AMPL_URL: '$(BUNDLES_URL)/$(LINUX64_BUNDLE_NAME)'}
     steps:
       - task: DownloadBuildArtifacts@0
