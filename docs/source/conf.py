@@ -46,7 +46,7 @@ copyright = u'2013-2021, AMPL Inc'
 # The short X.Y version.
 version =  '2.0'
 # The full version, including alpha/beta/rc tags.
-release = '2.0.5.0-280521'
+release = '2.0.6.0-260721'
 
 
 
