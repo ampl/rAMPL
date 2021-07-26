@@ -13,6 +13,7 @@ test_that("test set entity", {
   expect_equal(s$isScalar(), TRUE)
   expect_equal(s$numInstances(), 1)
   expect_equal(length(s$getIndexingSets()), 0)
+  expect_equal(length(s$xref()), 0)
   expect_equal(length(s$getValues()$s), 10)
   ampl$eval("set scopy;")
   scopy <- ampl$getSet("scopy")

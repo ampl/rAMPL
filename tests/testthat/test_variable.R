@@ -21,6 +21,7 @@ test_that("test variable entity", {
   expect_equal(y$numInstances(), 10)
   expect_equal(length(x$getIndexingSets()), 0)
   expect_equal(y$getIndexingSets(), "1 .. 10")
+  expect_equal(length(x$xref()), 1)
   expect_equal(x$getValues()$x.val, 0)
   expect_equal(x$getValues("dual")$x.dual, 0)
   x2$setValues(x$getValues())

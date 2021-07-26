@@ -335,6 +335,7 @@ RCPP_MODULE(rvar_entity){
     .const_method("isScalar", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::isScalar)
     .const_method("numInstances", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::numInstances)
     .const_method("getIndexingSets", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::getIndexingSets)
+    .const_method("xref", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::xref)
     .const_method("getValues", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::getSuffixValues)
     .const_method("getValues", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::getValues)
     .method("setValues", &RBasicEntity<ampl::VariableInstance, RVariableInstance>::setValues)

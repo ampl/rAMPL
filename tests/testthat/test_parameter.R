@@ -12,6 +12,7 @@ test_that("test parameter entity", {
   expect_equal(p$isScalar(), TRUE)
   expect_equal(p$numInstances(), 1)
   expect_equal(length(p$getIndexingSets()), 0)
+  expect_equal(length(p$xref()), 0)
   expect_equal(p$getValues()$p, 1)
   ampl$eval("param px;")
   px <- ampl$getParameter("px")

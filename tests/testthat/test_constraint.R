@@ -12,6 +12,7 @@ test_that("test constraint entity", {
   expect_equal(c$isScalar(), TRUE)
   expect_equal(c$numInstances(), 1)
   expect_equal(length(c$getIndexingSets()), 0)
+  expect_equal(length(c$xref()), 1)
   expect_equal(c$getValues()$c.dual, 0)
   expect_equal(c$getValues("ub")$c.ub, 0)
   ampl$eval("s.t. c2: x = 0;")

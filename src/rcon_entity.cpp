@@ -283,6 +283,7 @@ RCPP_MODULE(rcon_entity){
     .const_method("isScalar", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::isScalar)
     .const_method("numInstances", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::numInstances)
     .const_method("getIndexingSets", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::getIndexingSets)
+    .const_method("xref", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::xref)
     .const_method("getValues", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::getSuffixValues)
     .const_method("getValues", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::getValues)
     .method("setValues", &RBasicEntity<ampl::ConstraintInstance, RConstraintInstance>::setValues)

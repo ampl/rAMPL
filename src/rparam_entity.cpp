@@ -196,6 +196,7 @@ RCPP_MODULE(rparam_entity){
     .const_method("isScalar", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::isScalar)
     .const_method("numInstances", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::numInstances)
     .const_method("getIndexingSets", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getIndexingSets)
+    .const_method("xref", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::xref)
     //.const_method("getValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getSuffixValues)
     //.const_method("getValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getValues)
     //.method("setValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::setValues)

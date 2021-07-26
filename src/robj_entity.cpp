@@ -123,6 +123,7 @@ RCPP_MODULE(robj_entity){
     .const_method("isScalar", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::isScalar)
     .const_method("numInstances", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::numInstances)
     .const_method("getIndexingSets", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::getIndexingSets)
+    .const_method("xref", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::xref)
     .const_method("getValues", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::getSuffixValues)
     .const_method("getValues", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::getValues)
     .method("setValues", &RBasicEntity<ampl::ObjectiveInstance, RObjectiveInstance>::setValues)

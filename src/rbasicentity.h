@@ -27,6 +27,7 @@ public:
   bool isScalar() const;
   int numInstances() const;
   std::vector<std::string> getIndexingSets() const;
+  std::vector<std::string> xref() const;
   Rcpp::DataFrame getSuffixValues(const Rcpp::List) const;
   Rcpp::DataFrame getValues() const;
   void setValues(Rcpp::DataFrame);
@@ -122,6 +123,18 @@ int RBasicEntity<T, TW>::numInstances() const {
 template <class T, class TW>
 std::vector<std::string> RBasicEntity<T, TW>::getIndexingSets() const {
   ampl::StringArray sa = _impl.getIndexingSets();
+  return std::vector<std::string>(sa.begin(), sa.end());
+}
+
+/*.. method:: Entity.xref()
+
+  Get the names of all entities which depend on this one.
+
+  :return: A list with the names of all entities which depend on this one.
+*/
+template <class T, class TW>
+std::vector<std::string> RBasicEntity<T, TW>::xref() const {
+  ampl::StringArray sa = _impl.xref();
   return std::vector<std::string>(sa.begin(), sa.end());
 }
 

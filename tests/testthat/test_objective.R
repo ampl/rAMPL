@@ -11,6 +11,7 @@ test_that("test objective entity", {
   expect_equal(obj$isScalar(), TRUE)
   expect_equal(obj$numInstances(), 1)
   expect_equal(length(obj$getIndexingSets()), 0)
+  expect_equal(length(obj$xref()), 1)
   expect_equal(obj$getValues()$obj, 0)
   expect_equal(nrow(obj$getValues("result")), 1)
   expect_equal(obj$find(c())$name(), "obj")

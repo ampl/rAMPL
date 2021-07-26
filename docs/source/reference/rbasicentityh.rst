@@ -57,6 +57,12 @@ Entity
 
   :return: The string representation of the indexing sets for this entity or an empty list if the entity is scalar.
 
+.. method:: Entity.xref()
+
+  Get the names of all entities which depend on this one.
+
+  :return: A list with the names of all entities which depend on this one.
+
 .. method:: Entity.getValues()
 
   Get the principal values of this entity as a `data.frame`. The specific returned
