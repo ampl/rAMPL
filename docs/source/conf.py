@@ -104,17 +104,21 @@ html_theme_options = {
             "icon": "fab fa-github"
         },
         {
-            "name": "AMPL",
+            "name": "ampl.github.io",
             "url": "https://ampl.github.io",
-            "icon": "fa fa-code"
+            "icon": "fa fa-code",
+            "target": "_self",
         },
         {
-            "name": "AMPL",
+            "name": "ampl.com",
             "url": "https://ampl.com",
             "icon": "fa fa-home"
         },
     ],
     "collapse_navigation": True,
+}
+html_context = {
+    "theme_logo_text": "R API",
 }
 
 
@@ -136,7 +140,7 @@ html_theme_options = {
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
 #html_logo = None
-html_logo = "_static/logo-inline-web-rampl.png"
+html_logo = "_static/logo-inline-web-v4.png"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -148,6 +152,10 @@ html_favicon = "_static/cropped-favicon-raw-192x192.png"
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+# Add custom css file
+html_css_files = [
+    'css/custom.css',
+]
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
