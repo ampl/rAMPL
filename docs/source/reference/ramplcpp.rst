@@ -11,13 +11,11 @@ AMPL
 
   An object of this class can be used to do the following tasks:
 
-  - Run AMPL code. See :meth:`~.AMPL.eval` and
-    :meth:`~.AMPL.evalAsync`.
+  - Run AMPL code. See :meth:`~.AMPL.eval`.
   - Read models and data from files. See :meth:`~.AMPL.read`,
-    :meth:`~.AMPL.readData`, :meth:`~.AMPL.readAsync`, and
-    :meth:`~.AMPL.readDataAsync`.
+    and :meth:`~.AMPL.readData`.
   - Solve optimization problems constructed from model and data (see
-    :meth:`~.AMPL.solve` and :meth:`~.AMPL.solveAsync`).
+    :meth:`~.AMPL.solve`).
   - Access single Elements of an optimization problem. See
     :meth:`~.AMPL.getVariable`, :meth:`~.AMPL.getConstraint`,
     :meth:`~.AMPL.getObjective`, :meth:`~.AMPL.getSet`,
@@ -31,17 +29,16 @@ AMPL
 
   - Errors coming from the underlying AMPL translator (e.g. syntax errors and
     warnings obtained calling the eval method) are handled by
-    the :class:`~amplpy.ErrorHandler` which can be set and get via
-    :meth:`~.AMPL.getErrorHandler` and
-    :meth:`~.AMPL.setErrorHandler`.
+    an error handler which can be set and get via
+    :meth:`~.AMPL.setErrorHandler` and
+    :meth:`~.AMPL.getErrorHandler`.
   - Generic errors coming from misusing the API, which are detected in
     R, are thrown as exceptions.
 
   The default implementation of the error handler prints errors and warnings to the console.
 
   The output of every user interaction with the underlying translator is
-  handled implementing the abstract class :class:`~amplpy.OutputHandler`.
-  The (only) method is called at each block of output from the translator.
+  handled implementing an output handler function.
   The current output handler can be accessed and set via
   :meth:`~.AMPL.getOutputHandler` and
   :meth:`~.AMPL.setOutputHandler`.
