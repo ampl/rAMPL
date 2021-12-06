@@ -55,6 +55,20 @@ Environment
   :return: The location where AMPLAPI will search for the AMPL executable.
   :rtype: `character`
 
+.. method:: Environment.setBinName(binaryName)
+
+  Set the name of the AMPL executable.
+
+  :param binaryName: The name of the AMPL binary.
+  :type binaryName: `character`
+
+.. method:: Environment.getBinName()
+
+  Get the name of the AMPL executable.
+
+  :return: The name of the AMPL executable.
+  :rtype: `character`
+
 .. method:: Environment.toString()
 
   Returns all variables in the object as a string.

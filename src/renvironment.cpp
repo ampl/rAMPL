@@ -28,6 +28,7 @@ Environment
 */
 REnvironment::REnvironment()  { }
 REnvironment::REnvironment(std::string binaryDirectory): _impl(binaryDirectory) { }
+REnvironment::REnvironment(std::string binaryDirectory, std::string binaryName): _impl(binaryDirectory, binaryName) { }
 
 /*.. method:: Environment.get(name)
 
@@ -82,6 +83,28 @@ std::string REnvironment::getBinDir() const {
   return _impl.getBinDir();
 }
 
+/*.. method:: Environment.setBinName(binaryName)
+
+  Set the name of the AMPL executable.
+
+  :param binaryName: The name of the AMPL binary.
+  :type binaryName: `character`
+*/
+void REnvironment::setBinName(std::string binaryName) {
+  return _impl.setBinName(binaryName);
+}
+
+/*.. method:: Environment.getBinName()
+
+  Get the name of the AMPL executable.
+
+  :return: The name of the AMPL executable.
+  :rtype: `character`
+*/
+std::string REnvironment::getBinName() const {
+  return _impl.getBinName();
+}
+
 /*.. method:: Environment.toString()
 
   Returns all variables in the object as a string.
@@ -113,10 +136,13 @@ RCPP_MODULE(renvironment){
   Rcpp::class_<REnvironment>("Environment")
     .constructor()
     .constructor<std::string>()
+    .constructor<std::string, std::string>()
     .method("get", &REnvironment::get)
     .method("put", &REnvironment::put)
     .method("setBinDir", &REnvironment::setBinDir)
     .method("getBinDir", &REnvironment::getBinDir)
+    .method("setBinName", &REnvironment::setBinName)
+    .method("getBinName", &REnvironment::getBinName)
     .method("toString", &REnvironment::toString)
     .method("list", &REnvironment::list)
     ;

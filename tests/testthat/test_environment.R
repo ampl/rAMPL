@@ -1,5 +1,17 @@
 context("Test Environment")
 
+test_that("test environment initialization", {
+  env = new(Environment, "binary_directory")
+  expect_equal("binary_directory", env$getBinDir())
+  env = new(Environment, "binary_directory", "binary_name")
+  expect_equal("binary_directory", env$getBinDir())
+  expect_equal("binary_name", env$getBinName())
+  env$setBinDir("binary_directory_2")
+  expect_equal("binary_directory_2", env$getBinDir())
+  env$setBinName("binary_name_2")
+  expect_equal("binary_name_2", env$getBinName())
+})
+
 test_that("test environment", {
   env1 <- new(Environment)
   ampl <- new(AMPL, env1)
