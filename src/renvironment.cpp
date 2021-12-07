@@ -23,8 +23,19 @@ Environment
   Note that if this constructor is used, the automatic lookup for an AMPL
   executable will not be executed.
 
-  :param binaryDirectory: The directory in which look for the AMPL Binary.
+  :param binaryDirectory: The directory in which look for the AMPL binary.
   :type binaryDirectory: `character`
+
+.. function:: Environment(binaryDirectory, binaryName)
+
+  Constructor with ability to select the location and name of the AMPL binary.
+  Note that if this constructor is used, the automatic lookup for an AMPL
+  executable will not be executed.
+
+  :param binaryDirectory: The directory in which look for the AMPL binary.
+  :type binaryDirectory: `character`
+  :param binaryName: The name of the AMPL binary.
+  :type binaryName: `character`
 */
 REnvironment::REnvironment()  { }
 REnvironment::REnvironment(std::string binaryDirectory): _impl(binaryDirectory) { }
