@@ -56,7 +56,7 @@ you can add it passing a new :class:`Environment` to :class:`AMPL` as follows:
 
   ampl <- new(AMPL, new(Environment, "full path to the AMPL installation directory"))
 
-Note that you may need to escape backslashes (e.g., `'C:\\\\\\ampl\\\\\\ampl.mswin64'`) if included in the path.
+Note that you may need to escape backslashes (e.g., `'C:\\\\ampl\\\\ampl.mswin64'`) if included in the path.
 
 
 Development
