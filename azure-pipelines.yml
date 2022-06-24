@@ -88,12 +88,10 @@ stages:
           sed -i 's/\$(SHLIB_LD)/g++/g' `R RHOME`/share/make/winshlib.mk
           cat `R RHOME`/share/make/winshlib.mk
         displayName: Hack to fix azure-pipelines issue
-      - bash: bash dependencies.sh
-        displayName: Install Rcpp and testthat
       - script: |
           SET PATH=c:\rtools40\usr\bin;%PATH%
-          bash -c "which g++"
-          bash install.sh
+          R --no-save -q -e "install.packages(c('Rcpp', 'testthat'), repos='http://cran.us.r-project.org', INSTALL_opts=c('--no-multiarch', '--no-staged-install'))"
+          R CMD INSTALL rAMPL_*.tar.gz --debug --no-multiarch --no-staged-install
         displayName: Install package
       - bash: bash download-ampl.sh $AMPL_URL
         displayName: Install AMPL
