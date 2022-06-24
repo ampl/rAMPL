@@ -84,7 +84,7 @@ stages:
       - bash: |
           set -ex
           cat `R RHOME`/share/make/winshlib.mk
-          sed -i 's/\$(SHLIB_LD)/c:\/rtools40\/mingw64\/bin\/g++/g' `R RHOME`/share/make/winshlib.mk
+          sed -i 's/\$(SHLIB_LD)/c:\/rtools42\/mingw64\/bin\/g++/g' `R RHOME`/share/make/winshlib.mk
           cat `R RHOME`/share/make/winshlib.mk
         displayName: Hack to fix azure-pipelines issue
       - bash: bash dependencies.sh
