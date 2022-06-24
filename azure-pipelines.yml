@@ -83,7 +83,7 @@ stages:
       #   displayName: Debug azure-pipelines issue
       - bash: |
           set -ex
-          ls -l /c/
+          which g++
           cat `R RHOME`/share/make/winshlib.mk
           sed -i 's/\$(SHLIB_LD)/g++/g' `R RHOME`/share/make/winshlib.mk
           cat `R RHOME`/share/make/winshlib.mk
