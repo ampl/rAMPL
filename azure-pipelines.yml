@@ -90,7 +90,10 @@ stages:
         displayName: Hack to fix azure-pipelines issue
       - bash: bash dependencies.sh
         displayName: Install Rcpp and testthat
-      - bash: bash install.sh
+      - script: |
+          SET PATH=c:\rtools40\usr\bin;%PATH%
+          bash -c "which g++"
+          bash install.sh
         displayName: Install package
       - bash: bash download-ampl.sh $AMPL_URL
         displayName: Install AMPL
