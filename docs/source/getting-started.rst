@@ -18,7 +18,7 @@ In order to install the latest version of the R API you just need to run:
 .. code-block:: R
 
     install.packages("Rcpp", type="source")
-    install.packages("https://ampl.com/dl/API/rAMPL.tar.gz", repos=NULL)
+    install.packages("https://ampl.com/dl/API/rAMPL.tar.gz", repos=NULL, INSTALL_opts=c("--no-multiarch", "--no-staged-install"))
 
 Alternatively, you can install a specific version as follows:
 
