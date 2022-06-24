@@ -91,7 +91,8 @@ stages:
       - script: |
           SET PATH=c:\rtools40\usr\bin;%PATH%
           R --no-save -q -e "install.packages(c('Rcpp', 'testthat'), repos='http://cran.us.r-project.org', INSTALL_opts=c('--no-multiarch', '--no-staged-install'))"
-          R CMD INSTALL rAMPL_*.tar.gz --debug --no-multiarch --no-staged-install
+          move rAMPL_*.tar.gz rAMPL.tar.gz
+          R CMD INSTALL rAMPL.tar.gz --debug --no-multiarch --no-staged-install
         displayName: Install package
       - bash: bash download-ampl.sh $AMPL_URL
         displayName: Install AMPL
