@@ -1,2 +1,2 @@
 PKG_LIBS = -L../inst/libs/i386 -L../inst/libs/x64 -lampl
-PKG_CPPFLAGS =  -I../src/include -Wall -DNOGDI
+PKG_CPPFLAGS =  -I../src/include -Wall -DNOGDI -lstdc++
