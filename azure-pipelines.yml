@@ -30,40 +30,40 @@ stages:
   displayName: 'Test'
   dependsOn: build
   jobs:
-  - job: linux
-    pool: {vmImage: 'Ubuntu-20.04'}
-    variables: {AMPL_URL: '$(BUNDLES_URL)/$(LINUX64_BUNDLE_NAME)'}
-    steps:
-      - task: DownloadBuildArtifacts@0
-        inputs: {artifactName: 'drop', downloadPath: '.'}
-      - bash: cp drop/release/* .
-        displayName: Copy package
-      - bash: sudo bash dependencies.sh
-        displayName: Install Rcpp and testthat
-      - bash: sudo bash install.sh
-        displayName: Install package
-      - bash: bash download-ampl.sh $AMPL_URL
-        displayName: Install AMPL
-      - bash: sudo SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH" bash test.sh
-        displayName: Test package
-  - job: macos
-    pool: {vmImage: 'macOS-10.15'}
-    variables: {AMPL_URL: '$(BUNDLES_URL)/$(MACOS64_BUNDLE_NAME)'}
-    steps:
-      - task: DownloadBuildArtifacts@0
-        inputs: {artifactName: 'drop', downloadPath: '.'}
-      - bash: cp drop/release/* .
-        displayName: Copy package
-      - bash: bash dependencies.sh
-        displayName: Install Rcpp and testthat
-      - bash: bash install.sh
-        displayName: Install package
-      - bash: bash download-ampl.sh $AMPL_URL
-        displayName: Install AMPL
-      - bash: SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH"  bash test.sh
-        displayName: Test package
+  # - job: linux
+  #   pool: {vmImage: 'Ubuntu-20.04'}
+  #   variables: {AMPL_URL: '$(BUNDLES_URL)/$(LINUX64_BUNDLE_NAME)'}
+  #   steps:
+  #     - task: DownloadBuildArtifacts@0
+  #       inputs: {artifactName: 'drop', downloadPath: '.'}
+  #     - bash: cp drop/release/* .
+  #       displayName: Copy package
+  #     - bash: sudo bash dependencies.sh
+  #       displayName: Install Rcpp and testthat
+  #     - bash: sudo bash install.sh
+  #       displayName: Install package
+  #     - bash: bash download-ampl.sh $AMPL_URL
+  #       displayName: Install AMPL
+  #     - bash: sudo SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH" bash test.sh
+  #       displayName: Test package
+  # - job: macos
+  #   pool: {vmImage: 'macOS-10.15'}
+  #   variables: {AMPL_URL: '$(BUNDLES_URL)/$(MACOS64_BUNDLE_NAME)'}
+  #   steps:
+  #     - task: DownloadBuildArtifacts@0
+  #       inputs: {artifactName: 'drop', downloadPath: '.'}
+  #     - bash: cp drop/release/* .
+  #       displayName: Copy package
+  #     - bash: bash dependencies.sh
+  #       displayName: Install Rcpp and testthat
+  #     - bash: bash install.sh
+  #       displayName: Install package
+  #     - bash: bash download-ampl.sh $AMPL_URL
+  #       displayName: Install AMPL
+  #     - bash: SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH"  bash test.sh
+  #       displayName: Test package
   - job: windows
-    pool: {vmImage: 'windows-2022'}
+    pool: {vmImage: 'windows-2019'}
     variables: {AMPL_URL: '$(BUNDLES_URL)/$(MSWIN64_BUNDLE_NAME)'}
     steps:
       - task: DownloadBuildArtifacts@0
