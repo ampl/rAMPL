@@ -82,7 +82,8 @@ stages:
       #     cat `R RHOME`/share/make/winshlib.mk
       #   displayName: Debug azure-pipelines issue
       - bash: |
-          choco upgrade rtools
+          choco uninstall rtools
+          choco install rtools
         displayName: Install Rtools
       # - bash: |
       #     set -ex
