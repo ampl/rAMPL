@@ -82,11 +82,14 @@ stages:
       #     cat `R RHOME`/share/make/winshlib.mk
       #   displayName: Debug azure-pipelines issue
       - bash: |
-          set -ex
-          cat `R RHOME`/share/make/winshlib.mk
-          sed -i 's/\$(SHLIB_LD)/c:\/rtools40\/mingw64\/bin\/g++/g' `R RHOME`/share/make/winshlib.mk
-          cat `R RHOME`/share/make/winshlib.mk
-        displayName: Hack to fix azure-pipelines issue
+          choco upgrade rtools
+        displayName: Install Rtools
+      # - bash: |
+      #     set -ex
+      #     cat `R RHOME`/share/make/winshlib.mk
+      #     sed -i 's/\$(SHLIB_LD)/c:\/rtools40\/mingw64\/bin\/g++/g' `R RHOME`/share/make/winshlib.mk
+      #     cat `R RHOME`/share/make/winshlib.mk
+      #   displayName: Hack to fix azure-pipelines issue
       - bash: bash dependencies.sh
         displayName: Install Rcpp and testthat
       - bash: bash install.sh
