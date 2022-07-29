@@ -83,6 +83,7 @@ stages:
       #   displayName: Debug azure-pipelines issue
       - script: |
           choco uninstall rtools
+          choco install winget
           winget install -e --id RProject.Rtools
         displayName: Install Rtools
       # - bash: |
