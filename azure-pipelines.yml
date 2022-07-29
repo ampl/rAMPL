@@ -63,7 +63,7 @@ stages:
   #     - bash: SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH"  bash test.sh
   #       displayName: Test package
   - job: windows
-    pool: {vmImage: 'windows-2019'}
+    pool: {vmImage: 'windows-2022'}
     variables: {AMPL_URL: '$(BUNDLES_URL)/$(MSWIN64_BUNDLE_NAME)'}
     steps:
       - task: DownloadBuildArtifacts@0
