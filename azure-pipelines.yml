@@ -81,7 +81,7 @@ stages:
       #     cat `R RHOME`/etc/i386/Makeconf
       #     cat `R RHOME`/share/make/winshlib.mk
       #   displayName: Debug azure-pipelines issue
-      - bash: |
+      - script: |
           choco uninstall rtools
           winget install -e --id RProject.Rtools
         displayName: Install Rtools
