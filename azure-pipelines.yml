@@ -10,7 +10,7 @@ stages:
   displayName: 'Build'
   jobs:
   - job: macos
-    pool: {vmImage: 'macOS-10.15'}
+    pool: {vmImage: 'macOS-latest'}
     steps:
       - task: UsePythonVersion@0
       - bash: |
@@ -83,7 +83,7 @@ stages:
       #   displayName: Debug azure-pipelines issue
       - bash: |
           choco uninstall rtools
-          choco install rtools
+          winget install -e --id RProject.Rtools
         displayName: Install Rtools
       # - bash: |
       #     set -ex
