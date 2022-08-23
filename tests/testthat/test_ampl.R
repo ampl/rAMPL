@@ -90,11 +90,11 @@ test_that("test AMPL", {
   outh <- function(output) { out <<- paste(out, output, sep="") }
   expect_error(ampl$getOutputHandler())
   ampl$setOutputHandler(outh)
-  ampl$eval("display 1;")
-  expect_equal(out, "1 = 1\n\n")
+  ampl$eval("option times, gentimes; display 1;")
+  expect_equal(out, "option times 0;\noption gentimes 0;\n1 = 1\n\n")
 
   ampl$getOutputHandler()("test")
-  expect_equal(out, "1 = 1\n\ntest")
+  expect_equal(out, "option times 0;\noption gentimes 0;\n1 = 1\n\ntest")
 
   last_message <- ""
   expect_error(ampl$getErrorHandler())
