@@ -10,7 +10,7 @@ stages:
   displayName: 'Build'
   jobs:
   - job: macos
-    pool: {vmImage: 'macOS-10.15'}
+    pool: {vmImage: 'macos-latest'}
     steps:
       - task: UsePythonVersion@0
       - bash: |
@@ -47,7 +47,7 @@ stages:
       - bash: sudo SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH" bash test.sh
         displayName: Test package
   - job: macos
-    pool: {vmImage: 'macOS-10.15'}
+    pool: {vmImage: 'macos-latest'}
     variables: {AMPL_URL: '$(BUNDLES_URL)/$(MACOS64_BUNDLE_NAME)'}
     steps:
       - task: DownloadBuildArtifacts@0
