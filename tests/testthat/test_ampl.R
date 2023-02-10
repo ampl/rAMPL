@@ -101,7 +101,7 @@ test_that("test AMPL", {
   erroh <- function(error) { last_message <<- error$message }
   ampl$setErrorHandler(erroh)
   ampl$eval("xx;")
-  expect_equal(last_message, "syntax error")
+  expect_true(startsWith(last_message, "syntax error"))
   ampl$getErrorHandler()(list(message="foo"))
   expect_equal(last_message, "foo")
 
