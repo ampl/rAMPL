@@ -7,4 +7,4 @@ set -ex
 # $ R
 # > library(remotes)
 # > install_github("r-lib/testthat")
-R --no-save -q -e "library(testthat); test_package('rAMPL');"
+R --no-save -q -e "library(testthat); test_package('rAMPL');" 2>&1
