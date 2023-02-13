@@ -1,0 +1,96 @@
+name: build-and-test
+run-name: ${{ github.actor }} is building
+on: [push]
+jobs:
+  build-rAMPL:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: r-lib/actions/setup-r@v2
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - run: |
+          set -ex
+          python updatelib.py
+          bash build.sh
+          mkdir -p upload/{macos,release,doc}
+          cp rAMPL_*.tar.gz upload/macos/
+          cp rAMPL_*.tar.gz upload/release/
+          cp rAMPL_*.tar.gz upload/release/rAMPL.tar.gz
+          cp -r docs/build/html upload/doc/R
+      - uses: actions/upload-artifact@v3
+        with:
+          name: drop
+          path: upload/
+
+  test-linux:
+    needs: build-rAMPL
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: r-lib/actions/setup-r@v2
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - uses: actions/download-artifact@v3
+        with:
+          name: drop
+      - name: Copy package
+        run: cp release/* .
+      - name: Install Rcpp and testthat
+        run: bash dependencies.sh
+      - name: Install package
+        run: bash install.sh
+      - name: Install AMPL
+        run: bash download-ampl.sh https://portal.ampl.com/dl/amplce/ampl.linux64.tgz
+      - name: Test package
+        run: SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH" bash test.sh
+
+  test-macos:
+    needs: build-rAMPL
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: r-lib/actions/setup-r@v2
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - uses: actions/download-artifact@v3
+        with:
+          name: drop
+      - name: Copy package
+        run: cp release/* .
+      - name: Install Rcpp and testthat
+        run: bash dependencies.sh
+      - name: Install package
+        run: bash install.sh
+      - name: Install AMPL
+        run: bash download-ampl.sh https://portal.ampl.com/dl/amplce/ampl.macos64.tgz
+      - name: Test package
+        run: SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH" bash test.sh
+
+  test-windows:
+    needs: build-rAMPL
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: r-lib/actions/setup-r@v2
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - uses: actions/download-artifact@v3
+        with:
+          name: drop
+      - name: Copy package
+        shell: bash
+        run: cp release/* .
+      - name: Install Rcpp and testthat
+        run: bash dependencies.sh
+      - name: Install package
+        run: bash install.sh
+      - name: Install AMPL
+        run: bash download-ampl.sh https://portal.ampl.com/dl/amplce/ampl.mswin64.zip
+      - name: Test package
+        shell: bash
+        run: SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH" bash test.sh
