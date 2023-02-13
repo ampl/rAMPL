@@ -1,5 +1,7 @@
 ### rAMPL
 
+[![Build Status](https://dev.azure.com/ampldev/rAMPL/_apis/build/status/ampl.rAMPL?branchName=master)](https://dev.azure.com/ampldev/rAMPL/_build/latest?definitionId=10&branchName=master) [![build-and-test](https://github.com/ampl/rAMPL/actions/workflows/build-and-test.yaml/badge.svg)](https://github.com/ampl/rAMPL/actions/workflows/build-and-test.yaml)
+
 AMPL API is an interface that allows developers to access the features of the
 AMPL interpreter from within a programming language. All model generation and
 solver interaction is handled directly by AMPL, which leads to great stability
@@ -13,16 +15,12 @@ from C++, Java, C#, MATLAB, Python, and R.
 
 The AMPL API can function as an add-on to any existing AMPL installation. If
 you do not yet have an AMPL installation on the computer where you will be
-working with the API, see our
-[demo page](http://ampl.com/try-ampl/download-a-free-demo/)
-or
-[trial page](http://ampl.com/try-ampl/request-a-full-trial/)
+working with the API. Use our [Community Edition](http://ampl.com/ce)
 to download a working version that can be installed quickly.
 
 #### Documentation
 
 - http://rAMPL.readthedocs.io
-- http://ampl.com/api/nightly/R/
 
 #### Setup
 
@@ -52,5 +50,4 @@ $ R CMD INSTALL rAMPL_<version>.tar.gz
 BSD-3
 
 ***
-Copyright © 2018 AMPL Optimization inc. All rights reserved.
-
+Copyright © 2023 AMPL Optimization inc. All rights reserved.
