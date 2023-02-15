@@ -1,7 +1,7 @@
 .. _secRQuickStart:
 
-R quick start
-==================
+Quick Start
+===========
 
 This section will show a simple example to illustrate various functionalities of the AMPL R interface.
 The full example prints the version of the AMPL interpreter used, loads a model from file and the corresponding

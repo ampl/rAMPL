@@ -1,6 +1,6 @@
 .. _secReferenceR:
 
-R API reference
+R API Reference
 ===============
 
 AMPL classes
