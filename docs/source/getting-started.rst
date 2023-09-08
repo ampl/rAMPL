@@ -9,8 +9,8 @@ Installation
 The AMPL API can function as an add-on to any existing AMPL installation.
 If you do not yet have an AMPL installation on the computer where you will
 be working with the API, see our
-`demo page <http://ampl.com/try-ampl/download-a-free-demo/>`_ or
-`trial page <http://ampl.com/try-ampl/request-a-full-trial/>`_ to download a
+`demo page <https://ampl.com/try-ampl/download-a-free-demo/>`_ or
+`trial page <https://ampl.com/try-ampl/request-a-full-trial/>`_ to download a
 working version that can be installed quickly.
 
 In order to install the latest version of the R API you just need to run:

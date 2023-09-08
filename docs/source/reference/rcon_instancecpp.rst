@@ -10,7 +10,7 @@ ConstraintInstance
   This class represent an instance of a constraint.
 
   In general, all AMPL suffixes for a constraint are available through methods
-  with the same name in this class. See http://www.ampl.com/NEW/suffbuiltin.html
+  with the same name in this class. See https://www.ampl.com/NEW/suffbuiltin.html
   for a list of the available suffixes.
 
   Note that, since this class represents instances of both algebraic and logical

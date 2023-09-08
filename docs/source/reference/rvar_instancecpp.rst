@@ -13,7 +13,7 @@ VariableInstance
   of use when dealing with scalar variables.
 
   All AMPL suffixes for an algebraic variable are available through methods with
-  the same name in this class. See http://www.ampl.com/NEW/suffbuiltin.html
+  the same name in this class. See https://www.ampl.com/NEW/suffbuiltin.html
   for a list of the available suffixes.
 
   All the accessors in this class throw an error if the instance
