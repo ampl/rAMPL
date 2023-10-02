@@ -113,7 +113,7 @@ html_theme_options = {
     "logo_text": "R API",
 }
 
-html_baseurl = "https://rampl.ampl.com"
+html_baseurl = "https://rampl.ampl.com/en/latest/"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
