@@ -113,6 +113,7 @@ html_theme_options = {
     "logo_text": "R API",
 }
 
+html_baseurl = "https://rampl.ampl.com"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -207,7 +208,7 @@ latex_font_size = "10pt"
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ("index", "sphinx.tex", "sphinx Documentation", "Filipe Brandao", "manual")
+    ("index", "sphinx.tex", "sphinx Documentation", "AMPL Optimization Inc.", "manual")
 ]
 
 
@@ -245,7 +246,7 @@ latex_use_parts = False
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [("index", "sphinx", "sphinx Documentation", ["Filipe Brandão"], 1)]
+man_pages = [("index", "sphinx", "sphinx Documentation", ["AMPL Optimization Inc."], 1)]
 
 # -- Additional options --------------------------------------------------------
 
