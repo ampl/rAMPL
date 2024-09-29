@@ -11,7 +11,7 @@ ObjectiveInstance
   the properties (corresponding to AMPL suffixes) of the objective instance
   can be accessed through methods like :meth:`~.ObjectiveInstance.value`.
   The methods have the same name of the corresponding AMPL suffixes.
-  See https://www.ampl.com/NEW/suffbuiltin.html for a list of the available
+  See http://www.ampl.com/NEW/suffbuiltin.html for a list of the available
   suffixes.
 
   All these methods throw an error if called on an entity which has been deleted

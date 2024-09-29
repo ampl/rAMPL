@@ -19,7 +19,7 @@ Parameter
   using :meth:`~AMPL.setData` and an object of class
   :class:`~DataFrame`.
 */
-RParameterEntity::RParameterEntity(ampl::Parameter impl): RBasicEntity<ampl::VariantRef, ampl::VariantRef>(impl), _impl(impl) { }
+RParameterEntity::RParameterEntity(ampl::Parameter impl): RBasicEntity<ampl::Variant, ampl::Variant>(impl), _impl(impl) { }
 
 /*.. method:: Parameter.isSymbolic()
 
@@ -105,7 +105,7 @@ Rcpp::DataFrame RParameterEntity::getValues() const {
   Get the value of a scalar parameter.
 */
 SEXP RParameterEntity::value() const {
-  ampl::VariantRef value = _impl.get();
+  ampl::Variant value = _impl.get();
   if(value.type() == ampl::NUMERIC) {
     return Rcpp::wrap(value.dbl());
   } else {
@@ -155,31 +155,29 @@ void RParameterEntity::setIndVal(Rcpp::List index, SEXP value) {
   }
 }
 
-// RBasicEntity<ampl::VariantRef, ampl::VariantRef>
-template <>
-SEXP RBasicEntity<ampl::VariantRef, ampl::VariantRef>::get(Rcpp::List index) const {
+// RBasicEntity<ampl::Variant, ampl::Variant>
+SEXP RParameterEntity::get(Rcpp::List index) const {
   return variant2sexp(_impl.get(list2tuple(index)));
 }
 
-template <>
-SEXP RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getScalar() const {
+SEXP RParameterEntity::getScalar() const {
   return variant2sexp(_impl.get());
 }
 
-template <>
-SEXP RBasicEntity<ampl::VariantRef, ampl::VariantRef>::find(Rcpp::List index) const {
-  ampl::internal::CountedIterator<ampl::internal::EntityWrapper<ampl::VariantRef> > it = _impl.find(list2tuple(index));
-  if(it != _impl.end()) {
+SEXP RParameterEntity::find(Rcpp::List index) const {
+  std::map<ampl::Tuple, ampl::Variant> instances = _impl.getInstances();
+  typename std::map<ampl::Tuple, ampl::Variant>::iterator it = instances.find(list2tuple(index));
+  if(it != instances.end()) {
     return variant2sexp(it->second);
   } else {
     return R_NilValue;
   }
 }
 
-template <>
-Rcpp::List RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getInstances() const {
+Rcpp::List RParameterEntity::getInstances() const {
   Rcpp::List list;
-  for(ampl::BasicEntity<ampl::VariantRef>::iterator it = _impl.begin(); it != _impl.end(); it++) {
+  std::map<ampl::Tuple, ampl::Variant> instances = _impl.getInstances();
+  for(typename std::map<ampl::Tuple, ampl::Variant>::iterator it = instances.begin(); it != instances.end(); it++) {
     Rcpp::List row = tuple2list(it->first);
     row.push_back(variant2sexp(it->second));
     list.push_back(row);
@@ -189,25 +187,25 @@ Rcpp::List RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getInstances() cons
 
 // *** RCPP_MODULE ***
 RCPP_MODULE(rparam_entity){
-  Rcpp::class_<RBasicEntity<ampl::VariantRef, ampl::VariantRef> >("PEntity")
-    .const_method("name", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::name)
-    .const_method("toString", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::toString)
-    .const_method("indexarity", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::indexarity)
-    .const_method("isScalar", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::isScalar)
-    .const_method("numInstances", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::numInstances)
-    .const_method("getIndexingSets", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getIndexingSets)
-    .const_method("xref", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::xref)
+  Rcpp::class_<RBasicEntity<ampl::Variant, ampl::Variant> >("PEntity")
+    .const_method("name", &RBasicEntity<ampl::Variant, ampl::Variant>::name)
+    .const_method("toString", &RBasicEntity<ampl::Variant, ampl::Variant>::toString)
+    .const_method("indexarity", &RBasicEntity<ampl::Variant, ampl::Variant>::indexarity)
+    .const_method("isScalar", &RBasicEntity<ampl::Variant, ampl::Variant>::isScalar)
+    .const_method("numInstances", &RBasicEntity<ampl::Variant, ampl::Variant>::numInstances)
+    .const_method("getIndexingSets", &RBasicEntity<ampl::Variant, ampl::Variant>::getIndexingSets)
+    .const_method("xref", &RBasicEntity<ampl::Variant, ampl::Variant>::xref)
     //.const_method("getValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getSuffixValues)
     //.const_method("getValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getValues)
     //.method("setValues", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::setValues)
-    .const_method("[[", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::get)
-    .const_method("get", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::get)
-    .const_method("get", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getScalar)
-    .const_method("find", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::find)
-    .const_method("getInstances", &RBasicEntity<ampl::VariantRef, ampl::VariantRef>::getInstances)
+    //.const_method("[[", &RBasicEntity<ampl::Variant, ampl::Variant>::get)
+    //.const_method("get", &RBasicEntity<ampl::Variant, ampl::Variant>::get)
+    //.const_method("get", &RBasicEntity<ampl::Variant, ampl::Variant>::getScalar)
+    //.const_method("find", &RBasicEntity<ampl::Variant, ampl::Variant>::find)
+    //.const_method("getInstances", &RBasicEntity<ampl::Variant, ampl::Variant>::getInstances)
     ;
   Rcpp::class_<RParameterEntity>("Parameter")
-    .derives<RBasicEntity<ampl::VariantRef, ampl::VariantRef> >("PEntity")
+    .derives<RBasicEntity<ampl::Variant, ampl::Variant> >("PEntity")
     .method("[[<-", &RParameterEntity::setIndVal)
     .method("isSymbolic", &RParameterEntity::isSymbolic, "Returns true if the parameter is declared as symbolic")
     .method("setValues", &RParameterEntity::setValues, "Assign the specified values to this parameter")
@@ -215,5 +213,10 @@ RCPP_MODULE(rparam_entity){
     .method("value", &RParameterEntity::value, "Get the value of a scalar parameter")
     .method("set", &RParameterEntity::setIndVal, "Set the value of an indexed parameter")
     .method("set", &RParameterEntity::set, "Set the value of a scalar parameter")
+    .const_method("[[", &RParameterEntity::get)
+    .const_method("get", &RParameterEntity::get)
+    .const_method("get", &RParameterEntity::getScalar)
+    .const_method("find", &RParameterEntity::find)
+    .const_method("getInstances", &RParameterEntity::getInstances)
     ;
 }

@@ -14,8 +14,8 @@ public:
   ampl::Set _impl;
   RSetEntity(ampl::Set impl);
   int arity() const;
-  int size() const;
-  std::vector<Rcpp::List> members() const;
+  int size();// const;
+  std::vector<Rcpp::List> members();// const;
   bool contains(Rcpp::List tuple) const;
   Rcpp::DataFrame getValues() const;
   void setValues(SEXP values);

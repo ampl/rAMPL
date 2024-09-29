@@ -1,4 +1,4 @@
-#include "rcon_entity.h"
+#include "rcon_instance.h"
 #include "utils.h"
 #include <Rcpp.h>
 /*.. _secRrefConInstance:

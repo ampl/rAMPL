@@ -18,13 +18,12 @@ Rcpp::XPtr<T> getObj(const std::string &type, SEXP s) {
 }
 
 ampl::Tuple list2tuple(Rcpp::List list);
-Rcpp::List tuple2list(const ampl::TupleRef &tuple);
+Rcpp::List tuple2list(const ampl::Tuple &tuple);
 
 ampl::DataFrame rdf2df(Rcpp::DataFrame rdf, int numberOfIndexColumns = -1);
 
 Rcpp::DataFrame df2rdf(const ampl::DataFrame &df);
 
-SEXP variant2sexp(const ampl::VariantRef &value);
 SEXP variant2sexp(const ampl::Variant &value);
 
 #endif

@@ -6,7 +6,7 @@
 #include "rbasicentity.h"
 #include <Rcpp.h>
 
-class RParameterEntity: public RBasicEntity<ampl::VariantRef, ampl::VariantRef>{
+class RParameterEntity: public RBasicEntity<ampl::Variant, ampl::Variant>{
 public:
   ampl::Parameter _impl;
   RParameterEntity(ampl::Parameter impl);
@@ -17,6 +17,10 @@ public:
   SEXP value() const;
   void set(SEXP value);
   void setIndVal(Rcpp::List index, SEXP value);
+  SEXP get(Rcpp::List index) const;
+  SEXP getScalar() const;
+  SEXP find(Rcpp::List index) const;
+  Rcpp::List getInstances() const;
 };
 
 RCPP_EXPOSED_CLASS_NODECL(RParameterEntity)

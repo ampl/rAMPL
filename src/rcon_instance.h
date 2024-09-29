@@ -4,8 +4,6 @@
 #include <string>
 #include "ampl/entity.h"
 #include "ampl/instance.h"
-#include "rbasicentity.h"
-#include "rcon_instance.h"
 #include <Rcpp.h>
 
 class RConstraintInstance {

@@ -53,7 +53,7 @@ REnvironment::REnvironment(std::string binaryDirectory, std::string binaryName):
 Rcpp::String REnvironment::get(std::string name) const {
   ampl::Environment::iterator it = _impl.find(name);
   if(it != _impl.end()) {
-    return it->second;
+    return it->value;
   } else {
     return NA_STRING;
   }
@@ -137,7 +137,7 @@ std::string REnvironment::toString() const {
 Rcpp::List REnvironment::list() const {
   Rcpp::List list;
   for(ampl::Environment::iterator it = _impl.begin(); it != _impl.end(); it++){
-    list[it->first] = it->second;
+    list[std::string(it->name)] = std::string(it->value);
   }
   return list;
 }

@@ -37,7 +37,7 @@ public:
   Rcpp::List getInstances() const;
 };
 
-RCPP_EXPOSED_CLASS_NODECL(ampl::VariantRef);
+RCPP_EXPOSED_CLASS_NODECL(ampl::Variant);
 
 /*.. class:: Entity
 
@@ -214,6 +214,7 @@ SEXP RBasicEntity<T, TW>::get(Rcpp::List index) const {
     return Rcpp::wrap(TW(_impl.get(list2tuple(index))));
   }
 }
+
 template <class T, class TW>
 SEXP RBasicEntity<T, TW>::getScalar() const {
   return Rcpp::wrap(TW(_impl.get()));
@@ -227,8 +228,10 @@ SEXP RBasicEntity<T, TW>::getScalar() const {
 */
 template <class T, class TW>
 SEXP RBasicEntity<T, TW>::find(Rcpp::List index) const {
-  ampl::internal::CountedIterator<ampl::internal::EntityWrapper<T> > it = _impl.find(list2tuple(index));
-  if(it != _impl.end()) {
+  std::map<ampl::Tuple, T> instances = _impl.getInstances();
+  typename std::map<ampl::Tuple, T>::iterator it = instances.find(list2tuple(index));
+  //ampl::internal::CountedIterator<ampl::internal::EntityWrapper<T> > it = _impl.find(list2tuple(index));
+  if(it != instances.end()) {
     return Rcpp::wrap(TW(it->second));
   } else {
     return R_NilValue;
@@ -244,7 +247,8 @@ SEXP RBasicEntity<T, TW>::find(Rcpp::List index) const {
 template <class T, class TW>
 Rcpp::List RBasicEntity<T, TW>::getInstances() const {
   Rcpp::List list;
-  for(typename ampl::BasicEntity<T>::iterator it = _impl.begin(); it != _impl.end(); it++) {
+  std::map<ampl::Tuple, T> instances = _impl.getInstances();
+  for(typename std::map<ampl::Tuple, T>::iterator it = instances.begin(); it != instances.end(); it++) {
     list[it->second.name()] = TW(it->second);
   }
   return list;

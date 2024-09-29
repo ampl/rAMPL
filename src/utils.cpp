@@ -22,10 +22,10 @@ ampl::Tuple list2tuple(Rcpp::List list) {
   return ampl::Tuple(arguments, list.size());
 }
 
-Rcpp::List tuple2list(const ampl::TupleRef &tuple) {
+Rcpp::List tuple2list(const ampl::Tuple &tuple) {
   Rcpp::List list(tuple.size());
   for(std::size_t i = 0; i < tuple.size(); i++) {
-    const ampl::VariantRef &e = tuple[i];
+    const ampl::Variant &e = tuple[i];
     if(e.type() == ampl::NUMERIC) {
       list[i] = e.dbl();
     } else {
@@ -90,7 +90,7 @@ ampl::DataFrame rdf2df(Rcpp::DataFrame rdf, int numberOfIndexColumns){
 Rcpp::DataFrame df2rdf(const ampl::DataFrame &df){
   Rcpp::List tmp;
   int ncols = df.getNumCols();
-  ampl::StringRefArray headers = df.getHeaders();
+  ampl::StringArray headers = df.getHeaders();
   for(int i = 0; i < ncols; i++){
     ampl::DataFrame::Column col = df.getColumn(headers[i]);
     bool numeric = true;
@@ -115,16 +115,6 @@ Rcpp::DataFrame df2rdf(const ampl::DataFrame &df){
     }
   }
   return Rcpp::DataFrame(tmp);
-}
-
-SEXP variant2sexp(const ampl::VariantRef &value) {
-  if(value.type() == ampl::NUMERIC) {
-    return Rcpp::wrap(value.dbl());
-  } else if(value.type() == ampl::STRING) {
-    return Rcpp::wrap(value.str());
-  } else {
-    return Rcpp::wrap(Rcpp::String(NA_STRING));
-  }
 }
 
 SEXP variant2sexp(const ampl::Variant &value) {

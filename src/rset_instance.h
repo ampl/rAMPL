@@ -12,8 +12,8 @@ public:
   std::string name() const;
   std::string toString() const;
   //int arity() const; FIXME: ?
-  int size() const;
-  std::vector<Rcpp::List> members() const;
+  int size();// const;
+  std::vector<Rcpp::List> members();// const;
   bool contains(Rcpp::List tuple) const;
   Rcpp::DataFrame getValues() const;
   void setValues(SEXP values);

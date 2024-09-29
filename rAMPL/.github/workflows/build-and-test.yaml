@@ -1,0 +1,58 @@
+name: build-and-test
+run-name: ${{ github.actor }} is building "${{ github.ref_name }}"
+on: [push]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: r-lib/actions/setup-r@v2
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - run: |
+          set -ex
+          python updatelib.py
+          bash build.sh
+          mkdir -p upload/{release,doc}
+          cp rAMPL_*.tar.gz upload/release/
+          cp rAMPL_*.tar.gz upload/release/rAMPL.tar.gz
+          cp -r docs/build/html upload/doc/R
+      - uses: actions/upload-artifact@v3
+        with:
+          name: drop
+          path: upload/
+
+  test:
+    needs: build
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            bundle: https://portal.ampl.com/dl/amplce/ampl.linux64.tgz
+          - os: macos-latest
+            bundle: https://portal.ampl.com/dl/amplce/ampl.macos64.tgz
+          - os: windows-latest
+            bundle: https://portal.ampl.com/dl/amplce/ampl.mswin64.zip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: r-lib/actions/setup-r@v2
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - uses: actions/download-artifact@v3
+        with:
+          name: drop
+      - name: Copy package
+        shell: bash
+        run: cp release/* .
+      - name: Install Rcpp and testthat
+        run: bash dependencies.sh
+      - name: Install package
+        run: bash install.sh
+      - name: Install AMPL
+        run: bash download-ampl.sh ${{ matrix.bundle }}
+      - name: Test package
+        shell: bash
+        run: SKIP_BIG_TESTS=1 PATH="`pwd`/ampl:$PATH" bash test.sh 2>&1

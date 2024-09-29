@@ -11,7 +11,7 @@ Constraint
   constraint is scalar, its values can be accessed via functions like
   :meth:`~.Constraint.body` and :meth:`~.Constraint.dual`.
   All the AMPL suffixes for constraints (see
-  https://www.ampl.com/NEW/suffbuiltin.html)
+  http://www.ampl.com/NEW/suffbuiltin.html)
   are available through methods of this class with the same name (and methods
   of ConstraintInstance for indexed constraints).
 
@@ -32,7 +32,7 @@ Constraint
 
   Check if the constraint is a logical constraint. The available suffixes
   differ between logical and non logical constraints. See
-  https://www.ampl.com/NEW/suffbuiltin.html for a list of the available
+  http://www.ampl.com/NEW/suffbuiltin.html for a list of the available
   suffixes for algebraic constraints. The suffixes available for logical
   constraints are marked on the method description by "Valid only for logical
   constraints".
