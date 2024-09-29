@@ -1,4 +1,0 @@
-useDynLib(rAMPL)
-exportPattern("^[^\\.]")
-import(Rcpp)
-
