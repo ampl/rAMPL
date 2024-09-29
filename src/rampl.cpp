@@ -316,8 +316,9 @@ bool RAMPL::isRunning() const {
 
   :raises Error: If the underlying interpreter is not running.
 */
-void RAMPL::solve() {
-  _impl.eval("solve;");
+void RAMPL::solve(std::string problem = "", std::string solver = "") {
+  _impl.solve(problem, solver);
+  //_impl.eval("solve;");
   //return _impl.solve(); // FIXME: does not print to stdout with R IDE on Windows
 }
 

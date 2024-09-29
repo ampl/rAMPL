@@ -47,7 +47,7 @@ dietmodel <- function(solver=NULL, modelDirectory=NULL) {
   ampl$setData(df, 2, "")
 
   # Solve the model
-  ampl$solve()
+  ampl$solve("", "gurobi")
 
   # Print out the result
   cat(sprintf("Objective: %f\n", ampl$getObjective("Total_Cost")$value()))
