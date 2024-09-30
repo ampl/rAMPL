@@ -230,7 +230,6 @@ template <class T, class TW>
 SEXP RBasicEntity<T, TW>::find(Rcpp::List index) const {
   std::map<ampl::Tuple, T> instances = _impl.getInstances();
   typename std::map<ampl::Tuple, T>::iterator it = instances.find(list2tuple(index));
-  //ampl::internal::CountedIterator<ampl::internal::EntityWrapper<T> > it = _impl.find(list2tuple(index));
   if(it != instances.end()) {
     return Rcpp::wrap(TW(it->second));
   } else {
