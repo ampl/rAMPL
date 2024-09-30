@@ -1,3 +1,3 @@
-PKG_LIBS = -L../inst/libs/x64 -L../inst/libs/i386 -lampl -Wl,-rpath,@loader_path/../libs/x64 -Wl,-rpath,\$$ORIGIN/../libs/x64 -Wl,-rpath,\$$ORIGIN/../libs/i386 -Wl,-rpath,\$$ORIGIN/../inst/libs/x64 -Wl,-rpath,\$$ORIGIN/../inst/libs/i386
+PKG_LIBS = -L../inst/libs/x64 -lampl -Wl,-rpath,@loader_path/../libs/x64 -Wl,-rpath,\$$ORIGIN/../libs/x64 -Wl,-rpath,\$$ORIGIN/../inst/libs/x64
 PKG_CPPFLAGS=-I../src/include -Wall
 
