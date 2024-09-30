@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is building "${{ github.ref_name }}"
 on: [push]
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v3
       - uses: r-lib/actions/setup-r@v2
@@ -30,7 +30,7 @@ jobs:
         include:
           - os: ubuntu-latest
             bundle: https://portal.ampl.com/dl/amplce/ampl.linux64.tgz
-          - os: macos-latest
+          - os: macos-13
             bundle: https://portal.ampl.com/dl/amplce/ampl.macos64.tgz
           - os: windows-latest
             bundle: https://portal.ampl.com/dl/amplce/ampl.mswin64.zip
