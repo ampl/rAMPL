@@ -8,7 +8,7 @@ import shutil
 import tempfile
 
 VERSION = "nightly"
-API_URL = f"https://portal.ampl.com/~jurgen/libampl.zip"
+API_URL = f"https://portal.ampl.com/~jurgen/jl/libampl.zip"
 
 
 def updatelib(package):
