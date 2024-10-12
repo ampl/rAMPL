@@ -41,7 +41,7 @@ std::string RSetInstance::toString() const {
 
   :return: The number of tuples in the set.
 */
-int RSetInstance::size() { //const {
+int RSetInstance::size() {
   return _impl.size();
 }
 
@@ -51,7 +51,7 @@ int RSetInstance::size() { //const {
 
   :return: The list of members of the set.
 */
-std::vector<Rcpp::List> RSetInstance::members() { //const {
+std::vector<Rcpp::List> RSetInstance::members() {
   std::vector<Rcpp::List> members;
   ampl::SetInstance::MemberRange range = _impl.members();
   for(ampl::SetInstance::MemberRange::iterator it = range.begin(); it != range.end(); it++){

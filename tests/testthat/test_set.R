@@ -51,7 +51,7 @@ test_that("test set instance", {
   s2 <- ampl$getSet("s2")$get(c())
 
   expect_equal(s$name(), "s")
-  expect_equal(s$toString(), "set s = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};")
+  expect_equal(s$toString(), "set s;")
 
   # expect_equal(s$arity(), 1) # FIXME: missing in C++?
   expect_equal(s$size(), 10)

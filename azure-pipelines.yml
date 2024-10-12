@@ -13,8 +13,12 @@ stages:
     pool: {vmImage: 'macos-latest'}
     steps:
       - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.9.x'
+          addToPath: true 
       - bash: |
           set -ex
+          brew install r
           python updatelib.py
           bash build.sh
           mkdir -p upload/{macos,release,doc}
@@ -54,7 +58,10 @@ stages:
         inputs: {artifactName: 'drop', downloadPath: '.'}
       - bash: cp drop/release/* .
         displayName: Copy package
-      - bash: bash dependencies.sh
+      - bash: |
+          set -ex
+          brew install r
+          bash dependencies.sh
         displayName: Install Rcpp and testthat
       - bash: bash install.sh
         displayName: Install package

@@ -43,7 +43,7 @@ efficientfrontier <- function(solver=NULL, modelDirectory=NULL) {
   # Relax the integrality
   ampl$setOption("relax_integrality", TRUE)
   # Solve the problem
-  ampl$solve("", "gurobi")
+  ampl$solve("", "")
   # Calibrate the efficient frontier range
   minret <- portfolioReturn$value()
   values <- averageReturn$getValues()
@@ -60,14 +60,22 @@ efficientfrontier <- function(solver=NULL, modelDirectory=NULL) {
     ampl$eval("let stockopall:={};let stockrun:=stockall;")
     # Relax integrality
     ampl$setOption("relax_integrality", TRUE)
+<<<<<<< HEAD
     ampl$solve("", "gurobi")
+=======
+    ampl$solve("", "")
+>>>>>>> master
     cat(sprintf("QP result = %g\n", variance$value()))
     # Adjust included stocks
     ampl$eval("let stockrun:={i in stockrun:weights[i]>0};")
     ampl$eval("let stockopall:={i in stockrun:weights[i]>0.5};")
     # Set integrality back
     ampl$setOption("relax_integrality", FALSE)
+<<<<<<< HEAD
     ampl$solve("", "gurobi")
+=======
+    ampl$solve("", "")
+>>>>>>> master
     cat(sprintf("QMIP result = %g\n", variance$value()))
     # Store data of corrent frontier point
     returns <- c(returns, maxret - (i - 1) * stepsize)
