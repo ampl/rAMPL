@@ -90,7 +90,7 @@ ampl::DataFrame rdf2df(Rcpp::DataFrame rdf, int numberOfIndexColumns){
 Rcpp::DataFrame df2rdf(const ampl::DataFrame &df){
   Rcpp::List tmp;
   int ncols = df.getNumCols();
-  ampl::StringRefArray headers = df.getHeaders();
+  ampl::StringArray headers = df.getHeaders();
   for(int i = 0; i < ncols; i++){
     ampl::DataFrame::Column col = df.getColumn(headers[i]);
     bool numeric = true;
