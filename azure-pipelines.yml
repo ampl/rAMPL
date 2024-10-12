@@ -58,7 +58,10 @@ stages:
         inputs: {artifactName: 'drop', downloadPath: '.'}
       - bash: cp drop/release/* .
         displayName: Copy package
-      - bash: bash dependencies.sh
+      - bash: |
+          set -ex
+          brew install r
+          bash dependencies.sh
         displayName: Install Rcpp and testthat
       - bash: bash install.sh
         displayName: Install package
