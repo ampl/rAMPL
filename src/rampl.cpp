@@ -314,10 +314,12 @@ bool RAMPL::isRunning() const {
 
   Solve the current model.
 
+  :param string problem: The problem that will be solved.
+  :param string solver: The solver that will be used to solve the problem.
   :raises Error: If the underlying interpreter is not running.
 */
-void RAMPL::solve() {
-  _impl.eval("solve;");
+void RAMPL::solve(std::string problem = "", std::string solver = "") {
+  _impl.solve(problem, solver);
   //return _impl.solve(); // FIXME: does not print to stdout with R IDE on Windows
 }
 

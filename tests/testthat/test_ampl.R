@@ -83,7 +83,7 @@ test_that("test AMPL", {
   expect_equal(ampl$getSets()$S$name(), "S")
   expect_equal(ampl$getParameters()$l$name(), "l")
 
-  ampl$solve()
+  ampl$solve("", "gurobi")
   expect_equal(ampl$getObjective("obj")$value(), 5)
 
   out <- ""
