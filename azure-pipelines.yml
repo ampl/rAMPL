@@ -18,6 +18,7 @@ stages:
           addToPath: true 
       - bash: |
           set -ex
+          brew install r
           python updatelib.py
           bash build.sh
           mkdir -p upload/{macos,release,doc}
