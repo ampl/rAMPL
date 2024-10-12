@@ -5,9 +5,9 @@ jobs:
   build:
     runs-on: macos-13
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: r-lib/actions/setup-r@v2
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.9"
       - run: |
@@ -18,7 +18,7 @@ jobs:
           cp rAMPL_*.tar.gz upload/release/
           cp rAMPL_*.tar.gz upload/release/rAMPL.tar.gz
           cp -r docs/build/html upload/doc/R
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: drop
           path: upload/
@@ -36,9 +36,9 @@ jobs:
             bundle: https://portal.ampl.com/dl/amplce/ampl.mswin64.zip
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: r-lib/actions/setup-r@v2
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.9"
       - uses: actions/download-artifact@v4.1.7
