@@ -320,7 +320,7 @@ bool RAMPL::isRunning() const {
 */
 void RAMPL::solve(std::string problem, std::string solver) {
   _impl.solve(problem, solver);
-  //return _impl.solve(); // FIXME: does not print to stdout with R IDE on Windows
+  //return _impl.solve("", ""); // FIXME: does not print to stdout with R IDE on Windows
 }
 
 

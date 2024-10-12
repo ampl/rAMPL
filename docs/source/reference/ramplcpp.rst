@@ -203,7 +203,7 @@ AMPL
 
   Returns ``TRUE``  if the underlying engine is running.
 
-.. method:: AMPL.solve()
+.. method:: AMPL.solve("", "")
 
   Solve the current model.
 

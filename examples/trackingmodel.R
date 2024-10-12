@@ -36,7 +36,7 @@ trackingmodel <- function(solver=NULL, modelDirectory=NULL) {
   # Relax the integrality
   ampl$setOption("relax_integrality", TRUE)
   # Solve the problem
-  ampl$solve()
+  ampl$solve("", "")
   cat(sprintf("QP objective value ", ampl$getObjectives()[[1]]$value()))
 
   lowcutoff <- 0.04
@@ -62,6 +62,6 @@ trackingmodel <- function(solver=NULL, modelDirectory=NULL) {
   # Get back to the integer problem
   ampl$setOption("relax_integrality", FALSE)
   # Solve the (integer) problem
-  ampl$solve()
+  ampl$solve("", "")
   cat(sprintf("QMIP objective value %g\n", ampl$getObjectives()[[1]]$value()))
 }
