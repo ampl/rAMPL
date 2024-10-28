@@ -1,7 +1,7 @@
 .. _secExamplesR:
 
-R API Examples
-==============
+Examples
+========
 
 This section lists a few examples in R.
 These are the same files that can be found in the *examples* directory of the

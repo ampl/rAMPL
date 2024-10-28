@@ -95,23 +95,17 @@ pygments_style = "sphinx"
 # html_theme = u'sphinxdoc'
 html_theme = "ampl_sphinx_theme"
 html_theme_options = {
-    "logo_link": "index",
     "icon_links": [
         {
             "name": "GitHub",
             "url": "https://github.com/ampl/rAMPL",
             "icon": "fab fa-github",
         },
-        {
-            "name": "AMPL Resources",
-            "url": "https://dev.ampl.com",
-            "icon": "fas fa-book fa-fw",
-            "target": "_self",
-        },
     ],
     "collapse_navigation": True,
     "logo_text": "R API",
 }
+html_context = {"default_mode": "light"}
 
 html_baseurl = "https://rampl.ampl.com/en/latest/"
 
