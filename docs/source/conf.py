@@ -102,7 +102,6 @@ html_theme_options = {
             "icon": "fab fa-github",
         },
     ],
-    "collapse_navigation": True,
     "logo_text": "R API",
 }
 html_context = {"default_mode": "light"}
