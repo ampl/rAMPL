@@ -23,7 +23,12 @@ needs_sphinx = "5.0.0"
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ["sphinx.ext.todo", "sphinx.ext.ifconfig", "sphinx.ext.mathjax"]
+extensions = [
+    "sphinx.ext.todo",
+    "sphinx.ext.ifconfig",
+    "sphinx.ext.mathjax",
+    "sphinxcontrib.googleanalytics",
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -105,6 +110,7 @@ html_theme_options = {
     "logo_text": "R API",
 }
 html_context = {"default_mode": "light"}
+googleanalytics_id = "G-LEM4RDGQBY"
 
 html_baseurl = "https://rampl.ampl.com/en/latest/"
 
