@@ -14,7 +14,7 @@ if [ ! -d "venv" ]; then
     $PYTHON -m pip install virtualenv
     $PYTHON -m virtualenv venv
     source venv/bin/activate
-    $PYTHON -m pip install -r requirements-dev.txt
+    $PYTHON -m pip install -r requirements.txt
     deactivate
 fi
 source venv/bin/activate
