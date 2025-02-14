@@ -318,8 +318,17 @@ bool RAMPL::isRunning() const {
   :param string solver: The solver that will be used to solve the problem.
   :raises Error: If the underlying interpreter is not running.
 */
-void RAMPL::solve(std::string problem, std::string solver) {
-  _impl.solve(problem, solver);
+void RAMPL::solve(Rcpp::Nullable<std::string> problem = R_NilValue, Rcpp::Nullable<std::string> solver = R_NilValue) {
+  if (problem.isNotNull() && solver.isNotNull())
+    _impl.solve(problem, solver);
+  else if (problem.isNotNull())
+    _impl.solve(problem, "");
+  else if (solver.isNotNull())
+    _impl.solve("", solver);
+  else
+    _impl.solve("", "")
+  
+  
   //return _impl.solve("", ""); // FIXME: does not print to stdout with R IDE on Windows
 }
 

@@ -19,7 +19,7 @@ firstexample <- function(solver=NULL, modelDirectory=NULL) {
   ampl$readData(paste(modelDirectory, "/diet/diet.dat", sep=""))
 
   # Solve
-  ampl$solve("", "")
+  ampl$solve()
 
   # Get objective entity by AMPL name
   totalcost <- ampl$getObjective("Total_Cost")
@@ -34,7 +34,7 @@ firstexample <- function(solver=NULL, modelDirectory=NULL) {
   cat(sprintf("Increased costs of beef and ham.\n"))
 
   # Resolve and display objective
-  ampl$solve("", "")
+  ampl$solve()
   cat(sprintf("New objective value: %f\n", totalcost$value()))
 
   # Reassign data - all instances
@@ -43,7 +43,7 @@ firstexample <- function(solver=NULL, modelDirectory=NULL) {
   cat(sprintf("Updated all costs.\n"))
 
   # Resolve and display objective
-  ampl$solve("", "")
+  ampl$solve()
   cat(sprintf("New objective value: %f\n", totalcost$value()))
 
   # Get the values of the variable Buy in a dataframe object

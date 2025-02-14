@@ -258,7 +258,7 @@ The currently defined entities are obtained from the various get methods of the 
 (see section :ref:`secAMPLClass`). Once a reference to an entity is created, the entity is automatically kept up-to-date
 with the corresponding entity in the AMPL interpreter. That is, if a reference to a newly created AMPL variable
 is obtained by means of :meth:`.AMPL.getVariable()`, and the model the variable is part of is then solved
-by means of :meth:`.AMPL.solve("", "")`, the values of the instances of the variable will automatically be updated.
+by means of :meth:`.AMPL.solve()`, the values of the instances of the variable will automatically be updated.
 The following code snippet should demonstrate the concept.
 
 .. code-block:: R
@@ -271,7 +271,7 @@ The following code snippet should demonstrate the concept.
    # At this point x$value() evaluates to 0
    print(x$value())  # prints 0
 
-   ampl$solve("", "")
+   ampl$solve()
 
    # At this point x$value() evaluates to 10
    print(x$value())  # prints 10
