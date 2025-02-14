@@ -658,7 +658,7 @@ RCPP_MODULE(rampl){
     .method("reset", &RAMPL::reset)
     .method("close", &RAMPL::close)
     .method("isRunning", &RAMPL::isRunning)
-    .method("solve", &RAMPL::solve)
+    .method("solve", &RAMPL::solve, List::create( _["problem"], _["solver"] = "" ))
 
     .method("getData", &RAMPL::getData)
     .method("getValue", &RAMPL::getValue)
