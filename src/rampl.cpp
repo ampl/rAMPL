@@ -319,8 +319,8 @@ bool RAMPL::isRunning() const {
   :raises Error: If the underlying interpreter is not running.
 */
 void RAMPL::solve(Rcpp::Nullable<std::string> problem, Rcpp::Nullable<std::string> solver) {
-  std::string cpp_problem = problem.isNotNull() ? problem.getValue() : "";
-  std::string cpp_solver = solver.isNotNull() ? solver.getValue() : "";
+  std::string cpp_problem = problem.isNotNull() ? Rcpp::as<std::string>(problem) : "";
+  std::string cpp_solver = solver.isNotNull() ? Rcpp::as<std::string>(solver) : "";
     
   _impl.solve(cpp_problem, cpp_solver);
 }
