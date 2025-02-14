@@ -326,7 +326,7 @@ void RAMPL::solve(Rcpp::Nullable<std::string> problem = R_NilValue, Rcpp::Nullab
   else if (solver.isNotNull())
     _impl.solve("", solver);
   else
-    _impl.solve("", "")
+    _impl.solve("", "");
   
   
   //return _impl.solve("", ""); // FIXME: does not print to stdout with R IDE on Windows
