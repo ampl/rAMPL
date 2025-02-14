@@ -14,7 +14,6 @@ stages:
     steps:
       - task: UsePythonVersion@0
         inputs:
-          versionSpec: '3.9.x'
           addToPath: true 
       - bash: |
           set -ex
