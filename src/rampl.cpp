@@ -310,7 +310,7 @@ bool RAMPL::isRunning() const {
   return _impl.isRunning();
 }
 
-/*.. method:: AMPL.solve(problem, solver)
+/*.. method:: AMPL.solve()
 
   Solve the current model.
 
@@ -318,6 +318,17 @@ bool RAMPL::isRunning() const {
 */
 void RAMPL::solve() {
   _impl.solve("", "");
+}
+
+/*.. method:: AMPL.solve(problem)
+
+  Solve the current model.
+
+  :param string problem: The problem that will be solved.
+  :raises Error: If the underlying interpreter is not running.
+*/
+void RAMPL::solve(std::string problem) {
+  _impl.solve(problem, "");
 }
 
 /*.. method:: AMPL.solve(problem, solver)
@@ -666,6 +677,7 @@ RCPP_MODULE(rampl){
     .method("close", &RAMPL::close)
     .method("isRunning", &RAMPL::isRunning)
     .method("solve", ( void (RAMPL::*)() )(&RAMPL::solve))
+    .method("solve", ( void (RAMPL::*)(std::string) )(&RAMPL::solve))
     .method("solve", ( void (RAMPL::*)(std::string, std::string) )(&RAMPL::solve))
 
     .method("getData", &RAMPL::getData)
