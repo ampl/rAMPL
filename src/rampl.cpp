@@ -666,7 +666,7 @@ RCPP_MODULE(rampl){
     .method("close", &RAMPL::close)
     .method("isRunning", &RAMPL::isRunning)
     .method("solve", ( void (RAMPL::*)() )(&RAMPL::solve))
-    .method("solve", ( void (RAMPL::*)(std:string, std:string) )(&RAMPL::solve))
+    .method("solve", ( void (RAMPL::*)(std::string, std::string) )(&RAMPL::solve))
 
     .method("getData", &RAMPL::getData)
     .method("getValue", &RAMPL::getValue)
