@@ -104,8 +104,8 @@ public:
   void reset();
   void close();
   bool isRunning() const;
-  void solve(Rcpp::Nullable<std::string> problem = Rcpp::Nullable<std::string>(), Rcpp::Nullable<std::string> solver = Rcpp::Nullable<std::string>());
-
+  void solve();
+  void solve(std::string problem, std::string solver);
   Rcpp::DataFrame getData(Rcpp::List statements) const;
   SEXP getValue(std::string scalarExpression) const;
   Rcpp::String getOutput(std::string amplstatements);

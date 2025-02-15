@@ -314,15 +314,22 @@ bool RAMPL::isRunning() const {
 
   Solve the current model.
 
+  :raises Error: If the underlying interpreter is not running.
+*/
+void RAMPL::solve() {
+  _impl.solve("", "");
+}
+
+/*.. method:: AMPL.solve(problem, solver)
+
+  Solve the current model.
+
   :param string problem: The problem that will be solved.
   :param string solver: The solver that will be used to solve the problem.
   :raises Error: If the underlying interpreter is not running.
 */
-void RAMPL::solve(Rcpp::Nullable<std::string> problem, Rcpp::Nullable<std::string> solver) {
-  std::string cpp_problem = problem.isNotNull() ? Rcpp::as<std::string>(problem) : "";
-  std::string cpp_solver = solver.isNotNull() ? Rcpp::as<std::string>(solver) : "";
-    
-  _impl.solve(cpp_problem, cpp_solver);
+void RAMPL::solve(std::string problem, std::string solver) {
+  _impl.solve(problem, solver);
 }
 
 
@@ -658,7 +665,8 @@ RCPP_MODULE(rampl){
     .method("reset", &RAMPL::reset)
     .method("close", &RAMPL::close)
     .method("isRunning", &RAMPL::isRunning)
-    .method("solve", &RAMPL::solve, List::create( _["problem"], _["solver"] = "" ))
+    .method("solve", ( void (RAMPL::*)() )(&RAMPL::solve))
+    .method("solve", ( void (RAMPL::*)(std:string, std:string) )(&RAMPL::solve))
 
     .method("getData", &RAMPL::getData)
     .method("getValue", &RAMPL::getValue)
