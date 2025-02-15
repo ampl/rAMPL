@@ -203,10 +203,25 @@ AMPL
 
   Returns ``TRUE``  if the underlying engine is running.
 
-.. method:: AMPL.solve("", "")
+.. method:: AMPL.solve()
 
   Solve the current model.
 
+  :raises Error: If the underlying interpreter is not running.
+
+.. method:: AMPL.solve(problem)
+
+  Solve the current model.
+
+  :param string problem: The problem that will be solved.
+  :raises Error: If the underlying interpreter is not running.
+
+.. method:: AMPL.solve(problem, solver)
+
+  Solve the current model.
+
+  :param string problem: The problem that will be solved.
+  :param string solver: The solver that will be used to solve the problem.
   :raises Error: If the underlying interpreter is not running.
 
 .. method:: AMPL.getData(statements)
