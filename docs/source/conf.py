@@ -28,6 +28,7 @@ extensions = [
     "sphinx.ext.ifconfig",
     "sphinx.ext.mathjax",
     "sphinxcontrib.googleanalytics",
+    "sphinx_sitemap",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
