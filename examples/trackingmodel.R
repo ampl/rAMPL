@@ -62,10 +62,6 @@ trackingmodel <- function(solver=NULL, modelDirectory=NULL) {
   # Get back to the integer problem
   ampl$setOption("relax_integrality", FALSE)
   # Solve the (integer) problem
-<<<<<<< HEAD
   ampl$solve("", "gurobi")
-=======
-  ampl$solve("", "")
->>>>>>> master
   cat(sprintf("QMIP objective value %g\n", ampl$getObjectives()[[1]]$value()))
 }

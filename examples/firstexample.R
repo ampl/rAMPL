@@ -47,11 +47,7 @@ firstexample <- function(solver=NULL, modelDirectory=NULL) {
   cat(sprintf("Updated all costs.\n"))
 
   # Resolve and display objective
-<<<<<<< HEAD
   ampl$solve("", "gurobi")
-=======
-  ampl$solve("", "")
->>>>>>> master
   cat(sprintf("New objective value: %f\n", totalcost$value()))
 
   # Get the values of the variable Buy in a dataframe object
