@@ -34,11 +34,7 @@ firstexample <- function(solver=NULL, modelDirectory=NULL) {
   cat(sprintf("Increased costs of beef and ham.\n"))
 
   # Resolve and display objective
-<<<<<<< HEAD
   ampl$solve("", "gurobi")
-=======
-  ampl$solve("", "")
->>>>>>> master
   cat(sprintf("New objective value: %f\n", totalcost$value()))
 
   # Reassign data - all instances
