@@ -165,9 +165,8 @@ SEXP RParameterEntity::getScalar() const {
 }
 
 SEXP RParameterEntity::find(Rcpp::List index) const {
-  std::map<ampl::Tuple, ampl::Variant> instances = _impl.getInstances();
-  typename std::map<ampl::Tuple, ampl::Variant>::iterator it = instances.find(list2tuple(index));
-  if(it != instances.end()) {
+  ampl::BasicEntity<ampl::Variant>::iterator it = _impl.find(list2tuple(index));
+  if(it != _impl.end()) {
     return variant2sexp(it->second);
   } else {
     return R_NilValue;
@@ -176,8 +175,7 @@ SEXP RParameterEntity::find(Rcpp::List index) const {
 
 Rcpp::List RParameterEntity::getInstances() const {
   Rcpp::List list;
-  std::map<ampl::Tuple, ampl::Variant> instances = _impl.getInstances();
-  for(typename std::map<ampl::Tuple, ampl::Variant>::iterator it = instances.begin(); it != instances.end(); it++) {
+  for(ampl::BasicEntity<ampl::Variant>::iterator it = _impl.begin(); it != _impl.end(); it++) {
     Rcpp::List row = tuple2list(it->first);
     row.push_back(variant2sexp(it->second));
     list.push_back(row);

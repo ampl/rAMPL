@@ -228,9 +228,8 @@ SEXP RBasicEntity<T, TW>::getScalar() const {
 */
 template <class T, class TW>
 SEXP RBasicEntity<T, TW>::find(Rcpp::List index) const {
-  std::map<ampl::Tuple, T> instances = _impl.getInstances();
-  typename std::map<ampl::Tuple, T>::iterator it = instances.find(list2tuple(index));
-  if(it != instances.end()) {
+  typename ampl::BasicEntity<T>::iterator it = _impl.find(list2tuple(index));
+  if(it != _impl.end()) {
     return Rcpp::wrap(TW(it->second));
   } else {
     return R_NilValue;
@@ -246,8 +245,7 @@ SEXP RBasicEntity<T, TW>::find(Rcpp::List index) const {
 template <class T, class TW>
 Rcpp::List RBasicEntity<T, TW>::getInstances() const {
   Rcpp::List list;
-  std::map<ampl::Tuple, T> instances = _impl.getInstances();
-  for(typename std::map<ampl::Tuple, T>::iterator it = instances.begin(); it != instances.end(); it++) {
+  for(typename ampl::BasicEntity<T>::iterator it = _impl.begin(); it != _impl.end(); it++) {
     list[it->second.name()] = TW(it->second);
   }
   return list;
