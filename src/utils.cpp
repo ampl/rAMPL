@@ -3,6 +3,7 @@
 
 ampl::Tuple list2tuple(Rcpp::List list) {
   int p = 0;
+  if (list.size()==0) return ampl::Tuple();
   ampl::Variant arguments[list.size()];
   for(Rcpp::List::iterator it = list.begin(); it != list.end(); it++) {
     switch(TYPEOF(*it)) {
