@@ -200,7 +200,7 @@ RCPP_MODULE(rparam_entity){
     .const_method("get", &RBasicEntity<ampl::Variant, ampl::Variant>::get)
     .const_method("get", &RBasicEntity<ampl::Variant, ampl::Variant>::getScalar)
     .const_method("find", &RBasicEntity<ampl::Variant, ampl::Variant>::find)
-    .const_method("getInstances", &RBasicEntity<ampl::Variant, ampl::Variant>::getInstances)
+    //.const_method("getInstances", &RBasicEntity<ampl::Variant, ampl::Variant>::getInstances)
     ;
   Rcpp::class_<RParameterEntity>("Parameter")
     .derives<RBasicEntity<ampl::Variant, ampl::Variant> >("PEntity")
