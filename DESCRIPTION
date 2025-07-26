@@ -1,6 +1,6 @@
 Package: rAMPL
 Title: AMPL API for R
-Version: 2.0.13.0-20241012
+Version: 2.0.14.0-20250215
 Author: Filipe Brandao
 Maintainer: Filipe Brandão <fdabrandao@ampl.com>
 Description: AMPL API for R.

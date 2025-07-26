@@ -30,7 +30,7 @@ This is the complete listing of the example. Please note that, for clarity of pr
   ampl$readData("models/diet.dat")
 
   # Solve
-  ampl$solve("", "")
+  ampl$solve()
 
   # Get objective entity by AMPL name
   totalcost <- ampl$getObjective("Total_Cost")
@@ -43,7 +43,7 @@ This is the complete listing of the example. Please note that, for clarity of pr
   cat("Increased costs of beef and ham.\n")
 
   # Resolve and display objective
-  ampl$solve("", "")
+  ampl$solve()
   cat(sprintf("New objective value: %g\n", totalcost$value()))
 
   # Reassign data - all instances
@@ -52,7 +52,7 @@ This is the complete listing of the example. Please note that, for clarity of pr
   cat("Updated all costs.\n")
 
   # Resolve and display objective
-  ampl$solve("", "")
+  ampl$solve()
   cat(sprintf("New objective value: %g\n", totalcost$value()))
 
   # Get the values of the variable Buy in a dataframe object
@@ -123,7 +123,7 @@ To solve the currently loaded problem instance, it is sufficient to issue the co
 
 .. code-block:: R
 
-   ampl$solve("", "")
+   ampl$solve()
 
 
 Get an AMPL entity in the programming environment (get objective value)
@@ -175,7 +175,7 @@ values is overloaded, and is in both cases :meth:`Parameter.setValues()`.
    cost <- ampl$getParameter("cost")
    cost$setValues(data.frame(index=c("BEEF", "HAM"), value=c(5.01, 4.55)))
    cat("Increased costs of beef and ham.\n")
-   ampl$solve("", "")
+   ampl$solve()
    cat(sprintf("New objective value: %g\n", totalcost$value()))
 
 The code above assigns the values 5.01 and 4.55 to the parameter cost for the objects beef and ham respectively.
@@ -186,7 +186,7 @@ both the index and the value. A collection of values is assigned to each of the 
 
    cost$setValues(c(3, 5, 5, 6, 1, 2, 5.01, 4.55))
    cat("Updated all costs.\n")
-   ampl$solve("", "")
+   ampl$solve()
    cat(sprintf("New objective value: %g\n", totalcost$value()))
 
 The statements above produce the following output::
