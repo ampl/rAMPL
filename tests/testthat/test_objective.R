@@ -38,7 +38,7 @@ test_that("test objective instance", {
   obj <- ampl$getObjective("obj")$get(c())
 
   expect_equal(obj$name(), "obj")
-  # expect_equal(c$toString(), "maximize obj: 0;") # FIXME: "maximize obj:\n\t0;"?
+  expect_equal(c$toString(), "maximize obj: 0;")
 
   expect_equal(obj$value(), 0)
   expect_equal(obj$astatus(), "in")
