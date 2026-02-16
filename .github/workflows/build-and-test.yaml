@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is building "${{ github.ref_name }}"
 on: [push]
 jobs:
   build:
-    runs-on: macos-13
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
       - uses: r-lib/actions/setup-r@v2
