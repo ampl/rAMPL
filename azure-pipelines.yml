@@ -41,6 +41,11 @@ stages:
         inputs: {artifactName: 'drop', downloadPath: '.'}
       - bash: cp drop/release/* .
         displayName: Copy package
+      - bash: |
+          sudo apt-get update
+          sudo apt-get install -y r-base
+          R --version
+        displayName: 'Install R'
       - bash: sudo bash dependencies.sh
         displayName: Install Rcpp and testthat
       - bash: sudo bash install.sh
