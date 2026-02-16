@@ -495,7 +495,7 @@ Rcpp::List RAMPL::getVariables() const {
   ampl::EntityMap<ampl::Variable>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Variable>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Variable>::iterator itr = begin; itr != end; itr++){
-    list[itr->first] = RVariableEntity(*itr);
+    list[itr->first] = RVariableEntity(itr->second);
   }
   return list;
 }
@@ -512,7 +512,7 @@ Rcpp::List RAMPL::getConstraints() const {
   ampl::EntityMap<ampl::Constraint>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Constraint>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Constraint>::iterator itr = begin; itr != end; itr++){
-    list[itr->first] = RConstraintEntity(*itr);
+    list[itr->first] = RConstraintEntity(itr->second);
   }
   return list;
 }
@@ -529,7 +529,7 @@ Rcpp::List RAMPL::getObjectives() const {
   ampl::EntityMap<ampl::Objective>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Objective>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Objective>::iterator itr = begin; itr != end; itr++){
-    list[itr->first] = RObjectiveEntity(*itr);
+    list[itr->first] = RObjectiveEntity(itr->second);
   }
   return list;
 }
@@ -546,7 +546,7 @@ Rcpp::List RAMPL::getSets() const {
   ampl::EntityMap<ampl::Set>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Set>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Set>::iterator itr = begin; itr != end; itr++){
-    list[itr->first] = RSetEntity(*itr);
+    list[itr->first] = RSetEntity(itr->second);
   }
   return list;
 }
@@ -563,7 +563,7 @@ Rcpp::List RAMPL::getParameters() const {
   ampl::EntityMap<ampl::Parameter>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Parameter>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Parameter>::iterator itr = begin; itr != end; itr++){
-    list[itr->first] = RParameterEntity(*itr);
+    list[itr->first] = RParameterEntity(itr->second);
   }
   return list;
 }
