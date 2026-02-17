@@ -35,10 +35,10 @@ test_that("test objective entity", {
 test_that("test objective instance", {
   ampl <- new(AMPL)
   ampl$eval("maximize obj: 0;")
-  obj <- ampl$getObjective("obj")$get(c())
+  obj <- ampl$getObjective("obj")
 
   expect_equal(obj$name(), "obj")
-  expect_equal(c$toString(), "maximize obj: 0;")
+  expect_equal(obj$toString(), "maximize obj: 0;")
 
   expect_equal(obj$value(), 0)
   expect_equal(obj$astatus(), "in")
