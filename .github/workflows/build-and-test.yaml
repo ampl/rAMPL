@@ -30,7 +30,7 @@ jobs:
         include:
           - os: ubuntu-latest
             bundle: https://portal.ampl.com/dl/amplce/ampl.linux64.tgz
-          - os: macos-13
+          - os: macos-15
             bundle: https://portal.ampl.com/dl/amplce/ampl.macos64.tgz
           - os: windows-latest
             bundle: https://portal.ampl.com/dl/amplce/ampl.mswin64.zip
