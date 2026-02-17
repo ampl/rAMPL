@@ -491,7 +491,7 @@ RParameterEntity RAMPL::getParameter(std::string name) const {
 */
 Rcpp::List RAMPL::getVariables() const {
   Rcpp::List list;
-  const ampl::EntityMap<ampl::Variable> map = _impl.getVariables();
+  ampl::EntityMap<ampl::Variable> map = _impl.getVariables();
   ampl::EntityMap<ampl::Variable>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Variable>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Variable>::iterator itr = begin; itr != end; itr++){
@@ -508,7 +508,7 @@ Rcpp::List RAMPL::getVariables() const {
 */
 Rcpp::List RAMPL::getConstraints() const {
   Rcpp::List list;
-  const ampl::EntityMap<ampl::Constraint> map = _impl.getConstraints();
+  ampl::EntityMap<ampl::Constraint> map = _impl.getConstraints();
   ampl::EntityMap<ampl::Constraint>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Constraint>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Constraint>::iterator itr = begin; itr != end; itr++){
@@ -525,7 +525,7 @@ Rcpp::List RAMPL::getConstraints() const {
 */
 Rcpp::List RAMPL::getObjectives() const {
   Rcpp::List list;
-  const ampl::EntityMap<ampl::Objective> map = _impl.getObjectives();
+  ampl::EntityMap<ampl::Objective> map = _impl.getObjectives();
   ampl::EntityMap<ampl::Objective>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Objective>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Objective>::iterator itr = begin; itr != end; itr++){
@@ -542,7 +542,7 @@ Rcpp::List RAMPL::getObjectives() const {
 */
 Rcpp::List RAMPL::getSets() const {
   Rcpp::List list;
-  const ampl::EntityMap<ampl::Set> map = _impl.getSets();
+  ampl::EntityMap<ampl::Set> map = _impl.getSets();
   ampl::EntityMap<ampl::Set>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Set>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Set>::iterator itr = begin; itr != end; itr++){
@@ -559,7 +559,7 @@ Rcpp::List RAMPL::getSets() const {
 */
 Rcpp::List RAMPL::getParameters() const {
   Rcpp::List list;
-  const ampl::EntityMap<ampl::Parameter> map = _impl.getParameters();
+  ampl::EntityMap<ampl::Parameter> map = _impl.getParameters();
   ampl::EntityMap<ampl::Parameter>::iterator begin = map.begin();
   ampl::EntityMap<ampl::Parameter>::iterator end = map.end();
   for(ampl::EntityMap<ampl::Parameter>::iterator itr = begin; itr != end; itr++){
