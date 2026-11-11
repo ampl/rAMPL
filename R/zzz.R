@@ -30,6 +30,7 @@ loadModule("rparam_entity", TRUE)
   Sys.setenv(
     AMPL_API = "rAMPL",
     AMPL_API_VERSION = getNamespaceVersion(pkgname),
-    AMPL_API_ENV = .ampl_api_env()
+    AMPL_API_ENV = .ampl_api_env(),
+    AMPL_API_RUNTIME = paste0("R/", getRversion())
   )
 }
